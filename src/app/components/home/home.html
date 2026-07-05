@@ -1,0 +1,165 @@
+<section class="pf-hero">
+    <div class="container-xl">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-6 order-lg-1 order-2">
+                <span class="pf-badge mb-3">Dispensador IoT con Arduino</span>
+                <h1 class="display-4 fw-black lh-sm mb-4" style="font-weight:900;">
+                    Alimenta a tu mascota<br />
+                    <span style="color:var(--pf-primary);">desde cualquier lugar</span>
+                </h1>
+                <p class="text-muted fs-5 mb-5" style="max-width:480px;">
+                    PawFeeder es un dispensador inteligente de croquetas controlado por IoT. Programa horarios, ajusta porciones y monitorea a tu mascota en tiempo real.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a asp-controller="Home" asp-action="DownloadApp" class="btn-pf text-decoration-none">
+                        <i class="bi bi-download me-2"></i>Comenzar gratis
+                    </a>
+                    <a asp-controller="Home" asp-action="About" class="btn-pf-outline text-decoration-none">
+                        Conocer más
+                    </a>
+                </div>
+                <div class="d-flex gap-4 mt-5">
+                    <div>
+                        <div class="fw-bold fs-4" style="color:var(--pf-primary);">500+</div>
+                        <div class="text-muted small">Mascotas felices</div>
+                    </div>
+                    <div>
+                        <div class="fw-bold fs-4" style="color:var(--pf-primary);">99%</div>
+                        <div class="text-muted small">Precisión en porciones</div>
+                    </div>
+                    <div>
+                        <div class="fw-bold fs-4" style="color:var(--pf-primary);">24/7</div>
+                        <div class="text-muted small">Monitoreo continuo</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 order-lg-2 order-1">
+                <img src="/imagenes/web-hero.jpg" alt="PawFeeder dispositivo con mascota" class="pf-hero-img" />
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pf-section" id="features">
+    <div class="container-xl">
+        <div class="text-center mb-5">
+            <div class="pf-section-label">¿Por qué PawFeeder?</div>
+            <h2 class="fw-bold fs-1">Todo lo que tu mascota necesita</h2>
+            <p class="text-muted mx-auto" style="max-width:500px;">
+                Tecnología IoT diseñada para hacer la vida de tu mascota más cómoda y la tuya más tranquila.
+            </p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-4">
+                <div class="pf-card h-100">
+                    <div class="pf-icon">⏰</div>
+                    <h5 class="fw-bold mb-2">Horarios automáticos</h5>
+                    <p class="text-muted small mb-0">Programa hasta 6 comidas diarias con porciones exactas. El dispensador funciona aunque no tengas internet.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="pf-card h-100">
+                    <div class="pf-icon">📱</div>
+                    <h5 class="fw-bold mb-2">Control desde tu móvil</h5>
+                    <p class="text-muted small mb-0">Activa una comida manual, ajusta la porción o cambia el horario desde la app en cualquier momento.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="pf-card h-100">
+                    <div class="pf-icon">📊</div>
+                    <h5 class="fw-bold mb-2">Historial y alertas</h5>
+                    <p class="text-muted small mb-0">Consulta cuándo y cuánto comió tu mascota. Recibe alertas cuando el nivel de croqueta sea bajo.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="pf-card h-100">
+                    <div class="pf-icon">🐾</div>
+                    <h5 class="fw-bold mb-2">Múltiples mascotas</h5>
+                    <p class="text-muted small mb-0">Registra varios perfiles con sus propias dietas y horarios. Ideal para hogares con más de una mascota.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="pf-card h-100">
+                    <div class="pf-icon">🔒</div>
+                    <h5 class="fw-bold mb-2">Conexión segura</h5>
+                    <p class="text-muted small mb-0">Comunicación cifrada entre el dispositivo y la app. Tus datos y los de tu mascota siempre protegidos.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4">
+                <div class="pf-card h-100">
+                    <div class="pf-icon">⚡</div>
+                    <h5 class="fw-bold mb-2">Fácil instalación</h5>
+                    <p class="text-muted small mb-0">Conéctalo a tu red WiFi en menos de 5 minutos. Sin herramientas, sin configuraciones complicadas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section style="background:#fff; padding:5rem 0;">
+    <div class="container-xl">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5">
+                <img src="/imagenes/web-device.jpg" alt="Arduino IoT" class="pf-hero-img" />
+            </div>
+            <div class="col-lg-7">
+                <div class="pf-section-label">El hardware</div>
+                <h2 class="fw-bold fs-1 mb-3">Tecnología Arduino<br />al servicio de tu mascota</h2>
+                <div class="pf-divider"></div>
+                <p class="text-muted mb-4">
+                    El corazón de PawFeeder es un microcontrolador Arduino con módulo WiFi, sensor ultrasónico de nivel y un servo motor de precisión para controlar las porciones.
+                </p>
+                <div class="row g-3">
+                    <div class="col-6">
+                        <div class="pf-stat">
+                            <div class="fw-bold" style="color:var(--pf-primary);">Arduino + ESP8266</div>
+                            <div class="small text-muted mt-1">Microcontrolador WiFi</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="pf-stat">
+                            <div class="fw-bold" style="color:var(--pf-primary);">HC-SR04</div>
+                            <div class="small text-muted mt-1">Sensor ultrasónico</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="pf-stat">
+                            <div class="fw-bold" style="color:var(--pf-primary);">Servo 9g</div>
+                            <div class="small text-muted mt-1">Control de porciones</div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="pf-stat">
+                            <div class="fw-bold" style="color:var(--pf-primary);">MQTT / HTTP</div>
+                            <div class="small text-muted mt-1">Protocolo IoT</div>
+                        </div>
+                    </div>
+                </div>
+                <a asp-controller="Home" asp-action="Manual" class="btn-pf text-decoration-none d-inline-block mt-4">
+                    Ver manual técnico
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="download" style="background:linear-gradient(135deg,#16a34a,#22c55e); padding:5rem 0; color:#fff;">
+    <div class="container-xl text-center">
+        <img src="/imagenes/pawfeeder-mark.png" alt="PawFeeder" style="height:4rem;margin-bottom:1.5rem;filter:brightness(0) invert(1);" />
+        <h2 class="fw-bold fs-1 mb-3">¿Listo para empezar?</h2>
+        <p class="mb-5 opacity-75 fs-5 mx-auto" style="max-width:460px;">
+            Crea tu cuenta gratis, descarga la aplicación y comienza a programar las comidas de tu mascota hoy mismo.
+        </p>
+        <div class="d-flex justify-content-center flex-wrap gap-3">
+            <a asp-controller="Account" asp-action="Register"
+               class="text-decoration-none px-5 py-3 fw-semibold rounded-pill bg-white"
+               style="color:var(--pf-primary-dark);">
+                <i class="bi bi-person-plus me-2"></i>Crear cuenta
+            </a>
+            <a asp-controller="Home" asp-action="DownloadApp"
+               class="text-decoration-none px-5 py-3 fw-semibold rounded-pill border border-white text-white">
+                <i class="bi bi-download me-2"></i>Descargar App
+            </a>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,147 @@
+<section style="background:linear-gradient(135deg,#f0fdf4,#fff); padding:5rem 0 3rem;">
+    <div class="container-xl">
+        <div class="pf-section-label">Documentación</div>
+        <h1 class="display-5 fw-bold mb-3">Manual de uso</h1>
+        <div class="pf-divider"></div>
+        <p class="text-muted fs-5" style="max-width:600px;">
+            Aprende a configurar y usar tu PawFeeder en pocos minutos.
+        </p>
+    </div>
+</section>
+
+<section class="pf-section">
+    <div class="container-xl">
+        <div class="row g-5">
+
+            <!-- Sidebar de navegación -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="pf-card sticky-top" style="top:5rem;">
+                    <h6 class="fw-bold mb-3">Contenido</h6>
+                    <ul class="list-unstyled d-flex flex-column gap-1">
+                        <li><a href="#inicio-rapido" class="pf-footer-link d-flex align-items-center gap-2"><i class="bi bi-rocket"></i> Inicio rápido</a></li>
+                        <li><a href="#conexion" class="pf-footer-link d-flex align-items-center gap-2"><i class="bi bi-wifi"></i> Conectar WiFi</a></li>
+                        <li><a href="#horarios" class="pf-footer-link d-flex align-items-center gap-2"><i class="bi bi-calendar3"></i> Programar horarios</a></li>
+                        <li><a href="#manual" class="pf-footer-link d-flex align-items-center gap-2"><i class="bi bi-hand-index"></i> Comida manual</a></li>
+                        <li><a href="#mascotas" class="pf-footer-link d-flex align-items-center gap-2"><i class="bi bi-heart"></i> Perfil mascota</a></li>
+                        <li><a href="#alertas" class="pf-footer-link d-flex align-items-center gap-2"><i class="bi bi-bell"></i> Alertas</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Contenido principal -->
+            <div class="col-lg-9">
+
+                <!-- Inicio rápido -->
+                <div id="inicio-rapido" class="mb-5">
+                    <h2 class="fw-bold mb-3">
+                        <span class="me-2" style="color:var(--pf-primary);">01.</span>Inicio rápido
+                    </h2>
+                    <div class="pf-divider"></div>
+                    <p class="text-muted">Sigue estos pasos para tener tu PawFeeder funcionando en menos de 5 minutos:</p>
+                    <div class="row g-3 mt-2">
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="pf-card text-center">
+                                <div class="pf-icon mx-auto">🔌</div>
+                                <h6 class="fw-bold">1. Encender</h6>
+                                <p class="text-muted small mb-0">Conecta el cable de alimentación USB al dispositivo.</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="pf-card text-center">
+                                <div class="pf-icon mx-auto">📱</div>
+                                <h6 class="fw-bold">2. Registrarse</h6>
+                                <p class="text-muted small mb-0">Crea una cuenta en la app PawFeeder.</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-4">
+                            <div class="pf-card text-center">
+                                <div class="pf-icon mx-auto">🌐</div>
+                                <h6 class="fw-bold">3. Vincular</h6>
+                                <p class="text-muted small mb-0">Introduce el código del dispositivo en la app.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conexión WiFi -->
+                <div id="conexion" class="mb-5">
+                    <h2 class="fw-bold mb-3">
+                        <span class="me-2" style="color:var(--pf-primary);">02.</span>Conectar a WiFi
+                    </h2>
+                    <div class="pf-divider"></div>
+                    <ol class="text-muted d-flex flex-column gap-3 mt-3">
+                        <li>Al encender por primera vez, el LED parpadeará en <strong>azul</strong>.</li>
+                        <li>Conecta tu teléfono a la red <strong>PawFeeder_Setup</strong> (no requiere contraseña).</li>
+                        <li>Abre la app y dirígete a <strong>Equipo → Configurar WiFi</strong>.</li>
+                        <li>Selecciona tu red y escribe la contraseña.</li>
+                        <li>El LED cambiará a <strong>verde fijo</strong> cuando la conexión sea exitosa.</li>
+                    </ol>
+                    <div class="pf-card mt-4" style="background:var(--pf-primary-light);border-color:var(--pf-primary);">
+                        <p class="mb-0 small"><i class="bi bi-info-circle me-2" style="color:var(--pf-primary);"></i>
+                        Solo es compatible con redes <strong>WiFi 2.4 GHz</strong>. Las redes 5 GHz no son compatibles con el módulo ESP8266.</p>
+                    </div>
+                </div>
+
+                <!-- Horarios -->
+                <div id="horarios" class="mb-5">
+                    <h2 class="fw-bold mb-3">
+                        <span class="me-2" style="color:var(--pf-primary);">03.</span>Programar horarios
+                    </h2>
+                    <div class="pf-divider"></div>
+                    <p class="text-muted">Desde la sección <strong>Horarios</strong> de la app puedes crear hasta 6 alarmas diarias.</p>
+                    <ul class="list-unstyled d-flex flex-column gap-2 mt-3">
+                        <li class="d-flex gap-3 align-items-start">
+                            <i class="bi bi-1-circle-fill mt-1" style="color:var(--pf-primary);"></i>
+                            <span>Toca el botón <strong>+ Nuevo horario</strong>.</span>
+                        </li>
+                        <li class="d-flex gap-3 align-items-start">
+                            <i class="bi bi-2-circle-fill mt-1" style="color:var(--pf-primary);"></i>
+                            <span>Selecciona la hora y los días de la semana.</span>
+                        </li>
+                        <li class="d-flex gap-3 align-items-start">
+                            <i class="bi bi-3-circle-fill mt-1" style="color:var(--pf-primary);"></i>
+                            <span>Ajusta la porción (gramos) usando el deslizador.</span>
+                        </li>
+                        <li class="d-flex gap-3 align-items-start">
+                            <i class="bi bi-4-circle-fill mt-1" style="color:var(--pf-primary);"></i>
+                            <span>Guarda. El dispositivo recibirá la configuración al instante.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Comida manual -->
+                <div id="manual" class="mb-5">
+                    <h2 class="fw-bold mb-3">
+                        <span class="me-2" style="color:var(--pf-primary);">04.</span>Comida manual
+                    </h2>
+                    <div class="pf-divider"></div>
+                    <p class="text-muted">En la pantalla de <strong>Inicio</strong> de la app encontrarás el botón <em>Dispensar ahora</em>. Al pulsarlo, el dispositivo servirá la porción predeterminada de inmediato.</p>
+                </div>
+
+                <!-- Perfil mascota -->
+                <div id="mascotas" class="mb-5">
+                    <h2 class="fw-bold mb-3">
+                        <span class="me-2" style="color:var(--pf-primary);">05.</span>Perfil de mascota
+                    </h2>
+                    <div class="pf-divider"></div>
+                    <p class="text-muted">Ve a <strong>Mascotas → Agregar mascota</strong> para registrar a tu compañero. Puedes ingresar nombre, raza, peso y foto. El sistema usará el peso para sugerir la porción diaria recomendada.</p>
+                </div>
+
+                <!-- Alertas -->
+                <div id="alertas">
+                    <h2 class="fw-bold mb-3">
+                        <span class="me-2" style="color:var(--pf-primary);">06.</span>Alertas y notificaciones
+                    </h2>
+                    <div class="pf-divider"></div>
+                    <p class="text-muted">PawFeeder envía alertas push cuando:</p>
+                    <ul class="text-muted d-flex flex-column gap-2">
+                        <li>El nivel de croqueta baja del 20%.</li>
+                        <li>El dispositivo pierde la conexión WiFi.</li>
+                        <li>Se completa una comida programada.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

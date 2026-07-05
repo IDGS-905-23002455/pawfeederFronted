@@ -1,0 +1,87 @@
+<section style="background:linear-gradient(135deg,#f0fdf4,#fff); padding:5rem 0 3rem;">
+    <div class="container-xl">
+        <div class="pf-section-label">Soporte</div>
+        <h1 class="display-5 fw-bold mb-3">Contáctanos</h1>
+        <div class="pf-divider"></div>
+        <p class="text-muted fs-5" style="max-width:540px;">
+            ¿Tienes dudas, sugerencias o encontraste un problema? Escríbenos y te responderemos a la brevedad.
+        </p>
+    </div>
+</section>
+
+<section class="pf-section">
+    <div class="container-xl">
+        <div class="row g-5">
+
+            <!-- Tarjetas de contacto -->
+            <div class="col-lg-5">
+                <div class="d-flex flex-column gap-4">
+                    <div class="pf-card d-flex gap-4 align-items-start">
+                        <div class="pf-icon flex-shrink-0">📧</div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Correo electrónico</h6>
+                            <p class="text-muted small mb-0">Respuesta en menos de 24 horas.</p>
+                            <a href="mailto:carlosriosrmz17@gmail.com" class="text-decoration-none" style="color:var(--pf-primary);">carlosriosrmz17&#64;gmail.com</a>
+                        </div>
+                    </div>
+                    <div class="pf-card d-flex gap-4 align-items-start">
+                        <div class="pf-icon flex-shrink-0">🐙</div>
+                        <div>
+                            <h6 class="fw-bold mb-1">GitHub</h6>
+                            <p class="text-muted small mb-0">Reporta bugs o contribuye al proyecto.</p>
+                            <a href="#" class="text-decoration-none" style="color:var(--pf-primary);">github.com/pawfeeder</a>
+                        </div>
+                    </div>
+                    <div class="pf-card d-flex gap-4 align-items-start">
+                        <div class="pf-icon flex-shrink-0">📖</div>
+                        <div>
+                            <h6 class="fw-bold mb-1">Manual de uso</h6>
+                            <p class="text-muted small mb-0">Antes de escribirnos, revisa la documentación.</p>
+                            <a asp-controller="Home" asp-action="Manual" class="text-decoration-none" style="color:var(--pf-primary);">Ver manual</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div class="col-lg-7">
+                <div class="pf-card">
+                    <h4 class="fw-bold mb-4">Envíanos un mensaje</h4>
+                    <form method="post">
+                        <div class="row g-3">
+                            <div class="col-sm-6">
+                                <label class="form-label fw-semibold small">Nombre</label>
+                                <input type="text" name="nombre" class="form-control pf-input" placeholder="Tu nombre" required />
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label fw-semibold small">Correo electrónico</label>
+                                <input type="email" name="email" class="form-control pf-input" placeholder="tu@correo.com" required />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Asunto</label>
+                                <select name="asunto" class="form-select pf-input">
+                                    <option value="">Selecciona un asunto</option>
+                                    <option>Soporte técnico</option>
+                                    <option>Problema con la app</option>
+                                    <option>Problema con el dispositivo</option>
+                                    <option>Sugerencia</option>
+                                    <option>Otro</option>
+                                </select>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold small">Mensaje</label>
+                                <textarea name="mensaje" class="form-control pf-input" rows="5" placeholder="Describe tu consulta con el mayor detalle posible..." required></textarea>
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="btn-pf w-100 py-3">
+                                    <i class="bi bi-send me-2"></i>Enviar mensaje
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

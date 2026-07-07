@@ -1,0 +1,72 @@
+<div class="container my-4">
+  <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
+    <div>
+      <h2 class="fw-bold text-dark m-0">Consola de Administración</h2>
+      <p class="text-muted small m-0">Monitoreo de cuentas globales y hardware de PawFeeder</p>
+    </div>
+  </div>
+
+  <div class="row g-3 mb-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 bg-light p-3 text-center">
+        <h6 class="text-muted text-uppercase small font-weight-bold">Usuarios Totales</h6>
+        <h3 class="fw-bold text-primary m-0">{{ usuarios.length }} Clientes</h3>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 bg-light p-3 text-center">
+        <h6 class="text-muted text-uppercase small font-weight-bold">Dispositivos en Línea</h6>
+        <h3 class="fw-bold text-success m-0">2 Activos</h3>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0 bg-light p-3 text-center">
+        <h6 class="text-muted text-uppercase small font-weight-bold">Alertas del Servidor</h6>
+        <h3 class="fw-bold text-warning m-0">0 Fallos</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm border-0 bg-white p-4">
+    <h4 class="fw-bold mb-3 text-dark">Registros de Clientes y Hardware</h4>
+
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>ID</th>
+            <th>Nombre del Cliente</th>
+            <th>Correo Electrónico</th>
+            <th>ID Dispositivo (Arduino)</th>
+            <th>Estado</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (user of usuarios; track user.id) {
+            <tr>
+              <td><span class="fw-bold text-secondary">#0{{ user.id }}</span></td>
+              <td><span class="fw-semibold">{{ user.nombre }}</span></td>
+              <td>{{ user.correo }}</td>
+              <td>
+                <code class="px-2 py-1 bg-light rounded text-success border border-success border-opacity-25">
+                  {{ user.dispositivoId }}
+                </code>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="user.estado === 'Activo' ? 'bg-success-subtle text-success border border-success' : 'bg-danger-subtle text-danger border border-danger'">
+                  {{ user.estado }}
+                </span>
+              </td>
+              <td class="text-center">
+                <button (click)="darDeBaja(user.id)" class="btn btn-sm rounded-pill fw-semibold" [ngClass]="user.estado === 'Activo' ? 'btn-outline-danger' : 'btn-outline-success'">
+                  {{ user.estado === 'Activo' ? 'Suspender' : 'Activar' }}
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

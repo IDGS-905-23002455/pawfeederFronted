@@ -8,6 +8,8 @@ import { Manual } from './components/manual/manual';
 import { Pets } from './components/pets/pets';
 import { Profile} from './components/profile/profile';
 import { Schedules } from './components/schedules/schedules';
+import { Admin } from './components/admin/admin';
+import { Component } from '@angular/core';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +19,7 @@ export const routes: Routes = [
 
   { path: 'registro', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  {path: 'admin', component : Admin},
 
   { path: 'mascotas', component: Pets },
   { path: 'perfil', component: Profile},

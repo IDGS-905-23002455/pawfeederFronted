@@ -1,1 +1,61 @@
-<p>pets works!</p>
+<div class="row">
+  <div class="col-md-4 mb-4">
+    <div class="card shadow-sm border-0 p-4 bg-light">
+      <h4 class="fw-bold text-success mb-3">Registrar Mascota</h4>
+
+      <form [formGroup]="mascotaForm" (ngSubmit)="agregarMascota()">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Nombre</label>
+          <input type="text" formControlName="nombre" class="form-control" placeholder="Ej. Rocky">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Especie</label>
+          <select formControlName="especie" class="form-select">
+            <option value="Perro">Perro</option>
+            <option value="Gato">Gato</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Raza</label>
+          <input type="text" formControlName="raza" class="form-control" placeholder="Ej. Husky">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Edad (años)</label>
+          <input type="number" formControlName="edad" class="form-control" placeholder="Ej. 2">
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold">Agregar a PawFeeder</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-md-8">
+    <h3 class="fw-bold mb-4">Mis Mascotas en Vinculación</h3>
+
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+      @for (mascota of listaMascotas; track mascota.nombre) {
+        <div class="col">
+          <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden">
+            <div class="bg-success" style="height: 6px;"></div>
+
+            <div class="card-body p-4 d-flex align-items-center gap-3">
+              <div class="bg-success bg-opacity-10 text-success rounded-circle p-3 fs-3">
+                <span>🐾</span>
+              </div>
+
+              <div>
+                <h5 class="card-title fw-bold m-0">{{ mascota.nombre }}</h5>
+                <p class="text-muted small m-0">{{ mascota.especie }} · {{ mascota.raza }}</p>
+                <span class="badge bg-light text-dark border mt-2">{{ mascota.edad }} años</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

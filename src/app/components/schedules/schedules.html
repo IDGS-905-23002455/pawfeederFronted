@@ -1,1 +1,54 @@
-<p>schedules works!</p>
+<div class="row">
+  <div class="col-md-5 mb-4">
+    <div class="card shadow-sm border-0 p-4 bg-light">
+      <h4 class="fw-bold text-success mb-3">📅 Programar Dispensador</h4>
+      <p class="text-muted small">Configura las horas exactas en las que el PawFeeder liberará las porciones de alimento.</p>
+
+      <form [formGroup]="horarioForm" (ngSubmit)="agregarHorario()">
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Etiqueta del horario</label>
+          <input type="text" formControlName="nombre" class="form-control" placeholder="Ej. Almuerzo, Snack">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Hora de activación</label>
+          <input type="time" formControlName="hora" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Porción (Gramos)</label>
+          <input type="number" formControlName="porcion" class="form-control" placeholder="Ej. 100">
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold mt-2">Guardar Horario</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="col-md-7">
+    <h3 class="fw-bold mb-4">Cronograma de Alimentación Activo</h3>
+
+    @if (listaHorarios.length === 0) {
+      <div class="alert alert-warning text-center border-0 shadow-sm">
+        No hay horarios programados. ¡Tu mascota podría quedarse sin croquetas!
+      </div>
+    } @else {
+      <div class="list-group shadow-sm">
+        @for (horario of listaHorarios; track horario.hora; let idx = $index) {
+          <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 border-0 border-bottom">
+            <div class="d-flex align-items-center gap-3">
+              <span class="fs-3">⏰</span>
+              <div>
+                <h5 class="mb-1 fw-bold text-dark">{{ horario.hora }} hrs</h5>
+                <p class="mb-0 text-muted small">{{ horario.nombre }} — <span class="text-success fw-bold">{{ horario.porcion }} gramos</span></p>
+              </div>
+            </div>
+            <button (click)="eliminarHorario(idx)" class="btn btn-sm btn-outline-danger rounded-circle border-0">
+              ❌
+            </button>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

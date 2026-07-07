@@ -1,22 +1,74 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-  <div class="container">
-    <a class="navbar-brand fw-bold text-success" routerLink="/">
-      <img src="/imagenes/pawfeeder-mark.png" alt="Logo" style="height: 30px;" class="me-2"> PawFeeder
-    </a>
-    <div class="collapse navbar-collapse justify-content-center">
-      <ul class="navbar-nav gap-3">
-        <li class="nav-item"><a class="nav-link" routerLink="/">Inicio</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/about">Proyecto</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/manual">Manual</a></li>
-        <li class="nav-item"><a class="nav-link" routerLink="/contacto">Contacto</a></li>
-      </ul>
-    </div>
-    <div class="d-flex align-items-center gap-3">
-      <a class="nav-link text-secondary" routerLink="/login">Iniciar sesión</a>
-      <a class="btn btn-success text-white rounded-pill px-4" routerLink="/registro">Obtener app</a>
-    </div>
+<div class="position-fixed bottom-0 end-0 m-3 z-3 bg-dark text-white p-3 rounded shadow border border-secondary small" style="max-width: 280px;">
+  <p class="mb-2 text-center border-bottom border-secondary pb-1">Menú de Pruebas (Roles):</p>
+  <div class="d-flex flex-column gap-1">
+    <button class="btn btn-sm w-100 [object Object]" (click)="cambiarRol('publico')" routerLink="/">🌐 Modo Público</button>
+    <button class="btn btn-sm w-100 [object Object]" (click)="cambiarRol('cliente')" routerLink="/mascotas">🐾 Modo Cliente</button>
+    <button class="btn btn-sm w-100 [object Object]" (click)="cambiarRol('admin')" routerLink="/admin">⚙️ Modo Admin</button>
   </div>
-</nav>
+</div>
+
+@if (rolActual === 'admin') {
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-danger" routerLink="/admin">
+        <img src="/imagenes/pawfeeder-mark.png" alt="Logo" style="height: 30px;" class="me-2"> Panel Admin
+      </a>
+      <div class="collapse navbar-collapse justify-content-center">
+        <ul class="navbar-nav gap-3">
+          <li class="nav-item"><a class="nav-link fw-bold text-danger" routerLink="/admin">Gestión del Sistema</a></li>
+        </ul>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <span class="badge bg-danger text-white px-3 py-2 rounded-pill">Administrador</span>
+        <button class="btn btn-outline-secondary rounded-pill px-3 btn-sm" (click)="cambiarRol('publico')" routerLink="/">
+          Salir
+        </button>
+      </div>
+    </div>
+  </nav>
+}
+@else if (rolActual === 'cliente') {
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-success" routerLink="/mascotas">
+        <img src="/imagenes/pawfeeder-mark.png" alt="Logo" style="height: 30px;" class="me-2"> Panel PawFeeder
+      </a>
+      <div class="collapse navbar-collapse justify-content-center">
+        <ul class="navbar-nav gap-3">
+          <li class="nav-item"><a class="nav-link" routerLink="/mascotas">Mis Mascotas</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/horarios"> Horarios</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/manual">Manual IoT</a></li>
+        </ul>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <a class="nav-link text-secondary fw-semibold" routerLink="/perfil">Mi Perfil</a>
+        <button class="btn btn-outline-danger rounded-pill px-3 btn-sm" (click)="cambiarRol('publico')" routerLink="/">
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
+  </nav>
+}
+@else {
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
+    <div class="container">
+      <a class="navbar-brand fw-bold text-success" routerLink="/">
+        <img src="/images/pawfeeder-mark.png" alt="Logo" style="height: 30px;" class="me-2"> PawFeeder
+      </a>
+      <div class="collapse navbar-collapse justify-content-center">
+        <ul class="navbar-nav gap-3">
+          <li class="nav-item"><a class="nav-link" routerLink="/">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/about">Proyecto</a></li>
+          <li class="nav-item"><a class="nav-link" routerLink="/contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <a class="nav-link text-secondary" (click)="cambiarRol('cliente')" routerLink="/mascotas" style="cursor: pointer;">Iniciar sesión</a>
+        <a class="btn btn-success text-white rounded-pill px-4" (click)="cambiarRol('cliente')" routerLink="/mascotas">Obtener app</a>
+      </div>
+    </div>
+  </nav>
+}
 
 <div class="container mt-4" style="min-height: 70vh;">
   <router-outlet></router-outlet>
@@ -25,45 +77,30 @@
 <footer class="bg-light pt-5 pb-3 mt-5 border-top text-secondary">
   <div class="container">
     <div class="row g-4">
-
       <div class="col-md-4">
         <h5 class="fw-bold text-dark mb-3">
           <img src="/imagenes/pawfeeder-mark.png" alt="Logo" style="height: 24px;" class="me-2"> PawFeeder
         </h5>
         <p class="small">Dispensador inteligente de croquetas IoT. Alimentación precisa, programada y a distancia para el bienestar de tu mascota.</p>
-        <div class="d-flex gap-2 mt-3">
-          <a class="btn btn-outline-secondary btn-sm rounded-circle" href="#"><i class="bi bi-instagram"></i></a>
-          <a class="btn btn-outline-secondary btn-sm rounded-circle" href="#"><i class="bi bi-twitter-x"></i></a>
-          <a class="btn btn-outline-secondary btn-sm rounded-circle" href="#"><i class="bi bi-github"></i></a>
-          <a class="btn btn-outline-secondary btn-sm rounded-circle" href="#"><i class="bi bi-envelope"></i></a>
-        </div>
       </div>
-
       <div class="col-md-4 text-md-center">
         <h6 class="fw-bold text-dark mb-3">Producto</h6>
         <ul class="list-unstyled small d-inline-block text-start">
           <li class="mb-2"><a class="text-decoration-none text-secondary" routerLink="/about">Sobre el proyecto</a></li>
-          <li class="mb-2"><a class="text-decoration-none text-secondary" routerLink="/manual">Manual de uso</a></li>
-          <li class="mb-2"><a class="text-decoration-none text-secondary" routerLink="/">Funciones</a></li>
+          <li class="mb-2"><a class="text-decoration-none text-secondary" routerLink="/contacto">Soporte técnico</a></li>
         </ul>
       </div>
-
       <div class="col-md-4 text-md-end">
         <h6 class="fw-bold text-dark mb-3">Cuenta</h6>
         <ul class="list-unstyled small d-inline-block text-start text-md-end">
-          <li class="mb-2"><a class="text-decoration-none text-secondary" routerLink="/login">Iniciar sesión</a></li>
-          <li class="mb-2"><a class="text-decoration-none text-secondary" routerLink="/registro">Registrarse</a></li>
-          <li class="mb-2"><a class="text-decoration-none text-secondary" routerLink="/contacto">Soporte</a></li>
+          <li class="mb-2"><a class="text-decoration-none text-secondary" style="cursor:pointer;" (click)="cambiarRol('cliente')" routerLink="/mascotas">Mi cuenta</a></li>
+          <li class="mb-2"><a class="text-decoration-none text-secondary" style="cursor:pointer;" (click)="cambiarRol('admin')" routerLink="/admin">Administración</a></li>
         </ul>
       </div>
-
     </div>
-
     <hr class="my-4">
-
     <div class="text-center small">
       <p class="mb-0">© 2026 PawFeeder · Proyecto IoT con Arduino · Hecho con 🐾</p>
     </div>
-
   </div>
 </footer>

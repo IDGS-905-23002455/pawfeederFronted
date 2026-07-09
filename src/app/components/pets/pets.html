@@ -10,52 +10,69 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label fw-semibold">Especie</label>
-          <select formControlName="especie" class="form-select">
-            <option value="Perro">Perro</option>
-            <option value="Gato">Gato</option>
-            <option value="Otro">Otro</option>
-          </select>
-        </div>
-
-        <div class="mb-3">
           <label class="form-label fw-semibold">Raza</label>
-          <input type="text" formControlName="raza" class="form-control" placeholder="Ej. Husky">
+          <input type="text" formControlName="raza" class="form-control" placeholder="Ej. Golden Retriever">
         </div>
 
         <div class="mb-3">
           <label class="form-label fw-semibold">Edad (años)</label>
-          <input type="number" formControlName="edad" class="form-control" placeholder="Ej. 2">
+          <input type="number" formControlName="edadAnos" class="form-control" placeholder="Ej. 2">
         </div>
 
-        <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold">Agregar a PawFeeder</button>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Peso (kg)</label>
+          <input type="number" step="0.01" formControlName="pesoKg" class="form-control" placeholder="Ej. 25.5">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Tamaño</label>
+          <select formControlName="tamano" class="form-select">
+            <option value="pequeño">Pequeño</option>
+            <option value="mediano" selected>Mediano</option>
+            <option value="grande">Grande</option>
+            <option value="gigante">Gigante</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold" [disabled]="!mascotaForm.valid">
+          Agregar a PawFeeder
+        </button>
       </form>
     </div>
   </div>
 
   <div class="col-md-8">
     <h3 class="fw-bold mb-4">Mis Mascotas en Vinculación</h3>
+    
+    <div *ngIf="listaMascotas.length === 0" class="alert alert-info shadow-sm">
+      <i class="bi bi-arrow-clockwise animate-spin"></i> Conectando con el servidor de C#...
+    </div>
 
-    <div class="row row-cols-1 row-cols-md-2 g-3">
-      @for (mascota of listaMascotas; track mascota.nombre) {
-        <div class="col">
-          <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden">
-            <div class="bg-success" style="height: 6px;"></div>
-
-            <div class="card-body p-4 d-flex align-items-center gap-3">
-              <div class="bg-success bg-opacity-10 text-success rounded-circle p-3 fs-3">
-                <span>🐾</span>
-              </div>
-
+    <div class="row">
+      <div *ngFor="let mascota of listaMascotas" class="col-md-6 mb-3">
+        <div class="card shadow-sm border-0 position-relative h-100">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
               <div>
-                <h5 class="card-title fw-bold m-0">{{ mascota.nombre }}</h5>
-                <p class="text-muted small m-0">{{ mascota.especie }} · {{ mascota.raza }}</p>
-                <span class="badge bg-light text-dark border mt-2">{{ mascota.edad }} años</span>
+                <h5 class="card-title text-primary fw-bold mb-1">{{ mascota.nombre }}</h5>
+                <p class="text-muted small mb-2">{{ mascota.raza }}</p>
               </div>
+              <span class="badge" [ngClass]="mascota.activa ? 'bg-success' : 'bg-danger'">
+                {{ mascota.activa ? 'Activo' : 'Inactivo' }}
+              </span>
             </div>
+            
+            <hr class="text-muted my-2">
+            
+            <p class="card-text small text-secondary mb-0">
+              <strong>Edad:</strong> {{ mascota.edadAnos }} años <br>
+              <strong>Peso:</strong> {{ mascota.pesoKg }} kg <br>
+              <strong>Tamaño:</strong> <span class="text-capitalize">{{ mascota.tamano }}</span>
+            </p>
           </div>
         </div>
-      }
+      </div>
     </div>
+
   </div>
 </div>

@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; // <-- Importa ChangeDetectorRef
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { MascotaService } from '../../services/mascota';
 
-// Definimos cómo es una mascota
 interface Mascota {
+  id?: number;
+  usuarioId: number;
   nombre: string;
-  especie: string;
   raza: string;
-  edad: number;
+  edadAnos: number;
+  pesoKg: number;
+  tamano: string;
+  activa: boolean;
+  fotoUri?: string | null;
 }
 
 @Component({
@@ -17,39 +22,60 @@ interface Mascota {
   templateUrl: './pets.html',
   styleUrl: './pets.css'
 })
-export class Pets {
+export class Pets implements OnInit {
 
-  // Lista de prueba con datos simulados (luego vendrán de tu API de C#)
-  listaMascotas: Mascota[] = [
-    { nombre: 'Max', especie: 'Perro', raza: 'Golden Retriever', edad: 3 },
-    { nombre: 'Luna', especie: 'Gato', raza: 'Siamés', edad: 2 }
-  ];
+  listaMascotas: Mascota[] = [];
 
-  // Formulario reactivo para registrar una nueva mascota
   mascotaForm = new FormGroup({
     nombre: new FormControl('', [Validators.required]),
-    especie: new FormControl('Perro', [Validators.required]),
     raza: new FormControl('', [Validators.required]),
-    edad: new FormControl('', [Validators.required, Validators.min(0)])
+    edadAnos: new FormControl('', [Validators.required, Validators.min(0)]),
+    pesoKg: new FormControl('', [Validators.required, Validators.min(0)]),
+    tamano: new FormControl('mediano', [Validators.required])
   });
 
-  // Función para agregar la mascota a la lista cuando le den clic al botón
+  // Inyectamos también el ChangeDetectorRef en el constructor
+  constructor(
+    private mascotaService: MascotaService,
+    private cdr: ChangeDetectorRef // <-- Agregado aquí
+  ) {}
+
+  ngOnInit(): void {
+    this.cargarMascotas();
+  }
+
+  cargarMascotas() {
+    this.mascotaService.getMascotasPorUsuario(1).subscribe({
+      next: (data: any[]) => {
+        this.listaMascotas = data;
+        console.log('¡Mascotas cargadas desde C#!', this.listaMascotas);
+        
+        // Le avisamos a Angular de manera explícita que redibuje la pantalla ahora mismo
+        this.cdr.detectChanges(); 
+      },
+      error: (err: any) => {
+        console.error('Error al conectar con el backend:', err);
+      }
+    });
+  }
+
   agregarMascota() {
     if (this.mascotaForm.valid) {
       const nuevaMascota: Mascota = {
+        usuarioId: 1,
         nombre: this.mascotaForm.value.nombre!,
-        especie: this.mascotaForm.value.especie!,
         raza: this.mascotaForm.value.raza!,
-        edad: Number(this.mascotaForm.value.edad!)
+        edadAnos: Number(this.mascotaForm.value.edadAnos!),
+        pesoKg: Number(this.mascotaForm.value.pesoKg!),
+        tamano: this.mascotaForm.value.tamano!,
+        activa: true
       };
 
-      // La metemos al arreglo dinámicamente
       this.listaMascotas.push(nuevaMascota);
-
-      // Limpiamos el formulario
-      this.mascotaForm.reset({ especie: 'Perro' });
+      this.mascotaForm.reset({ tamano: 'mediano' });
+      this.cdr.detectChanges(); // También lo ponemos aquí al agregar una nueva
     } else {
-      alert("Por favor, llena todos los campos de la mascota.");
+      alert("Por favor, llena todos los campos obligatorios.");
     }
   }
 }

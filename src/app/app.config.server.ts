@@ -1,11 +1,12 @@
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
-import { provideServerRendering, withRoutes } from '@angular/ssr';
+import { provideServerRendering } from '@angular/platform-server';
+import { provideHttpClient } from '@angular/common/http'; // <-- Asegúrate de tener este import
 import { appConfig } from './app.config';
-import { serverRoutes } from './app.routes.server';
 
 const serverConfig: ApplicationConfig = {
   providers: [
-    provideServerRendering(withRoutes(serverRoutes))
+    provideServerRendering(),
+    provideHttpClient() // <-- Se agrega aquí para que haga match con tu appConfig
   ]
 };
 

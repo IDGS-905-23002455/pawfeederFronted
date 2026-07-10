@@ -11,6 +11,7 @@ import { Schedules } from './components/schedules/schedules';
 import { Admin } from './components/admin/admin';
 import { Component } from '@angular/core';
 
+
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'about', component: About },
@@ -26,3 +27,5 @@ export const routes: Routes = [
   { path: 'horarios', component: Schedules },
   { path: '**', redirectTo: '' }
 ];
+
+

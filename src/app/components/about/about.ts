@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // <-- Importamos FormsModule para usar [(ngModel)]
+import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [CommonModule, FormsModule], // <-- Agrégalo aquí
+  imports: [CommonModule, FormsModule, RouterLink], // <-- Agrégalo aquí
   templateUrl: './about.html',
   styleUrl: './about.css'
 })

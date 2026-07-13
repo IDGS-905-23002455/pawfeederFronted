@@ -11,10 +11,10 @@
                     PawFeeder es un dispensador inteligente de croquetas controlado por IoT. Programa horarios, ajusta porciones y monitorea a tu mascota en tiempo real.
                 </p>
                 <div class="d-flex flex-wrap gap-3">
-                    <a asp-controller="Home" asp-action="DownloadApp" class="btn-pf text-decoration-none">
+                    <a asp-controller="Home" routerLink="/**" class="btn-pf text-decoration-none">
                         <i class="bi bi-download me-2"></i>Comenzar gratis
                     </a>
-                    <a asp-controller="Home" asp-action="About" class="btn-pf-outline text-decoration-none">
+                    <a asp-controller="Home" routerLink="/about" class="btn-pf-outline text-decoration-none" >
                         Conocer más
                     </a>
                 </div>
@@ -135,9 +135,9 @@
                         </div>
                     </div>
                 </div>
-                <a asp-controller="Home" asp-action="Manual" class="btn-pf text-decoration-none d-inline-block mt-4">
+                <!-- <a asp-controller="Home" routerLink="/manual" class="btn-pf text-decoration-none d-inline-block mt-4">
                     Ver manual técnico
-                </a>
+                </a> -->
             </div>
         </div>
     </div>
@@ -151,7 +151,7 @@
             Crea tu cuenta gratis, descarga la aplicación y comienza a programar las comidas de tu mascota hoy mismo.
         </p>
         <div class="d-flex justify-content-center flex-wrap gap-3">
-            <a asp-controller="Account" asp-action="Register"
+            <a asp-controller="Account" routerLink="/registro"
                class="text-decoration-none px-5 py-3 fw-semibold rounded-pill bg-white"
                style="color:var(--pf-primary-dark);">
                 <i class="bi bi-person-plus me-2"></i>Crear cuenta

@@ -1,9 +1,12 @@
 <div class="row">
   <div class="col-md-4 mb-4">
     <div class="card shadow-sm border-0 p-4 bg-light">
-      <h4 class="fw-bold text-success mb-3">Registrar Mascota</h4>
+      <h4 class="fw-bold text-success mb-3">
+        {{ mascotaEnEdicionId ? 'Editar Mascota' : 'Registrar Mascota' }}
 
-      <form [formGroup]="mascotaForm" (ngSubmit)="agregarMascota()">
+      </h4>
+
+<form [formGroup]="mascotaForm" (ngSubmit)="guardarMascota()">
         <div class="mb-3">
           <label class="form-label fw-semibold">Nombre</label>
           <input type="text" formControlName="nombre" class="form-control" placeholder="Ej. Rocky">
@@ -28,29 +31,36 @@
           <label class="form-label fw-semibold">Tamaño</label>
           <select formControlName="tamano" class="form-select">
             <option value="pequeño">Pequeño</option>
-            <option value="mediano" selected>Mediano</option>
+            <option value="mediano">Mediano</option>
             <option value="grande">Grande</option>
             <option value="gigante">Gigante</option>
           </select>
         </div>
 
-        <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold" [disabled]="!mascotaForm.valid">
-          Agregar a PawFeeder
-        </button>
+        <div class="d-grid gap-2">
+          <button type="submit" [disabled]="!mascotaForm.valid" class="btn btn-success fw-bold">
+            {{ mascotaEnEdicionId ? 'Actualizar Cambios' : 'Agregar a PawFeeder' }}
+          </button>
+
+          <button *ngIf="mascotaEnEdicionId" type="button" (click)="limpiarFormulario()" class="btn btn-outline-secondary btn-sm">
+            Cancelar Edición
+          </button>
+        </div>
       </form>
     </div>
   </div>
 
   <div class="col-md-8">
     <h3 class="fw-bold mb-4">Mis Mascotas en Vinculación</h3>
-    
-    <div *ngIf="listaMascotas.length === 0" class="alert alert-info shadow-sm">
-      <i class="bi bi-arrow-clockwise animate-spin"></i> Conectando con el servidor de C#...
+
+    <div *ngIf="listaMascotas.length === 0" class="alert alert-info shadow-sm d-flex align-items-center gap-2">
+      <div class="spinner-border spinner-border-sm text-info" role="status"></div>
+      <span>Conectando con el servidor de C# o sin mascotas registradas...</span>
     </div>
 
     <div class="row">
       <div *ngFor="let mascota of listaMascotas" class="col-md-6 mb-3">
-        <div class="card shadow-sm border-0 position-relative h-100">
+        <div class="card shadow-sm border-0 h-100 d-flex flex-column justify-content-between">
           <div class="card-body">
             <div class="d-flex justify-content-between align-items-start">
               <div>
@@ -61,14 +71,23 @@
                 {{ mascota.activa ? 'Activo' : 'Inactivo' }}
               </span>
             </div>
-            
+
             <hr class="text-muted my-2">
-            
-            <p class="card-text small text-secondary mb-0">
+
+            <p class="card-text small text-secondary mb-3">
               <strong>Edad:</strong> {{ mascota.edadAnos }} años <br>
               <strong>Peso:</strong> {{ mascota.pesoKg }} kg <br>
               <strong>Tamaño:</strong> <span class="text-capitalize">{{ mascota.tamano }}</span>
             </p>
+          </div>
+
+          <div class="card-footer bg-transparent border-0 pt-0 pb-3 px-3 d-flex gap-2">
+            <button (click)="seleccionarMascotaParaEditar(mascota)" class="btn btn-sm btn-outline-primary flex-fill d-flex align-items-center justify-content-center gap-1">
+              Editar
+            </button>
+            <button (click)="eliminarMascota(mascota.id!)" class="btn btn-sm btn-outline-danger flex-fill d-flex align-items-center justify-content-center gap-1">
+              Eliminar
+            </button>
           </div>
         </div>
       </div>

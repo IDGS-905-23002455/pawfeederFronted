@@ -5,15 +5,26 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-
 export class MascotaService {
-  // Revisa que este puerto coincida con el que te abrió Swagger (7122)
-  private apiUrl = 'https://localhost:7122/api/Mascotas'; 
+
+  private apiUrl = 'https://localhost:7122/api/Mascotas';
 
   constructor(private http: HttpClient) { }
 
-  // Método para ir por las mascotas del usuario a C#
   getMascotasPorUsuario(usuarioId: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/usuario/${usuarioId}`);
   }
+
+  crearMascota(mascota: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, mascota);
+  }
+
+  actualizarMascota(id: number, mascota: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, mascota);
+  }
+
+  eliminarMascota(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
+
 }

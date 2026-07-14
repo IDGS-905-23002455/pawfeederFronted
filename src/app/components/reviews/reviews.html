@@ -1,0 +1,105 @@
+<div class="container my-5">
+
+  <!-- Encabezado de Satisfacción -->
+  <div class="row align-items-center mb-5 bg-white p-4 rounded shadow-sm border">
+    <div class="col-md-5 d-flex align-items-center gap-4 border-end justify-content-center justify-content-md-start">
+      <div class="position-relative d-inline-flex justify-content-center align-items-center">
+        <div class="rounded-circle border border-5 border-success-subtle d-flex align-items-center justify-content-center" style="width: 120px; height: 120px; border-top-color: #198754 !important; border-width: 12px !important; transform: rotate(45deg);">
+          <span class="fs-2 fw-bold text-success position-absolute" style="transform: rotate(-45deg);">95%</span>
+        </div>
+      </div>
+      <div>
+        <h4 class="fw-bold mb-1 text-dark">Satisfacción de los Usuarios</h4>
+        <p class="text-muted small mb-0">reporta mejora en la puntualidad dietética</p>
+      </div>
+    </div>
+    <div class="col-md-7 ps-md-5 mt-4 mt-md-0 text-center text-md-start">
+      <h2 class="fw-bold lh-base">Nuestros clientes confirman:<br><span class="text-success">PawFeeder</span> cumple sus promesas.</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <!-- COLUMNA IZQUIERDA: FORMULARIO PARA AGREGAR OPINIÓN -->
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm border-0 p-4 bg-light">
+        <h4 class="fw-bold text-success mb-3">Déjanos tu Opinión</h4>
+
+        <form [formGroup]="opinionForm" (ngSubmit)="guardarOpinion()">
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Tu Nombre</label>
+            <input type="text" formControlName="nombreUsuario" class="form-control" placeholder="Ej. Ana o Carlos">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Tu Mascota (Raza y Nombre)</label>
+            <input type="text" formControlName="detallesMascota" class="form-control" placeholder="Ej. Labrador Max o Luna">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Calificación (Estrellas)</label>
+            <select formControlName="calificacion" class="form-select">
+              <option value="5">⭐⭐⭐⭐⭐ 5 - Excelente</option>
+              <option value="4">⭐⭐⭐⭐ 4 - Bueno</option>
+              <option value="3">⭐⭐⭐ 3 - Regular</option>
+              <option value="2">⭐⭐ 2 - Malo</option>
+              <option value="1">⭐ 1 - Pésimo</option>
+            </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="form-label fw-semibold">Tu Comentario</label>
+            <textarea formControlName="comentario" class="form-control" rows="4" placeholder="Cuéntanos tu experiencia con PawFeeder..."></textarea>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" [disabled]="!opinionForm.valid" class="btn btn-success fw-bold">
+              Publicar Comentario
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- COLUMNA DERECHA: LISTADO DE COMENTARIOS -->
+    <div class="col-md-8">
+      <h3 class="fw-bold mb-4">Comentarios de la Comunidad</h3>
+
+      <div *ngIf="listaOpiniones.length === 0" class="alert alert-info shadow-sm d-flex align-items-center gap-2">
+        <div class="spinner-border spinner-border-sm text-info" role="status"></div>
+        <span>Cargando comentarios desde la base de datos...</span>
+      </div>
+
+      <div class="row">
+        <div *ngFor="let op of listaOpiniones" class="col-md-6 mb-3">
+          <div class="card h-100 shadow-sm border-0 rounded-4 p-3 border">
+            <div class="card-body p-2">
+
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="rounded-circle border border-3 border-success p-1 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px; overflow: hidden; background: #e9ecef;">
+                  <span class="fs-4">🐾</span>
+                </div>
+                <div>
+                  <h6 class="fw-bold text-dark mb-0">{{ op.nombreUsuario }}</h6>
+                  <p class="text-secondary small mb-0">{{ op.detallesMascota }}</p>
+                  <span class="text-muted" style="font-size: 0.72rem;">{{ op.fecha }}</span>
+                </div>
+              </div>
+
+              <div class="mb-2 text-warning fs-6">
+                <span *ngFor="let estrella of obtenerEstrellas(op.calificacion)">★</span>
+                <span *ngFor="let vacia of obtenerEstrellasVacias(op.calificacion)" class="text-black-50 opacity-25">★</span>
+              </div>
+
+              <p class="card-text text-secondary mt-2 small lh-sm">
+                {{ op.comentario }}
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,54 +1,143 @@
 <div class="row">
-  <div class="col-md-5 mb-4">
+  <div class="col-md-4 mb-4">
     <div class="card shadow-sm border-0 p-4 bg-light">
-      <h4 class="fw-bold text-success mb-3">📅 Programar Dispensador</h4>
-      <p class="text-muted small">Configura las horas exactas en las que el PawFeeder liberará las porciones de alimento.</p>
+      <h4 class="fw-bold text-success mb-3">
+        {{ horarioEnEdicionId ? 'Editar Alerta' : 'Programar Comida' }}
+      </h4>
 
-      <form [formGroup]="horarioForm" (ngSubmit)="agregarHorario()">
+      <form [formGroup]="horarioForm" (ngSubmit)="guardarHorario()">
+
         <div class="mb-3">
-          <label class="form-label fw-semibold">Etiqueta del horario</label>
-          <input type="text" formControlName="nombre" class="form-control" placeholder="Ej. Almuerzo, Snack">
+          <label class="form-label fw-semibold">Nombre del Horario</label>
+          <input type="text" formControlName="nombre" class="form-control" placeholder="Ej. Desayuno o Almuerzo">
+        </div>
+
+<div class="row">
+          <div class="col-6 mb-3">
+            <label class="form-label fw-semibold">Hora (24h)</label>
+            <input
+              type="text"
+              formControlName="hora"
+              class="form-control"
+              placeholder="Ej. 14:30"
+              maxlength="5"
+              [class.is-invalid]="horarioForm.get('hora')?.invalid && horarioForm.get('hora')?.touched">
+            <div class="invalid-feedback small">Usa formato de 24h (HH:MM).</div>
+          </div>
+
+          <div class="col-6 mb-3">
+            <label class="form-label fw-semibold">Porción (g)</label>
+            <input
+              type="number"
+              formControlName="porcionGramos"
+              class="form-control"
+              placeholder="100"
+              min="1"
+              onkeypress="return event.charCode >= 48 && event.charCode <= 57"
+              [class.is-invalid]="horarioForm.get('porcionGramos')?.invalid && horarioForm.get('porcionGramos')?.touched">
+            <div class="invalid-feedback small">Ingresa un número entero válido.</div>
+          </div>
         </div>
 
         <div class="mb-3">
-          <label class="form-label fw-semibold">Hora de activación</label>
-          <input type="time" formControlName="hora" class="form-control">
+          <label class="form-label fw-semibold">Mascota Asignada</label>
+          <select formControlName="mascotaId" class="form-select">
+            <option value="">Cualquiera (General)</option>
+            <option *ngFor="let m of listaMascotas" [value]="m.id">{{ m.nombre }}</option>
+          </select>
         </div>
 
-        <div class="mb-3">
-          <label class="form-label fw-semibold">Porción (Gramos)</label>
-          <input type="number" formControlName="porcion" class="form-control" placeholder="Ej. 100">
+        <div class="mb-4">
+          <label class="form-label fw-semibold d-block mb-2">Días de Repetición</label>
+          <div class="d-flex flex-wrap gap-3 bg-white p-3 rounded border">
+            <div class="form-check">
+              <input type="checkbox" formControlName="lunes" class="form-check-input" id="chkL">
+              <label class="form-check-label small" for="chkL">Lun</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" formControlName="martes" class="form-check-input" id="chkM">
+              <label class="form-check-label small" for="chkM">Mar</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" formControlName="miercoles" class="form-check-input" id="chkMi">
+              <label class="form-check-label small" for="chkMi">Mié</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" formControlName="jueves" class="form-check-input" id="chkJ">
+              <label class="form-check-label small" for="chkJ">Jue</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" formControlName="viernes" class="form-check-input" id="chkV">
+              <label class="form-check-label small" for="chkV">Vie</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" formControlName="sabado" class="form-check-input" id="chkS">
+              <label class="form-check-label small" for="chkS">Sáb</label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" formControlName="domingo" class="form-check-input" id="chkD">
+              <label class="form-check-label small" for="chkD">Dom</label>
+            </div>
+          </div>
         </div>
 
-        <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold mt-2">Guardar Horario</button>
+        <div class="d-grid gap-2">
+          <button type="submit" [disabled]="!horarioForm.valid" class="btn btn-success fw-bold">
+            {{ horarioEnEdicionId ? 'Guardar Modificación' : 'Activar Horario' }}
+          </button>
+          <button *ngIf="horarioEnEdicionId" type="button" (click)="limpiarFormulario()" class="btn btn-outline-secondary btn-sm">
+            Cancelar
+          </button>
+        </div>
+
       </form>
     </div>
   </div>
 
-  <div class="col-md-7">
-    <h3 class="fw-bold mb-4">Cronograma de Alimentación Activo</h3>
+  <div class="col-md-8">
+    <h3 class="fw-bold mb-4">Cronograma de Distribución Automática</h3>
 
-    @if (listaHorarios.length === 0) {
-      <div class="alert alert-warning text-center border-0 shadow-sm">
-        No hay horarios programados. ¡Tu mascota podría quedarse sin croquetas!
-      </div>
-    } @else {
-      <div class="list-group shadow-sm">
-        @for (horario of listaHorarios; track horario.hora; let idx = $index) {
-          <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center p-3 border-0 border-bottom">
-            <div class="d-flex align-items-center gap-3">
-              <span class="fs-3">⏰</span>
-              <div>
-                <h5 class="mb-1 fw-bold text-dark">{{ horario.hora }} hrs</h5>
-                <p class="mb-0 text-muted small">{{ horario.nombre }} — <span class="text-success fw-bold">{{ horario.porcion }} gramos</span></p>
-              </div>
+    <div *ngIf="listaHorarios.length === 0" class="alert alert-warning border-0 shadow-sm">
+      No hay ninguna rutina programada en la base de datos todavía. ¡Crea la primera comida a la izquierda!
+    </div>
+
+    <div class="row">
+      <div *ngFor="let h of listaHorarios" class="col-md-6 mb-3">
+        <div class="card shadow-sm border-0 h-100 position-relative">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="badge bg-light text-primary border border-primary small">
+                {{ h.porcionGramos }}g
+              </span>
             </div>
-            <button (click)="eliminarHorario(idx)" class="btn btn-sm btn-outline-danger rounded-circle border-0">
-              ❌
+
+            <p class="text-muted small mb-1">
+              <strong>Mascota:</strong> {{ obtenerNombreMascota(h.mascotaId) }}
+            </p>
+            <p class="fs-4 fw-bold  my-2">{{ h.hora }}</p>
+
+            <div class="d-flex gap-1 mt-2 flex-wrap">
+              <span class="badge" [ngClass]="h.lunes ? 'bg-success' : 'bg-light text-muted'">L</span>
+              <span class="badge" [ngClass]="h.martes ? 'bg-success' : 'bg-light text-muted'">M</span>
+              <span class="badge" [ngClass]="h.miercoles ? 'bg-success' : 'bg-light text-muted'">X</span>
+              <span class="badge" [ngClass]="h.jueves ? 'bg-success' : 'bg-light text-muted'">J</span>
+              <span class="badge" [ngClass]="h.viernes ? 'bg-success' : 'bg-light text-muted'">V</span>
+              <span class="badge" [ngClass]="h.sabado ? 'bg-success' : 'bg-light text-muted'">S</span>
+              <span class="badge" [ngClass]="h.domingo ? 'bg-success' : 'bg-light text-muted'">D</span>
+            </div>
+          </div>
+
+          <div class="card-footer bg-transparent border-0 d-flex gap-2 pb-3 pt-0">
+            <button type="button" (click)="seleccionarParaEditar(h)" class="btn btn-sm btn-outline-primary flex-fill">
+              Editar
+            </button>
+            <button type="button" (click)="eliminarHorario(h.id!)" class="btn btn-sm btn-outline-danger flex-fill">
+              Eliminar
             </button>
           </div>
-        }
+        </div>
       </div>
-    }
+    </div>
+
   </div>
 </div>

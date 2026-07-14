@@ -9,6 +9,7 @@ import { Pets } from './components/pets/pets';
 import { Profile} from './components/profile/profile';
 import { Schedules } from './components/schedules/schedules';
 import { Admin } from './components/admin/admin';
+import { Reviews } from './components/reviews/reviews';
 import { Component } from '@angular/core';
 
 
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'about', component: About },
   { path: 'contacto', component: Contact },
   { path: 'manual', component: Manual },
+  { path: 'opiniones', component: Reviews },
 
   { path: 'registro', component: RegisterComponent },
   { path: 'login', component: LoginComponent },

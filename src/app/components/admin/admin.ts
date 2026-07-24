@@ -1,13 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { UsuarioService, Usuario } from '../../services/usuario';
+import { DispensadorService, Dispensador } from '../../services/dispensador';
+
+
 interface UsuarioSistema {
+
   id: number;
   nombre: string;
   correo: string;
   dispositivoId: string;
   estado: string;
+
 }
+
+
 
 @Component({
   selector: 'app-admin',
@@ -15,21 +23,164 @@ interface UsuarioSistema {
   imports: [CommonModule],
   templateUrl: './admin.html',
   styleUrl: './admin.css'
+})
+export class Admin implements OnInit {
 
-  })
-export class Admin {
-  // Datos simulados de control total para el Administrador
-  usuarios: UsuarioSistema[] = [
-    { id: 1, nombre: 'Paola Gonzalez', correo: 'paola@example.com', dispositivoId: 'PW-ARD-905X', estado: 'Activo' },
-    { id: 2, nombre: 'Juan Pérez', correo: 'juan.perez@example.com', dispositivoId: 'PW-ARD-112Y', estado: 'Activo' },
-    { id: 3, nombre: 'María López', correo: 'maria.l@example.com', dispositivoId: 'Sin Vincular', estado: 'Inactivo' }
-  ];
 
-  // Funciones de control de administración
-  darDeBaja(id: number) {
-    const usuario = this.usuarios.find(u => u.id === id);
-    if (usuario) {
-      usuario.estado = usuario.estado === 'Activo' ? 'Inactivo' : 'Activo';
-    }
+  usuarios: UsuarioSistema[] = [];
+
+  dispensadores: Dispensador[] = [];
+
+
+
+  constructor(
+    private usuarioService: UsuarioService,
+    private dispensadorService: DispensadorService
+  ){}
+
+
+
+  ngOnInit(): void {
+
+    console.log("ADMIN INICIADO");
+
+    this.cargarUsuarios();
+
+    this.cargarDispensadores();
+
   }
+
+
+
+
+  cargarUsuarios(){
+
+
+    console.log("Consultando usuarios API...");
+
+
+    this.usuarioService.getUsuarios()
+    .subscribe({
+
+      next:(data: Usuario[])=>{
+
+
+        console.log("USUARIOS RECIBIDOS:", data);
+
+
+
+        this.usuarios = data.map(usuario => ({
+
+
+          id: usuario.id,
+
+          nombre: usuario.nombre,
+
+          correo: usuario.email,
+
+          dispositivoId: "Sin vincular",
+
+          estado: usuario.activo
+          ? "Activo"
+          : "Inactivo"
+
+
+        }));
+
+
+        console.log("TABLA USUARIOS:", this.usuarios);
+
+
+      },
+
+
+      error:(error)=>{
+
+
+        console.error(
+          "ERROR API USUARIOS:",
+          error
+        );
+
+
+      }
+
+
+    });
+
+
+  }
+
+
+
+
+  cargarDispensadores(){
+
+
+    console.log("Consultando dispensadores API...");
+
+
+    this.dispensadorService.getDispensadores()
+    .subscribe({
+
+
+      next:(data: Dispensador[])=>{
+
+
+        console.log(
+          "DISPENSADORES RECIBIDOS:",
+          data
+        );
+
+
+        this.dispensadores = data;
+
+
+      },
+
+
+      error:(error)=>{
+
+
+        console.error(
+          "ERROR API DISPENSADORES:",
+          error
+        );
+
+
+      }
+
+
+    });
+
+
+  }
+
+
+
+
+
+  darDeBaja(id:number){
+
+
+    const usuario = this.usuarios.find(
+      u => u.id === id
+    );
+
+
+    if(usuario){
+
+
+      usuario.estado =
+      usuario.estado === "Activo"
+      ? "Inactivo"
+      : "Activo";
+
+
+    }
+
+
+  }
+
+
 }

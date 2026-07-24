@@ -128,9 +128,12 @@
           </div>
 
           <div class="card-footer bg-transparent border-0 d-flex gap-2 pb-3 pt-0">
-            <button type="button" (click)="seleccionarParaEditar(h)" class="btn btn-sm btn-outline-primary flex-fill">
-              Editar
-            </button>
+<button
+  type="button"
+  (click)="seleccionarParaEditar(h)"
+  class="btn btn-sm btn-edit-outline flex-fill">
+  Editar
+</button>
             <button type="button" (click)="eliminarHorario(h.id!)" class="btn btn-sm btn-outline-danger flex-fill">
               Eliminar
             </button>

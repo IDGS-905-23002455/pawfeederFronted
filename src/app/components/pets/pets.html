@@ -82,9 +82,11 @@
           </div>
 
           <div class="card-footer bg-transparent border-0 pt-0 pb-3 px-3 d-flex gap-2">
-            <button (click)="seleccionarMascotaParaEditar(mascota)" class="btn btn-sm btn-outline-primary flex-fill d-flex align-items-center justify-content-center gap-1">
-              Editar
-            </button>
+<button
+  (click)="seleccionarMascotaParaEditar(mascota)"
+  class="btn btn-sm btn-edit-outline flex-fill d-flex align-items-center justify-content-center gap-1">
+  Editar
+</button>
             <button (click)="eliminarMascota(mascota.id!)" class="btn btn-sm btn-outline-danger flex-fill d-flex align-items-center justify-content-center gap-1">
               Eliminar
             </button>

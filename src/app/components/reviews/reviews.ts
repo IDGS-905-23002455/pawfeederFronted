@@ -14,7 +14,6 @@ import { Opinion } from './opinion';
 export class Reviews implements OnInit {
   listaOpiniones: Opinion[] = [];
 
-  // 1. Declaramos el formulario reactivo
   opinionForm = new FormGroup({
     nombreUsuario: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
     detallesMascota: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
@@ -51,13 +50,13 @@ export class Reviews implements OnInit {
       detallesMascota: this.opinionForm.value.detallesMascota!,
       calificacion: Number(this.opinionForm.value.calificacion),
       comentario: this.opinionForm.value.comentario!,
-      fecha: new Date().toLocaleDateString('es-MX') // Genera la fecha actual en formato DD/MM/AAAA
+      fecha: new Date().toLocaleDateString('es-MX')
     };
 
     this.opinionService.crearOpinion(nuevaOpinion).subscribe({
       next: () => {
-        this.cargarOpiniones(); // Recarga la lista para ver el nuevo comentario arriba
-        this.opinionForm.reset({ calificacion: 5 }); // Limpia el formulario y resetea las estrellas a 5
+        this.cargarOpiniones();
+        this.opinionForm.reset({ calificacion: 5 });
       },
       error: (err) => {
         console.error('Error al guardar la opinión:', err);

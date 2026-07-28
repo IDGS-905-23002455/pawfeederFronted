@@ -1,0 +1,133 @@
+<div class="inv-disp-container">
+  <div class="header-section">
+    <div>
+      <span class="sub-tag">INVENTARIO DE DISPENSADORES</span>
+      <h2>Dispensadores PawFeeder</h2>
+    </div>
+    <button class="btn-refresh" (click)="cargarTodo()" [disabled]="cargando">
+      Actualizar
+    </button>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <span class="stat-label">Total Fabricados</span>
+      <span class="stat-number">{{ unidades.length }}</span>
+    </div>
+    <div class="stat-card stat-terminado">
+      <span class="stat-label">Listos (Terminados)</span>
+      <span class="stat-number">{{ totalTerminados }}</span>
+    </div>
+    <div class="stat-card stat-proceso">
+      <span class="stat-label">En Proceso</span>
+      <span class="stat-number">{{ unidades.length - totalTerminados }}</span>
+    </div>
+  </div>
+
+  <div class="custom-card mb-4">
+    <div class="card-header-custom">
+      <h5>Registrar Nuevo Tipo de Dispensador</h5>
+    </div>
+    <div class="card-body-custom">
+      <form (ngSubmit)="registrarProducto()" class="row-form">
+        <div class="form-group flex-grow">
+          <label>Nombre del Dispensador</label>
+          <input
+            type="text"
+            class="custom-input"
+            placeholder="Ej. PawFeeder Pro, PawFeeder Lite..."
+            [(ngModel)]="nuevoNombre"
+            name="txtNombre"
+            required>
+        </div>
+        <div class="form-group align-end">
+          <button type="submit" class="btn-custom-primary" [disabled]="cargando">
+            Registrar Tipo
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="custom-card mb-4">
+    <div class="card-header-custom bg-mint">
+      <h5>Tipos de Dispensador ({{ productos.length }})</h5>
+    </div>
+    <div class="card-body-custom p-0">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th class="text-center">Stock Total</th>
+            <th class="text-center">Fabricar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let prod of productos">
+            <td class="fw-bold text-dark">#{{ prod.id }}</td>
+            <td class="fw-semibold text-dark">{{ prod.nombre }}</td>
+            <td class="text-center">
+              <span class="badge-stock" [class.badge-low]="prod.stock <= 3">
+                {{ prod.stock }} pza
+              </span>
+            </td>
+            <td class="text-center">
+              <button class="btn-fabricar" (click)="fabricarDispensador(prod.id, prod.nombre)" [disabled]="cargando">
+                Fabricar +1
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="productos.length === 0 && !cargando">
+            <td colspan="4" class="text-center py-4 text-muted">No hay tipos de dispensador registrados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="custom-card full-width-card">
+    <div class="card-header-custom">
+      <h5>Unidades Fabricadas ({{ unidades.length }})</h5>
+    </div>
+    <div class="card-body-custom p-0">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Código Único</th>
+            <th>Producto</th>
+            <th class="text-center">Estado</th>
+            <th>Fecha de Fabricación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of unidades">
+            <td>
+              <code class="code-badge">{{ u.codigoUnico }}</code>
+            </td>
+            <td class="fw-semibold text-dark">{{ u.productoNombre }}</td>
+            <td class="text-center">
+              <select
+                class="estado-select"
+                [ngClass]="{
+                  'estado-pendiente': u.estado === 'Pendiente',
+                  'estado-proceso': u.estado === 'En proceso',
+                  'estado-terminado': u.estado === 'Terminado'
+                }"
+                [value]="u.estado"
+                (change)="cambiarEstadoUnidad(u.id, $any($event.target).value)">
+                <option value="Pendiente">Pendiente</option>
+                <option value="En proceso">En proceso</option>
+                <option value="Terminado">Terminado</option>
+              </select>
+            </td>
+            <td class="text-muted">{{ u.creadoEn | date:'dd/MM/yyyy HH:mm' }}</td>
+          </tr>
+          <tr *ngIf="unidades.length === 0 && !cargando">
+            <td colspan="4" class="text-center py-4 text-muted">No hay unidades fabricadas aún</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -11,7 +11,7 @@ import { Schedules } from './components/schedules/schedules';
 import { Admin } from './components/admin/admin';
 import { Reviews } from './components/reviews/reviews';
 import { InventarioComponent } from './components/inventario/inventario';
-import { Component } from '@angular/core';
+import { InventarioDispensadoresComponent } from './components/inventario-dispensadores/inventario-dispensadores';
 
 
 export const routes: Routes = [
@@ -25,6 +25,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {path: 'admin', component : Admin},
   { path: 'inventario', component: InventarioComponent },
+  { path: 'inventario-dispensadores', component: InventarioDispensadoresComponent },
 
   { path: 'mascotas', component: Pets },
   { path: 'perfil', component: Profile},

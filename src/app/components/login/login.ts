@@ -1,28 +1,49 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms'; // <-- Importa esto
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule], // <-- Agrégalo aquí
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css'
 })
 export class LoginComponent {
-  // Definimos el grupo de datos del login
+
   loginForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required])
   });
 
-  // Función que se ejecutará al dar clic en entrar
+  errorMsg = '';
+
+  constructor(
+    private auth: AuthService,
+    private router: Router
+  ) {}
+
   onLogin() {
-    if (this.loginForm.valid) {
-      console.log("Datos del Login:", this.loginForm.value);
-      // Aquí más adelante conectaremos con tu API de C#
-    } else {
+    if (this.loginForm.invalid) {
       alert("Por favor, llena todos los campos correctamente.");
+      return;
     }
+
+    const { email, password } = this.loginForm.value;
+
+    this.auth.login(email!, password!).subscribe({
+      next: (usuario) => {
+        if (usuario.rol === 'admin') {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/mascotas']);
+        }
+      },
+      error: () => {
+        this.errorMsg = 'Credenciales inválidas. Intenta de nuevo.';
+      }
+    });
   }
 }

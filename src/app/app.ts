@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { AppService } from './services/app.service';
-
+import { AuthService } from './services/auth';
 
 @Component({
   selector: 'app-root',
@@ -13,54 +13,35 @@ import { AppService } from './services/app.service';
 })
 export class App {
 
-  // Los roles posibles serán: 'publico', 'cliente' o 'admin'
   rolActual: string = 'publico';
 
-
   constructor(
-    private appService: AppService
-  ){}
-
-
-
-  cambiarRol(nuevoRol: string) {
-    this.rolActual = nuevoRol;
+    private appService: AppService,
+    private auth: AuthService
+  ) {
+    this.auth.currentUser$.subscribe(user => {
+      this.rolActual = user?.rol ?? 'publico';
+    });
   }
 
+  logout() {
+    this.auth.logout();
+    this.rolActual = 'publico';
+  }
 
-
-  descargarApp(){
-
+  descargarApp() {
     this.appService.descargarApp()
-    .subscribe((archivo)=>{
-
-
-      const blob = new Blob(
-        [archivo],
-        {
-          type:'application/vnd.android.package-archive'
-        }
-      );
-
-
+    .subscribe((archivo) => {
+      const blob = new Blob([archivo], {
+        type: 'application/vnd.android.package-archive'
+      });
       const url = window.URL.createObjectURL(blob);
-
-
       const link = document.createElement('a');
-
       link.href = url;
-
       link.download = 'PawFeeder.apk';
-
-
       link.click();
-
-
       window.URL.revokeObjectURL(url);
-
-
     });
-
   }
 
 }

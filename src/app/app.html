@@ -1,12 +1,3 @@
-<div class="position-fixed bottom-0 end-0 m-3 z-3 bg-dark text-white p-3 rounded shadow border border-secondary small" style="max-width: 280px;">
-  <p class="mb-2 text-center border-bottom border-secondary pb-1">Menú de Pruebas (Roles):</p>
-  <div class="d-flex flex-column gap-1">
-    <button class="btn btn-sm w-100 btn-outline-light text-start" (click)="cambiarRol('publico')" routerLink="/">🌐 Modo Público</button>
-    <button class="btn btn-sm w-100 btn-outline-light text-start" (click)="cambiarRol('cliente')" routerLink="/mascotas">🐾 Modo Cliente</button>
-    <button class="btn btn-sm w-100 btn-outline-light text-start" (click)="cambiarRol('admin')" routerLink="/admin">⚙️ Modo Admin</button>
-  </div>
-</div>
-
 @if (rolActual === 'admin') {
   <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom shadow-sm">
     <div class="container">
@@ -33,6 +24,8 @@
         </ul>
       </div>
       <div class="d-flex align-items-center gap-3">
+        <span class="badge bg-danger text-white px-3 py-2 rounded-pill">Administrador</span>
+        <button class="btn btn-outline-secondary rounded-pill px-3 btn-sm" (click)="logout()">
         <span class="badge bg-success text-white px-3 py-2 rounded-pill">Administrador</span>
         <button class="btn btn-outline-danger rounded-pill px-3 btn-sm" (click)="cambiarRol('publico')" routerLink="/">
           Salir
@@ -56,7 +49,7 @@
       </div>
       <div class="d-flex align-items-center gap-3">
         <a class="nav-link text-secondary fw-semibold" routerLink="/perfil">Mi Perfil</a>
-        <button class="btn btn-outline-danger rounded-pill px-3 btn-sm" (click)="cambiarRol('publico')" routerLink="/">
+        <button class="btn btn-outline-danger rounded-pill px-3 btn-sm" (click)="logout()">
           Cerrar Sesión
         </button>
       </div>
@@ -78,6 +71,7 @@
         </ul>
       </div>
       <div class="d-flex align-items-center gap-3">
+        <a class="nav-link text-secondary" routerLink="/login" style="cursor: pointer;">Iniciar sesión</a>
         <a class="nav-link text-secondary" (click)="cambiarRol('cliente')" routerLink="/mascotas" style="cursor: pointer;">Iniciar sesión</a>
         <button
 class="btn btn-success text-white rounded-pill px-4"
@@ -112,8 +106,17 @@ class="btn btn-success text-white rounded-pill px-4"
       <div class="col-md-4 text-md-end">
         <h6 class="fw-bold text-dark mb-3">Cuenta</h6>
         <ul class="list-unstyled small d-inline-block text-start text-md-end">
-          <li class="mb-2"><a class="text-decoration-none text-secondary" style="cursor:pointer;" (click)="cambiarRol('cliente')" routerLink="/mascotas">Mi cuenta</a></li>
-          <li class="mb-2"><a class="text-decoration-none text-secondary" style="cursor:pointer;" (click)="cambiarRol('admin')" routerLink="/admin">Administración</a></li>
+          @if (rolActual === 'publico') {
+            <li class="mb-2"><a class="text-decoration-none text-secondary" routerLink="/login">Iniciar sesión</a></li>
+            <li class="mb-2"><a class="text-decoration-none text-secondary" routerLink="/registro">Registrarse</a></li>
+          }
+          @if (rolActual === 'cliente') {
+            <li class="mb-2"><a class="text-decoration-none text-secondary" (click)="logout()" style="cursor:pointer;">Cerrar sesión</a></li>
+          }
+          @if (rolActual === 'admin') {
+            <li class="mb-2"><a class="text-decoration-none text-secondary" routerLink="/admin">Administración</a></li>
+            <li class="mb-2"><a class="text-decoration-none text-secondary" (click)="logout()" style="cursor:pointer;">Cerrar sesión</a></li>
+          }
         </ul>
       </div>
     </div>

@@ -1,0 +1,262 @@
+:host {
+  --primary-green: #10b981;
+  --primary-green-hover: #059669;
+  --mint-light: #e6f7f0;
+  --mint-accent: #d1fae5;
+  --text-dark: #1f2937;
+  --text-muted: #6b7280;
+  --border-color: #e5e7eb;
+  --danger: #ef4444;
+  --danger-hover: #dc2626;
+}
+
+.prov-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.sub-tag {
+  color: var(--primary-green);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.header-section h2 {
+  color: var(--text-dark);
+  font-size: 1.8rem;
+  margin-top: 4px;
+  font-weight: 800;
+}
+
+.btn-add {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-add:hover {
+  background-color: var(--primary-green-hover);
+}
+
+.custom-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.card-header-custom {
+  background-color: var(--primary-green);
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+}
+
+.card-header-custom.bg-mint {
+  background-color: var(--mint-light);
+  color: var(--primary-green-hover);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card-header-custom h5 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.card-body-custom {
+  padding: 1.5rem;
+}
+
+.row-form {
+  display: flex;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group.flex-grow {
+  flex: 1;
+  min-width: 180px;
+}
+
+.form-group.w-fixed {
+  width: 140px;
+}
+
+.form-group.align-end {
+  justify-content: flex-end;
+}
+
+.form-group label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.custom-input {
+  padding: 0.65rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: #f9fafb;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.custom-input:focus {
+  border-color: var(--primary-green);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.btn-custom-primary {
+  background-color: var(--primary-green);
+  color: white;
+  border: none;
+  padding: 0.65rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-custom-primary:hover {
+  background-color: var(--primary-green-hover);
+}
+
+.btn-cancel {
+  background-color: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-color);
+  padding: 0.65rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-cancel:hover {
+  border-color: #9ca3af;
+  color: var(--text-dark);
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.custom-table th {
+  background-color: #f9fafb;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.85rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.custom-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+}
+
+.badge-estado {
+  padding: 0.35rem 0.8rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.estado-terminado {
+  background-color: #d1fae5;
+  color: #059669;
+}
+
+.estado-pendiente {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.actions-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-action-outline {
+  background: transparent;
+  padding: 0.4rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-edit-outline {
+  border: 1px solid #10b981;
+  color: #059669;
+}
+
+.btn-edit-outline:hover {
+  background-color: #10b981;
+  color: #ffffff;
+}
+
+.btn-delete-outline {
+  border: 1px solid var(--danger);
+  color: var(--danger-hover);
+}
+
+.btn-delete-outline:hover {
+  background-color: var(--danger);
+  color: #ffffff;
+}
+
+.full-width-card {
+  width: 100%;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.error-msg {
+  color: var(--danger);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.custom-input.ng-invalid.ng-touched {
+  border-color: var(--danger);
+  background-color: #fff5f5;
+}
+
+.btn-custom-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

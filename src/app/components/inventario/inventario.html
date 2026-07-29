@@ -1,0 +1,111 @@
+<div class="inventario-container">
+  <div class="header-section">
+    <div>
+      <span class="sub-tag">MÓDULO DE HARDWARE E INVENTARIO</span>
+      <h2>Control de Producción e Inventario PawFeeder</h2>
+    </div>
+    <button class="btn-refresh" (click)="obtenerInventario()" [disabled]="cargando">
+      Actualizar Stocks
+    </button>
+  </div>
+
+  <div class="custom-card mb-4">
+    <div class="card-header-custom">
+      <h5>Alta de Nuevo Componente</h5>
+    </div>
+    <div class="card-body-custom">
+      <form (ngSubmit)="registrarComponente()" class="row-form">
+        <div class="form-group flex-grow">
+          <label>Nombre del Componente</label>
+          <input
+            type="text"
+            class="custom-input"
+            placeholder="Ej. Servomotor SG90, Sensor HC-SR04..."
+            [(ngModel)]="nuevoNombre"
+            name="txtNombre"
+            required>
+        </div>
+
+        <div class="form-group w-fixed">
+          <label>Cantidad (Piezas)</label>
+          <input
+            type="number"
+            class="custom-input"
+            min="1"
+            step="1"
+            [(ngModel)]="nuevoStock"
+            name="txtStock"
+            required>
+        </div>
+
+        <div class="form-group align-end">
+          <button type="submit" class="btn-custom-primary" [disabled]="cargando">
+            Guardar Componente
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="componenteEditando" class="custom-card mb-4 border-warning">
+    <div class="card-header-custom bg-warning text-dark">
+      <h5>Editar Componente: {{ componenteEditando.nombre }}</h5>
+    </div>
+    <div class="card-body-custom">
+      <form (ngSubmit)="guardarEdicion()" class="row-form">
+        <div class="form-group flex-grow">
+          <label>Nombre</label>
+          <input type="text" class="custom-input" [(ngModel)]="componenteEditando.nombre" name="editNombre" required>
+        </div>
+        <div class="form-group w-fixed">
+          <label>Cantidad</label>
+          <input type="number" class="custom-input" min="0" [(ngModel)]="componenteEditando.stock" name="editStock" required>
+        </div>
+        <div class="form-group align-end d-flex gap-2">
+          <button type="submit" class="btn-custom-primary" [disabled]="cargando">Actualizar</button>
+          <button type="button" class="btn-cancel" (click)="cancelarEdicion()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="custom-card full-width-card">
+    <div class="card-header-custom bg-mint">
+      <h5>Materia Prima en Stock</h5>
+    </div>
+    <div class="card-body-custom p-0">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Componente</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of componentes">
+            <td class="fw-bold text-dark">{{ item.nombre }}</td>
+            <td class="text-center">
+              <span class="badge-stock" [class.badge-low]="item.stock <= 3">
+                {{ item.stock }} pza
+              </span>
+            </td>
+            <td class="text-center">
+              <div class="actions-wrapper">
+                <button class="btn-action-outline btn-edit-outline" (click)="seleccionarParaEditar(item)">
+                  Editar
+                </button>
+                <button class="btn-action-outline btn-delete-outline" (click)="eliminarComponente(item)">
+                  Eliminar
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="componentes.length === 0">
+            <td colspan="3" class="text-center py-4 text-muted">No hay componentes registrados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

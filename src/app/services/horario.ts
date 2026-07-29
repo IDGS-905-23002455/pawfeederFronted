@@ -1,17 +1,18 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Horario } from '../components/horario';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HorarioService {
-  private apiUrl = 'https://localhost:7122/api/Horarios';
+  // Usamos la URL base del environment + el endpoint específico de Horarios
+  private apiUrl = `${environment.apiUrl}/Horarios`;
+  private http = inject(HttpClient);
 
-  constructor(private http: HttpClient) { }
-
-getHorariosPorUsuario(usuarioId: number): Observable<Horario[]> {
+  getHorariosPorUsuario(usuarioId: number): Observable<Horario[]> {
     return this.http.get<Horario[]>(`${this.apiUrl}/Usuario/${usuarioId}`);
   }
 

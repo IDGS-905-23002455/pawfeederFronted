@@ -11,6 +11,11 @@ import { Schedules } from './components/schedules/schedules';
 import { Admin } from './components/admin/admin';
 import { Reviews } from './components/reviews/reviews';
 import { rolGuard } from './guards/auth.guard';
+import { InventarioComponent } from './components/inventario/inventario';
+import { InventarioDispensadoresComponent } from './components/inventario-dispensadores/inventario-dispensadores';
+import { ProveedoresComponent } from './components/proveedores/proveedores';
+import { RecetasComponent } from './components/recetas/recetas';
+
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },

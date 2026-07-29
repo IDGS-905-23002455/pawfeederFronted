@@ -113,7 +113,6 @@ export class Admin implements OnInit {
     );
 
 
-
     this.usuarioService.getUsuarios()
 
     .subscribe({
@@ -218,7 +217,6 @@ export class Admin implements OnInit {
     console.log(
       "Consultando dispensadores API..."
     );
-
 
 
     this.dispensadorService.getDispensadores()

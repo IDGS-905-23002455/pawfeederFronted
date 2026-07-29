@@ -1,0 +1,27 @@
+.form-registro {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.btn-refresh-sm {
+  background-color: #e6f7f0;
+  color: #059669;
+  border: 1px solid #10b981;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-refresh-sm:hover {
+  background-color: #d1fae5;
+}
+
+.btn-refresh-sm:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

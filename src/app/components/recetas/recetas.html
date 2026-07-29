@@ -1,0 +1,117 @@
+<div class="rec-container">
+  <div class="header-section">
+    <div>
+      <span class="sub-tag">FABRICACIÓN</span>
+      <h2>Recetas de Dispensadores</h2>
+    </div>
+  </div>
+
+  <div class="alert-error" *ngIf="mensajeError">
+    {{ mensajeError }}
+  </div>
+
+  <div class="split-layout">
+    <div class="left-panel">
+      <div class="custom-card">
+        <div class="card-header-custom bg-mint">
+          <h5>Tipos de Dispensador</h5>
+        </div>
+        <div class="card-body-custom p-0">
+          <div class="producto-list">
+            <div class="producto-item" *ngFor="let p of productos"
+              [class.active]="productoSeleccionado?.id === p.id"
+              (click)="seleccionarProducto(p)">
+              <div class="producto-info">
+                <span class="producto-nombre">{{ p.nombre }}</span>
+                <span class="producto-badge" [ngClass]="p.componentesCount > 0 ? 'badge-completa' : 'badge-incompleta'">
+                  {{ p.componentesCount }} componente{{ p.componentesCount !== 1 ? 's' : '' }}
+                </span>
+              </div>
+              <span class="producto-stock">Stock: {{ p.stock }}</span>
+            </div>
+            <div *ngIf="productos.length === 0" class="text-center py-4 text-muted">
+              No hay productos registrados
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="custom-card" *ngIf="!productoSeleccionado">
+        <div class="card-body-custom text-center py-5 text-muted">
+          Selecciona un tipo de dispensador para ver o editar su receta
+        </div>
+      </div>
+
+      <div class="custom-card" *ngIf="productoSeleccionado">
+        <div class="card-header-custom">
+          <h5>Receta: {{ productoSeleccionado.nombre }}</h5>
+        </div>
+        <div class="card-body-custom">
+          <div class="receta-actions">
+            <button class="btn-add-small" (click)="mostrandoFormulario = !mostrandoFormulario; nuevoComponenteId = 0; nuevaCantidad = 1">
+              {{ mostrandoFormulario ? 'Cancelar' : '+ Agregar Componente' }}
+            </button>
+          </div>
+
+          <div class="add-form" *ngIf="mostrandoFormulario">
+            <select class="custom-input" [(ngModel)]="nuevoComponenteId">
+              <option [value]="0">Seleccionar componente...</option>
+              <option *ngFor="let c of getComponentesDisponibles()" [value]="c.id">
+                {{ c.nombre }} (Stock: {{ c.stock }})
+              </option>
+            </select>
+            <input type="number" class="custom-input w-cant" placeholder="Cantidad" [(ngModel)]="nuevaCantidad" min="1" style="width:100px;">
+            <button class="btn-custom-primary" (click)="agregarComponente()" [disabled]="nuevoComponenteId <= 0 || nuevaCantidad <= 0">Agregar</button>
+          </div>
+
+          <table class="custom-table">
+            <thead>
+              <tr>
+                <th>Componente</th>
+                <th class="text-center">Cantidad</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let r of recetas">
+                <td class="fw-bold">{{ r.componenteNombre }}</td>
+                <td class="text-center">{{ r.cantidadRequerida }} pza</td>
+                <td class="text-center">
+                  <div class="actions-wrapper">
+                    <button class="btn-action-outline btn-edit-outline" (click)="iniciarEdicion(r)">Editar</button>
+                    <button class="btn-action-outline btn-delete-outline" (click)="eliminar(r)">Eliminar</button>
+                  </div>
+                </td>
+              </tr>
+              <tr *ngIf="recetas.length === 0">
+                <td colspan="3" class="text-center py-3 text-muted">
+                  Esta receta no tiene componentes registrados
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="custom-card" *ngIf="editandoReceta">
+        <div class="card-header-custom" style="background-color: #f59e0b;">
+          <h5>Editar: {{ editandoReceta.componenteNombre }}</h5>
+        </div>
+        <div class="card-body-custom">
+          <form (ngSubmit)="guardarEdicion()" class="row-form">
+            <div class="form-group w-fixed">
+              <label>Cantidad</label>
+              <input type="number" class="custom-input" [(ngModel)]="editandoReceta.cantidadRequerida" name="editCantidad" min="1" required>
+            </div>
+            <div class="form-group align-end d-flex gap-2" style="flex-direction: row;">
+              <button type="submit" class="btn-custom-primary">Guardar</button>
+              <button type="button" class="btn-cancel" (click)="cancelarEdicion()">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

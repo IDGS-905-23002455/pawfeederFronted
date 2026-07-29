@@ -12,6 +12,8 @@ import { Admin } from './components/admin/admin';
 import { Reviews } from './components/reviews/reviews';
 import { InventarioComponent } from './components/inventario/inventario';
 import { InventarioDispensadoresComponent } from './components/inventario-dispensadores/inventario-dispensadores';
+import { ProveedoresComponent } from './components/proveedores/proveedores';
+import { RecetasComponent } from './components/recetas/recetas';
 
 
 export const routes: Routes = [
@@ -26,6 +28,8 @@ export const routes: Routes = [
   {path: 'admin', component : Admin},
   { path: 'inventario', component: InventarioComponent },
   { path: 'inventario-dispensadores', component: InventarioDispensadoresComponent },
+  { path: 'proveedores', component: ProveedoresComponent },
+  { path: 'recetas', component: RecetasComponent },
 
   { path: 'mascotas', component: Pets },
   { path: 'perfil', component: Profile},

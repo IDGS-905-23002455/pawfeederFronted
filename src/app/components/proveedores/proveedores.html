@@ -1,0 +1,131 @@
+<div class="prov-container">
+  <div class="header-section">
+    <div>
+      <span class="sub-tag">MÓDULO DE COMPRAS</span>
+      <h2>Proveedores</h2>
+    </div>
+    <button class="btn-add" (click)="mostrandoFormulario = !mostrandoFormulario; nuevo = {}" [disabled]="cargando">
+      {{ mostrandoFormulario ? 'Cancelar' : '+ Nuevo Proveedor' }}
+    </button>
+  </div>
+
+  <div class="custom-card mb-4" *ngIf="mostrandoFormulario">
+    <div class="card-header-custom">
+      <h5>Registrar Proveedor</h5>
+    </div>
+    <div class="card-body-custom">
+      <form #formNuevo="ngForm" (ngSubmit)="guardar(formNuevo)" class="row-form" novalidate>
+        <div class="form-group flex-grow">
+          <label>Nombre *</label>
+          <input type="text" class="custom-input" placeholder="Nombre del proveedor"
+            [(ngModel)]="nuevo.nombre" name="nombre" #nombre="ngModel" required>
+          <span class="error-msg" *ngIf="nombre.invalid && nombre.touched">El nombre es obligatorio</span>
+        </div>
+        <div class="form-group flex-grow">
+          <label>Contacto</label>
+          <input type="text" class="custom-input" placeholder="Nombre del contacto" [(ngModel)]="nuevo.contacto" name="contacto">
+        </div>
+        <div class="form-group w-fixed">
+          <label>Teléfono</label>
+          <input type="text" class="custom-input" placeholder="Teléfono"
+            [(ngModel)]="nuevo.telefono" name="telefono" #telefono="ngModel" pattern="[0-9]*">
+          <span class="error-msg" *ngIf="telefono.invalid && telefono.touched">Solo números</span>
+        </div>
+        <div class="form-group flex-grow">
+          <label>Correo</label>
+          <input type="text" class="custom-input" placeholder="correo@ejemplo.com"
+            [(ngModel)]="nuevo.correo" name="correo" #correo="ngModel" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+          <span class="error-msg" *ngIf="correo.invalid && correo.touched">Ingresa un correo válido (ej: user@dominio.com)</span>
+        </div>
+        <div class="form-group flex-grow">
+          <label>Dirección</label>
+          <input type="text" class="custom-input" placeholder="Dirección" [(ngModel)]="nuevo.direccion" name="direccion">
+        </div>
+        <div class="form-group align-end">
+          <button type="submit" class="btn-custom-primary" [disabled]="formNuevo.invalid">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="custom-card full-width-card">
+    <div class="card-header-custom bg-mint">
+      <h5>Proveedores Registrados ({{ proveedores.length }})</h5>
+    </div>
+    <div class="card-body-custom p-0">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Contacto</th>
+            <th>Teléfono</th>
+            <th>Correo</th>
+            <th>Dirección</th>
+            <th class="text-center">Estado</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of proveedores">
+            <td class="fw-bold text-dark">{{ p.nombre }}</td>
+            <td>{{ p.contacto || '-' }}</td>
+            <td>{{ p.telefono || '-' }}</td>
+            <td>{{ p.correo || '-' }}</td>
+            <td>{{ p.direccion || '-' }}</td>
+            <td class="text-center">
+              <span class="badge-estado" [ngClass]="p.activo ? 'estado-terminado' : 'estado-pendiente'">
+                {{ p.activo ? 'Activo' : 'Inactivo' }}
+              </span>
+            </td>
+            <td class="text-center">
+              <div class="actions-wrapper">
+                <button class="btn-action-outline btn-edit-outline" (click)="iniciarEdicion(p)">Editar</button>
+                <button class="btn-action-outline btn-delete-outline" (click)="eliminar(p)">Eliminar</button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="proveedores.length === 0">
+            <td colspan="7" class="text-center py-4 text-muted">No hay proveedores registrados</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="custom-card" *ngIf="editandoItem">
+    <div class="card-header-custom" style="background-color: #f59e0b;">
+      <h5>Editar: {{ editandoItem.nombre }}</h5>
+    </div>
+    <div class="card-body-custom">
+      <form #formEdit="ngForm" (ngSubmit)="guardarEdicion(formEdit)" class="row-form" novalidate>
+        <div class="form-group flex-grow">
+          <label>Nombre *</label>
+          <input type="text" class="custom-input" [(ngModel)]="editandoItem.nombre" name="editNombre" #editNombre="ngModel" required>
+          <span class="error-msg" *ngIf="editNombre.invalid && editNombre.touched">El nombre es obligatorio</span>
+        </div>
+        <div class="form-group flex-grow">
+          <label>Contacto</label>
+          <input type="text" class="custom-input" [(ngModel)]="editandoItem.contacto" name="editContacto">
+        </div>
+        <div class="form-group w-fixed">
+          <label>Teléfono</label>
+          <input type="text" class="custom-input" [(ngModel)]="editandoItem.telefono" name="editTelefono" #editTelefono="ngModel" pattern="[0-9]*">
+          <span class="error-msg" *ngIf="editTelefono.invalid && editTelefono.touched">Solo números</span>
+        </div>
+        <div class="form-group flex-grow">
+          <label>Correo</label>
+          <input type="text" class="custom-input" [(ngModel)]="editandoItem.correo" name="editCorreo" #editCorreo="ngModel" pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}">
+          <span class="error-msg" *ngIf="editCorreo.invalid && editCorreo.touched">Ingresa un correo válido (ej: user@dominio.com)</span>
+        </div>
+        <div class="form-group flex-grow">
+          <label>Dirección</label>
+          <input type="text" class="custom-input" [(ngModel)]="editandoItem.direccion" name="editDireccion">
+        </div>
+        <div class="form-group align-end d-flex gap-2" style="flex-direction: row;">
+          <button type="submit" class="btn-custom-primary" [disabled]="formEdit.invalid">Guardar</button>
+          <button type="button" class="btn-cancel" (click)="cancelarEdicion()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

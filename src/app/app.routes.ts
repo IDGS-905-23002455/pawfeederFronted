@@ -27,6 +27,10 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
 
   { path: 'admin', component: Admin, canActivate: [rolGuard('admin')] },
+  { path: 'inventario', component: InventarioComponent, canActivate: [rolGuard('admin')] },
+  { path: 'inventario-dispensadores', component: InventarioDispensadoresComponent, canActivate: [rolGuard('admin')] },
+  { path: 'proveedores', component: ProveedoresComponent, canActivate: [rolGuard('admin')] },
+  { path: 'recetas', component: RecetasComponent, canActivate: [rolGuard('admin')] },
   { path: 'mascotas', component: Pets, canActivate: [rolGuard('cliente')] },
   { path: 'perfil', component: Profile, canActivate: [rolGuard('cliente')] },
   { path: 'horarios', component: Schedules, canActivate: [rolGuard('cliente')] },

@@ -187,6 +187,10 @@ export class Admin implements OnInit {
           error
         );
 
+        this.usuarios = [
+          { id: 1, nombre: 'Admin PawFeeder', correo: 'admin@pawfeeder.com', dispositivoId: 'Sin vincular', estado: 'Activo' },
+          { id: 2, nombre: 'Cliente', correo: 'cliente@pawfeeder.com', dispositivoId: 'Sin vincular', estado: 'Activo' }
+        ];
 
         this.cargando=false;
 
@@ -236,6 +240,8 @@ export class Admin implements OnInit {
 
 
         this.dispensadores=data;
+
+        this.cdr.markForCheck();
 
 
 

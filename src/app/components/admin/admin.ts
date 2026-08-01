@@ -89,14 +89,9 @@ export class Admin implements OnInit {
         },
         error: (error: any) => {
           console.error('ERROR API USUARIOS:', error);
-          this.usuarios = [
-            {
-              id: 1, nombre: 'Admin PawFeeder', correo: 'admin@pawfeeder.com',
-              rol: 'admin', verificado: true, estado: 'Activo', actuando: false
-            }
-          ];
-
+          this.usuarios = [];
           this.cargando = false;
+          this.notificar(false, 'No se pudieron cargar los usuarios. Revisa tu conexión a la API.');
           this.cdr.markForCheck();
         }
       });

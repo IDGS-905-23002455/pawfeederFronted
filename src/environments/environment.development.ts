@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5172/api'
+  apiUrl: 'https://petfeeder-api-dgjx.onrender.com/api'
 };

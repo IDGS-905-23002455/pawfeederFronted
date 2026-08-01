@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 
 export interface Dispensador {
@@ -38,7 +39,7 @@ export class DispensadorService {
 
 
   private apiUrl =
-  'https://localhost:7122/api/Dispensadores';
+  `${environment.apiUrl}/Dispensadores`;
 
 
 

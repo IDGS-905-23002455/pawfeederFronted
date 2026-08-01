@@ -2,12 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, BehaviorSubject, tap, catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 export interface UsuarioAuth {
   id: number;
   nombre: string;
   email: string;
   rol?: 'admin' | 'cliente';
+}
+
+export interface RegistroRespuesta {
+  exito: boolean;
+  mensaje: string;
+  codigoPrueba?: string;
 }
 
 interface MockUser {
@@ -42,7 +49,7 @@ function getLocalStorage(): Storage | null {
 })
 export class AuthService {
 
-  private apiUrl = 'https://localhost:7122/api/Usuarios/login';
+  private apiUrl = `${environment.apiUrl}/Usuarios/login`;
   private currentUserSubject = new BehaviorSubject<UsuarioAuth | null>(null);
   currentUser$ = this.currentUserSubject.asObservable();
 
@@ -74,6 +81,14 @@ export class AuthService {
         throw new Error('Credenciales inválidas');
       })
     );
+  }
+
+  register(nombre: string, email: string, password: string): Observable<RegistroRespuesta> {
+    return this.http.post<RegistroRespuesta>(`${environment.apiUrl}/auth/registro`, {
+      nombre,
+      email,
+      password
+    });
   }
 
   private guardarSesion(usuario: UsuarioAuth): void {

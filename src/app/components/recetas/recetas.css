@@ -1,7 +1,7 @@
 :host {
-  --primary-green: #10b981;
-  --primary-green-hover: #059669;
-  --mint-light: #e6f7f0;
+  --primary-green: #2C5F8A;
+  --primary-green-hover: #25517A;
+  --mint-light: #EAF2FA;
   --text-dark: #1f2937;
   --text-muted: #6b7280;
   --border-color: #e5e7eb;
@@ -101,11 +101,11 @@
 }
 
 .producto-item:hover {
-  background-color: #f0fdf4;
+  background-color: #EAF2FA;
 }
 
 .producto-item.active {
-  background-color: #d1fae5;
+  background-color: #D8E7F5;
   border-left: 4px solid var(--primary-green);
 }
 
@@ -130,8 +130,8 @@
 }
 
 .badge-completa {
-  background-color: #d1fae5;
-  color: #059669;
+  background-color: #D8E7F5;
+  color: #25517A;
 }
 
 .badge-incompleta {
@@ -267,12 +267,12 @@
 }
 
 .btn-edit-outline {
-  border: 1px solid #10b981;
-  color: #059669;
+  border: 1px solid #2C5F8A;
+  color: #25517A;
 }
 
 .btn-edit-outline:hover {
-  background-color: #10b981;
+  background-color: #2C5F8A;
   color: #ffffff;
 }
 

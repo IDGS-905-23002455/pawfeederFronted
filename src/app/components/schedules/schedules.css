@@ -1,19 +1,19 @@
 .btn-edit-outline {
-  border: 1px solid #10b981;
-  color: #059669;
+  border: 1px solid #2C5F8A;
+  color: #25517A;
   background-color: transparent;
 }
 
 .btn-edit-outline:hover {
-  background-color: #10b981;
+  background-color: #2C5F8A;
   color: #fff;
-  border-color: #10b981;
+  border-color: #2C5F8A;
 }
 
 .btn-edit-outline:focus,
 .btn-edit-outline:active {
-  background-color: #059669;
+  background-color: #25517A;
   color: #fff;
-  border-color: #059669;
+  border-color: #25517A;
   box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.25);
 }

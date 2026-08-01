@@ -1,8 +1,8 @@
 :host {
-  --primary-green: #10b981;
-  --primary-green-hover: #059669;
-  --mint-light: #e6f7f0;
-  --mint-accent: #d1fae5;
+  --primary-green: #2C5F8A;
+  --primary-green-hover: #25517A;
+  --mint-light: #EAF2FA;
+  --mint-accent: #D8E7F5;
   --text-dark: #1f2937;
   --text-muted: #6b7280;
   --border-color: #e5e7eb;
@@ -192,8 +192,8 @@
 }
 
 .estado-terminado {
-  background-color: #d1fae5;
-  color: #059669;
+  background-color: #D8E7F5;
+  color: #25517A;
 }
 
 .estado-pendiente {
@@ -218,12 +218,12 @@
 }
 
 .btn-edit-outline {
-  border: 1px solid #10b981;
-  color: #059669;
+  border: 1px solid #2C5F8A;
+  color: #25517A;
 }
 
 .btn-edit-outline:hover {
-  background-color: #10b981;
+  background-color: #2C5F8A;
   color: #ffffff;
 }
 

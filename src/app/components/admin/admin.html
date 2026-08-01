@@ -1,364 +1,117 @@
-<div class="container my-4">
-
-
-<div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-
-
-<div>
-
-
-<h2 class="fw-bold text-dark m-0">
-
-Consola de Administración
-
-</h2>
-
-
-<p class="text-muted small m-0">
-
-Monitoreo de cuentas globales y hardware de PawFeeder
-
-</p>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="row g-3 mb-4">
-
-
-<div class="col-md-4">
-
-
-<div class="card shadow-sm border-0 bg-light p-3 text-center">
-
-
-<h6 class="text-muted text-uppercase small">
-
-Usuarios Totales
-
-</h6>
-
-
-
-@if(!cargando){
-
-<h3 class="fw-bold text-primary m-0">
-
-{{usuarios.length}} Clientes
-
-</h3>
-
-}
-@else{
-
-<h3 class="fw-bold text-primary m-0">
-
-Cargando...
-
-</h3>
-
-}
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="col-md-4">
-
-
-<div class="card shadow-sm border-0 bg-light p-3 text-center">
-
-
-<h6 class="text-muted text-uppercase small">
-
-Dispositivos Registrados
-
-</h6>
-
-
-
-<h3 class="fw-bold text-success m-0">
-
-{{dispensadores.length}} Dispositivos
-
-</h3>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="col-md-4">
-
-
-<div class="card shadow-sm border-0 bg-light p-3 text-center">
-
-
-<h6 class="text-muted text-uppercase small">
-
-Alertas del Servidor
-
-</h6>
-
-
-
-<h3 class="fw-bold text-warning m-0">
-
-0 Fallos
-
-</h3>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="card shadow-sm border-0 bg-white p-4">
-
-
-
-<h4 class="fw-bold mb-3">
-
-Registros de Clientes y Hardware
-
-</h4>
-
-
-
-
-
-<div class="table-responsive">
-
-
-<table class="table table-hover align-middle">
-
-
-
-<thead class="table-light">
-
-
-<tr>
-
-<th>ID</th>
-
-<th>Nombre</th>
-
-<th>Correo</th>
-
-<th>Dispositivo</th>
-
-<th>Estado</th>
-
-<th>Acciones</th>
-
-
-</tr>
-
-
-</thead>
-
-
-
-
-
-
-<tbody>
-
-
-
-@if(cargando){
-
-
-<tr>
-
-<td colspan="6" class="text-center">
-
-Cargando usuarios...
-
-</td>
-
-</tr>
-
-
-}
-
-
-
-@else{
-
-
-
-@for(user of usuarios; track user.id){
-
-
-
-<tr>
-
-
-<td>
-
-#0{{user.id}}
-
-</td>
-
-
-
-<td>
-
-{{user.nombre}}
-
-</td>
-
-
-
-<td>
-
-{{user.correo}}
-
-</td>
-
-
-
-<td>
-
-{{user.dispositivoId}}
-
-</td>
-
-
-
-
-<td>
-
-
-<span
-
-class="badge"
-
-[ngClass]="user.estado === 'Activo'
-?'bg-success'
-:'bg-danger'">
-
-
-{{user.estado}}
-
-
-</span>
-
-
-</td>
-
-
-
-
-
-<td>
-
-
-<button
-
-
-(click)="darDeBaja(user)"
-
-
-class="btn btn-sm rounded-pill"
-
-
-[ngClass]="user.estado === 'Activo'
-?'btn-outline-danger'
-:'btn-outline-success'">
-
-
-{{user.estado === 'Activo'
-?'Suspender'
-:'Activar'}}
-
-
-
-</button>
-
-
-</td>
-
-
-
-</tr>
-
-
-
-}
-
-
-
-
-@if(usuarios.length===0){
-
-
-<tr>
-
-<td colspan="6" class="text-center text-muted">
-
-No hay usuarios registrados
-
-</td>
-
-</tr>
-
-
-}
-
-
-
-}
-
-
-
-</tbody>
-
-
-
-</table>
-
-
-</div>
-
-
-
-</div>
-
-
-
+<div class="admin-wrap">
+
+  @if (mensaje) {
+    <div class="admin-alert" [ngClass]="tipoMensaje === 'ok' ? 'alert-ok' : 'alert-error'">
+      {{ mensaje }}
+    </div>
+  }
+
+  <div class="admin-header">
+    <div>
+      <span class="admin-eyebrow">PANEL DE CONTROL</span>
+      <h2 class="admin-title">Consola de Administración</h2>
+      <p class="admin-subtitle">Gestiona usuarios, verificaciones y hardware de PawFeeder</p>
+    </div>
+    <button class="btn btn-outline btn-sm" (click)="cargarUsuarios()" [disabled]="cargando">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>
+      Refrescar
+    </button>
+  </div>
+
+  <div class="admin-stats">
+    <div class="stat-card">
+      <div class="stat-icon icon-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div>
+        <h3>{{ cargando ? '…' : usuarios.length }}</h3>
+        <span>Usuarios totales</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon icon-amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+      <div>
+        <h3>{{ cargando ? '…' : verificadosCount }}</h3>
+        <span>Verificados</span>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon icon-red"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
+      <div>
+        <h3>{{ dispensadores.length }}</h3>
+        <span>Dispositivos</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-card">
+    <div class="table-responsive">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Correo</th>
+            <th>Rol</th>
+            <th>Verificación</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @if (cargando) {
+            <tr>
+              <td colspan="7" class="text-center py-4 text-muted">Cargando usuarios…</td>
+            </tr>
+          } @else {
+            @for (user of usuarios; track user.id) {
+              <tr>
+                <td class="mono">#{{ user.id }}</td>
+                <td class="fw-semibold">{{ user.nombre }}</td>
+                <td class="text-muted">{{ user.correo }}</td>
+                <td>
+                  <span class="badge" [ngClass]="user.rol === 'admin' ? 'badge-admin' : 'badge-cliente'">
+                    {{ user.rol === 'admin' ? 'Admin' : 'Cliente' }}
+                  </span>
+                </td>
+                <td>
+                  @if (user.verificado) {
+                    <span class="badge badge-ok"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:3px;vertical-align:-1px;"><polyline points="20 6 9 17 4 12"/></svg>Verificado</span>
+                  } @else {
+                    <span class="badge badge-pending"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="margin-right:3px;vertical-align:-1px;"><circle cx="12" cy="12" r="6"/></svg>Sin verificar</span>
+                  }
+                </td>
+                <td>
+                  <span class="badge" [ngClass]="user.estado === 'Activo' ? 'badge-ok' : 'badge-error'">
+                    {{ user.estado }}
+                  </span>
+                </td>
+                <td>
+                  <div class="d-flex flex-wrap gap-1">
+                    @if (!user.verificado) {
+                      <button class="btn btn-sm btn-verify" (click)="verificar(user)" [disabled]="user.actuando">
+                        {{ user.actuando ? '…' : 'Verificar' }}
+                      </button>
+                    }
+                    <button class="btn btn-sm" [ngClass]="user.rol === 'admin' ? 'btn-rol-out' : 'btn-rol-up'"
+                            (click)="cambiarRol(user)" [disabled]="user.actuando">
+                      {{ user.rol === 'admin' ? 'Quitar admin' : 'Hacer admin' }}
+                    </button>
+                    <button class="btn btn-sm" [ngClass]="user.estado === 'Activo' ? 'btn-suspender' : 'btn-activar'"
+                            (click)="darDeBaja(user)" [disabled]="user.actuando">
+                      {{ user.estado === 'Activo' ? 'Suspender' : 'Activar' }}
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+
+            @if (usuarios.length === 0) {
+              <tr>
+                <td colspan="7" class="text-center text-muted py-4">No hay usuarios registrados</td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

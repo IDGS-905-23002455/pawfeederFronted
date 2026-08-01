@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -8,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class AppService {
 
 
-  private apiUrl = 'https://localhost:7122/DownloadApp';
+  private apiUrl = `${environment.apiUrl.replace(/\/api$/, '')}/DownloadApp`;
 
 
   constructor(private http: HttpClient){}

@@ -1,8 +1,8 @@
 :host {
-  --primary-green: #10b981;
-  --primary-green-hover: #059669;
-  --mint-light: #e6f7f0;
-  --mint-accent: #d1fae5;
+  --primary-green: #2C5F8A;
+  --primary-green-hover: #25517A;
+  --mint-light: #EAF2FA;
+  --mint-accent: #D8E7F5;
   --text-dark: #1f2937;
   --text-muted: #6b7280;
   --border-color: #e5e7eb;
@@ -69,7 +69,7 @@
 }
 
 .stat-terminado .stat-number {
-  color: #059669;
+  color: #25517A;
 }
 
 .stat-proceso .stat-number {
@@ -254,9 +254,9 @@
 }
 
 .estado-select.estado-terminado {
-  background-color: #d1fae5;
-  color: #059669;
-  border-color: #10b981;
+  background-color: #D8E7F5;
+  color: #25517A;
+  border-color: #2C5F8A;
 }
 
 .btn-fabricar {

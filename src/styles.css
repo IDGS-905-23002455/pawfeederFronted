@@ -1,12 +1,20 @@
 @import "bootstrap/dist/css/bootstrap.min.css";
 :root {
-  --pf-primary: #22c55e;
-  --pf-primary-dark: #16a34a;
-  --pf-primary-light: #dcfce7;
-  --pf-dark: #1e293b;
-  --pf-muted: #64748b;
-  --pf-bg: #f8fafc;
-  --pf-border: #e2e8f0;
+  --pf-primary: #2C5F8A;
+  --pf-primary-dark: #25517A;
+  --pf-primary-light: #EAF2FA;
+  --pf-amber: #E8A838;
+  --pf-amber-dark: #CC8A25;
+  --pf-navy: #1E3A5C;
+  --pf-dark: #1A1A1A;
+  --pf-muted: #6C757D;
+  --pf-bg: #F5F0E8;
+  --pf-border: #E8E8E8;
+  --bs-success: #2C5F8A;
+  --bs-success-rgb: 44, 95, 138;
+  --bs-success-bg-subtle: #EAF2FA;
+  --bs-success-text: #2C5F8A;
+  --bs-success-border-subtle: #BFD4E8;
 }
 
 html {
@@ -21,7 +29,25 @@ html {
 body {
   background-color: var(--pf-bg);
   color: var(--pf-dark);
-  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ── Animaciones globales ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
 }
 
 /* ── Header ── */
@@ -35,7 +61,7 @@ body {
 }
 
 .pf-logo-text .paw { color: var(--pf-primary); font-weight: 900; }
-.pf-logo-text .feeder { color: var(--pf-dark); font-weight: 900; }
+.pf-logo-text .feeder { color: var(--pf-navy); font-weight: 900; }
 
 .pf-nav-link {
   padding: 0.4rem 1rem;
@@ -61,13 +87,13 @@ body {
   font-weight: 600;
   font-size: 0.9rem;
   transition: all 0.2s;
-  box-shadow: 0 4px 14px rgba(34,197,94,0.3);
+  box-shadow: 0 4px 14px rgba(44,95,138,0.3);
 }
 .btn-pf:hover {
   background: var(--pf-primary-dark);
   color: #fff;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(34,197,94,0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(44,95,138,0.4);
 }
 .btn-pf-outline {
   background: transparent;
@@ -86,18 +112,20 @@ body {
 
 /* ── Hero ── */
 .pf-hero {
-  background: linear-gradient(135deg, #f0fdf4 0%, #fff 60%, #dcfce7 100%);
+  background: linear-gradient(135deg, #F5F0E8 0%, #fff 55%, #EAF2FA 100%);
   min-height: 88vh;
   display: flex;
   align-items: center;
+  animation: fadeIn 0.6s ease both;
 }
 
 .pf-hero-img {
   border-radius: 1.5rem;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.12);
+  box-shadow: 0 25px 60px rgba(30,58,92,0.16);
   max-height: 520px;
   object-fit: cover;
   width: 100%;
+  animation: floatY 6s ease-in-out infinite;
 }
 
 .pf-badge {
@@ -119,10 +147,11 @@ body {
   border-radius: 1.25rem;
   padding: 1.75rem;
   transition: transform 0.2s, box-shadow 0.2s;
+  animation: fadeUp 0.5s ease both;
 }
 .pf-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(30,58,92,0.12);
 }
 .pf-icon {
   width: 52px; height: 52px;
@@ -140,7 +169,7 @@ body {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--pf-primary);
+  color: var(--pf-amber);
   margin-bottom: 0.5rem;
 }
 
@@ -150,15 +179,15 @@ body {
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+  background: linear-gradient(135deg, #F5F0E8 0%, #EAF2FA 100%);
   padding: 2rem;
 }
 .phone-shell {
   width: 390px;
-  background: #1e293b;
+  background: #1E3A5C;
   border-radius: 3rem;
   padding: 0.75rem;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.35);
+  box-shadow: 0 30px 80px rgba(30,58,92,0.35);
   position: relative;
 }
 .phone-screen {
@@ -177,7 +206,7 @@ body {
   transform: translateX(-50%);
   width: 8rem;
   height: 1.4rem;
-  background: #1e293b;
+  background: #1E3A5C;
   border-radius: 9999px;
   z-index: 50;
 }
@@ -189,7 +218,7 @@ body {
   align-items: center;
   font-size: 0.7rem;
   font-weight: 600;
-  color: var(--pf-dark);
+  color: var(--pf-navy);
   flex-shrink: 0;
 }
 .phone-content {
@@ -229,73 +258,143 @@ body {
 }
 .phone-label { display: block; }
 
-/* ── Auth pages ── */
+/* ── Auth pages (estilo app móvil) ── */
 .pf-auth-wrap {
   min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-@media (max-width: 767px) {
-  .pf-auth-wrap { grid-template-columns: 1fr; }
-  .pf-auth-image { display: none; }
+  background: var(--pf-bg);
+  display: flex;
+  animation: fadeIn 0.4s ease both;
 }
 .pf-auth-image {
+  flex: 1;
   background-size: cover;
   background-position: center;
+  position: relative;
+  min-height: 100vh;
+}
+.pf-auth-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(30,58,92,0.65) 0%, rgba(0,0,0,0.1) 45%);
+}
+.pf-auth-image .pf-auth-caption {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 2.5rem;
+  right: 2.5rem;
+  z-index: 2;
+  color: #fff;
+}
+.pf-auth-badge-iot {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.2rem;
+  background: rgba(0,0,0,0.4);
+  color: #fff;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  z-index: 2;
 }
 .pf-auth-form {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 3rem 2rem;
+  background: var(--pf-bg);
 }
 .pf-form-box {
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
+  background: #fff;
+  border-radius: 1.5rem;
+  border: 1px solid var(--pf-border);
+  padding: 2.5rem 2.25rem;
+  box-shadow: 0 20px 60px rgba(30,58,92,0.12);
+  animation: fadeUp 0.5s ease both;
+}
+.pf-auth-eyebrow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--pf-primary);
+  text-transform: uppercase;
+}
+.pf-auth-title {
+  font-weight: 800;
+  color: var(--pf-navy);
+}
+.pf-auth-sub {
+  color: var(--pf-muted);
 }
 .pf-input {
-  border-radius: 0.75rem;
+  border-radius: 0.9rem;
   border: 1.5px solid var(--pf-border);
-  padding: 0.65rem 1rem;
+  padding: 0.7rem 1rem;
   font-size: 0.95rem;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 .pf-input:focus {
   border-color: var(--pf-primary);
-  box-shadow: 0 0 0 3px rgba(34,197,94,0.15);
+  box-shadow: 0 0 0 4px rgba(44,95,138,0.15);
   outline: none;
+}
+.btn-pf-block {
+  width: 100%;
+  background: var(--pf-primary);
+  color: #fff;
+  border: none;
+  border-radius: 0.9rem;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: all 0.2s;
+  box-shadow: 0 6px 18px rgba(44,95,138,0.3);
+}
+.btn-pf-block:hover {
+  background: var(--pf-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(44,95,138,0.4);
 }
 
 /* ── Footer ── */
 .pf-footer {
-  background: #fff;
-  border-top: 1px solid var(--pf-border);
+  background: var(--pf-navy);
+  color: #cfd8e3;
+  border-top: none;
   margin-top: 5rem;
 }
+.pf-footer h5, .pf-footer h6 {
+  color: #fff;
+}
 .pf-footer-link {
-  color: var(--pf-muted);
+  color: #aeb9c6;
   text-decoration: none;
   font-size: 0.9rem;
   transition: color 0.2s;
 }
-.pf-footer-link:hover { color: var(--pf-primary); }
+.pf-footer-link:hover { color: var(--pf-amber); }
 
 /* ── Social icons ── */
 .pf-social {
   width: 2.25rem; height: 2.25rem;
   border-radius: 50%;
-  border: 1px solid var(--pf-border);
+  border: 1px solid #3d5a7d;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--pf-muted);
+  color: #cfd8e3;
   text-decoration: none;
   transition: all 0.2s;
 }
 .pf-social:hover {
-  background: var(--pf-primary);
-  border-color: var(--pf-primary);
-  color: #fff;
+  background: var(--pf-amber);
+  border-color: var(--pf-amber);
+  color: var(--pf-navy);
 }
 
 /* ── Misc ── */
@@ -307,9 +406,7 @@ body {
 .pf-divider {
   height: 3px;
   width: 3rem;
-  background: var(--pf-primary);
+  background: var(--pf-amber);
   border-radius: 9999px;
   margin: 0.75rem 0 1.5rem;
 }
-
-

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-about',
@@ -72,7 +73,7 @@ enviarCotizacion() {
   };
 
   this.http.post(
-    'https://localhost:7122/api/Cotizacion/enviar',
+    `${environment.apiUrl}/Cotizacion/enviar`,
     datos
   ).subscribe({
     next: () => {

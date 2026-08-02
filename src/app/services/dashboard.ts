@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { timeout, retry, catchError } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -11,10 +12,16 @@ export class DashboardService {
   private http = inject(HttpClient);
 
   getDashboardCliente(usuarioId: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/cliente/${usuarioId}`);
+    return this.http.get<any>(`${this.apiUrl}/cliente/${usuarioId}`).pipe(
+      timeout(15000),
+      retry(2)
+    );
   }
 
   getDashboardAdmin(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/admin`);
+    return this.http.get<any>(`${this.apiUrl}/admin`).pipe(
+      timeout(15000),
+      retry(2)
+    );
   }
 }

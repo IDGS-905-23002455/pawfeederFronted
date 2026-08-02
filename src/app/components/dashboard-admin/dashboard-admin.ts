@@ -14,6 +14,7 @@ export class DashboardAdminComponent implements OnInit {
 
   cargando = true;
   error = false;
+  mensajeError = '';
 
   usuarios = { total: 0, admins: 0, clientes: 0, verificados: 0, activos: 0 };
   sesiones = { total: 0, porUsuario: [] as any[] };
@@ -42,7 +43,9 @@ export class DashboardAdminComponent implements OnInit {
         this.general = data.general;
         this.cargando = false;
       },
-      error: () => {
+      error: (err) => {
+        console.error('Error cargando dashboard admin:', err);
+        this.mensajeError = `No se pudieron cargar los datos (${err?.status ?? 'sin respuesta'}). Verifica la conexión con la API.`;
         this.error = true;
         this.cargando = false;
       }

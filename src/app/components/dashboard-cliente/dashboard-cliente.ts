@@ -18,6 +18,7 @@ export class DashboardClienteComponent implements OnInit, OnDestroy {
 
   cargando = true;
   error = false;
+  mensajeError = '';
   usuarioNombre = '';
   private userSub: Subscription | null = null;
 
@@ -60,7 +61,9 @@ export class DashboardClienteComponent implements OnInit, OnDestroy {
         this.notificaciones = data.notificaciones;
         this.cargando = false;
       },
-      error: () => {
+      error: (err) => {
+        console.error('Error cargando dashboard cliente:', err);
+        this.mensajeError = `No se pudieron cargar los datos (${err?.status ?? 'sin respuesta'}). Verifica la conexión con la API.`;
         this.error = true;
         this.cargando = false;
       }

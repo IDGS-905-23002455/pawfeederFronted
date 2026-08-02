@@ -15,6 +15,8 @@ import { InventarioComponent } from './components/inventario/inventario';
 import { InventarioDispensadoresComponent } from './components/inventario-dispensadores/inventario-dispensadores';
 import { ProveedoresComponent } from './components/proveedores/proveedores';
 import { RecetasComponent } from './components/recetas/recetas';
+import { DashboardClienteComponent } from './components/dashboard-cliente/dashboard-cliente';
+import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin';
 
 
 export const routes: Routes = [
@@ -27,6 +29,7 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
 
   { path: 'admin', component: Admin, canActivate: [rolGuard('admin')] },
+  { path: 'dashboard', component: DashboardAdminComponent, canActivate: [rolGuard('admin')] },
   { path: 'inventario', component: InventarioComponent, canActivate: [rolGuard('admin')] },
   { path: 'inventario-dispensadores', component: InventarioDispensadoresComponent, canActivate: [rolGuard('admin')] },
   { path: 'proveedores', component: ProveedoresComponent, canActivate: [rolGuard('admin')] },
@@ -34,6 +37,7 @@ export const routes: Routes = [
   { path: 'mascotas', component: Pets, canActivate: [rolGuard('cliente')] },
   { path: 'perfil', component: Profile, canActivate: [rolGuard('cliente')] },
   { path: 'horarios', component: Schedules, canActivate: [rolGuard('cliente')] },
+  { path: 'dashboard-cliente', component: DashboardClienteComponent, canActivate: [rolGuard('cliente')] },
   { path: '**', redirectTo: '' }
 ];
 

@@ -14,6 +14,7 @@
     <div class="collapse navbar-collapse justify-content-center" id="mainNav">
       @if (rolActual === 'admin') {
         <ul class="navbar-nav gap-2">
+          <li class="nav-item"><a class="pf-nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/admin" routerLinkActive="active">Usuarios</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/inventario" routerLinkActive="active">Inventario</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/inventario-dispensadores" routerLinkActive="active">Dispensadores</a></li>
@@ -22,6 +23,7 @@
         </ul>
       } @else if (rolActual === 'cliente') {
         <ul class="navbar-nav gap-2">
+          <li class="nav-item"><a class="pf-nav-link" routerLink="/dashboard-cliente" routerLinkActive="active">Dashboard</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/mascotas" routerLinkActive="active">Mis Mascotas</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/horarios" routerLinkActive="active">Horarios</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/manual" routerLinkActive="active">Manual IoT</a></li>

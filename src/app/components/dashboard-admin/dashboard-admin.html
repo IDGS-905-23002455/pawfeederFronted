@@ -1,0 +1,236 @@
+<div class="admin-wrap">
+
+  @if (error) {
+    <div class="admin-alert alert-error">No se pudieron cargar los datos del dashboard.</div>
+  }
+
+  <div class="admin-header">
+    <div>
+      <span class="admin-eyebrow">PANEL ADMINISTRADOR</span>
+      <h2 class="admin-title">Dashboard general</h2>
+      <p class="admin-subtitle">Resumen global de usuarios, inventario y ventas</p>
+    </div>
+  </div>
+
+  @if (cargando) {
+    <div class="text-center py-5 text-muted">Cargando datos...</div>
+  } @else {
+
+    <h6 class="fw-bold text-uppercase small mb-2" style="color:var(--pf-muted); letter-spacing:0.08em;">Usuarios</h6>
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <h3>{{ usuarios.total }}</h3>
+          <span>Usuarios totales</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+        </div>
+        <div>
+          <h3>{{ usuarios.clientes }}</h3>
+          <span>Clientes</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-amber">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+        <div>
+          <h3>{{ usuarios.admins }}</h3>
+          <span>Administradores</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-amber">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div>
+          <h3>{{ usuarios.verificados }}</h3>
+          <span>Verificados</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-red">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div>
+          <h3>{{ usuarios.activos }}</h3>
+          <span>Activos</span>
+        </div>
+      </div>
+    </div>
+
+    <h6 class="fw-bold text-uppercase small mb-2" style="color:var(--pf-muted); letter-spacing:0.08em;">Ventas y dispositivo</h6>
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2"/><line x1="8" y1="2" x2="8" y2="22"/><line x1="16" y1="2" x2="16" y2="22"/></svg>
+        </div>
+        <div>
+          <h3>{{ inventario.unidadesFabricadas }}</h3>
+          <span>Unidades fabricadas</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-amber">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+        </div>
+        <div>
+          <h3>{{ inventario.unidadesTerminadas }}</h3>
+          <span>Terminadas</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-red">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/><path d="M9 17h6"/></svg>
+        </div>
+        <div>
+          <h3>{{ inventario.unidadesPendientes }}</h3>
+          <span>Pendientes</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+        </div>
+        <div>
+          <h3>{{ ventas.dispositivosRegistrados }}</h3>
+          <span>Dispositivos registrados</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-amber">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+        </div>
+        <div>
+          <h3>{{ ventas.dispositivosActivos }}</h3>
+          <span>Dispositivos activos</span>
+        </div>
+      </div>
+    </div>
+
+    <h6 class="fw-bold text-uppercase small mb-2" style="color:var(--pf-muted); letter-spacing:0.08em;">Inventario y stock</h6>
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div>
+          <h3>{{ inventario.productos.total }}</h3>
+          <span>Productos</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-amber">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8V21H3V8"/><path d="M1 3h22v5H1z"/><path d="M10 12h4"/></svg>
+        </div>
+        <div>
+          <h3>{{ inventario.productos.stockTotal }}</h3>
+          <span>Stock productos</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div>
+          <h3>{{ inventario.componentes.total }}</h3>
+          <span>Componentes</span>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon icon-red">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+        </div>
+        <div>
+          <h3>{{ inventario.componentes.stockTotal }}</h3>
+          <span>Stock componentes</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+      <div class="col-md-6">
+        <div class="admin-card h-100">
+          <h5 class="fw-bold" style="color:var(--pf-navy);">Producción</h5>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Productos en proceso</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ inventario.productos.enProceso }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Productos terminados</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ inventario.productos.terminados }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Dispensaciones ejecutadas</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ ventas.dispensacionesEjecutadas }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Comida dispensada total</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ ventas.comidaTotalGramos | number:'1.0-0' }} g</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="admin-card h-100">
+          <h5 class="fw-bold" style="color:var(--pf-navy);">Comunidad</h5>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Mascotas registradas</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ general.mascotas }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Horarios activos</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ general.horarios }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Opiniones</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ general.opiniones }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Calificación promedio</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ general.calificacionPromedio | number:'1.0-1' }} / 5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="admin-card">
+      <h5 class="fw-bold" style="color:var(--pf-navy);">Inicios de sesión por usuario</h5>
+      @if (sesiones.porUsuario.length === 0) {
+        <p class="text-muted small mt-2 mb-0">Aún no hay inicios de sesión registrados.</p>
+      } @else {
+        <div class="table-responsive mt-2">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Usuario</th>
+                <th>Correo</th>
+                <th>Web</th>
+                <th>App</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (s of sesiones.porUsuario; track s.usuarioId) {
+                <tr>
+                  <td class="fw-semibold">{{ s.nombre }}</td>
+                  <td class="mono">{{ s.email }}</td>
+                  <td>{{ s.web }}</td>
+                  <td>{{ s.app }}</td>
+                  <td class="fw-bold" style="color:var(--pf-navy);">{{ s.total }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+
+  }
+</div>

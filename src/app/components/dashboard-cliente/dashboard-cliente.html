@@ -1,0 +1,181 @@
+<div class="admin-wrap">
+
+  @if (error) {
+    <div class="admin-alert alert-error">No se pudieron cargar los datos del dashboard.</div>
+  }
+
+  <div class="admin-header">
+    <div>
+      <span class="admin-eyebrow">RESUMEN</span>
+      <h2 class="admin-title">Hola, {{ usuarioNombre }}</h2>
+      <p class="admin-subtitle">Así va tu PawFeeder hoy</p>
+    </div>
+  </div>
+
+  @if (cargando) {
+    <div class="text-center py-5 text-muted">Cargando datos...</div>
+  } @else {
+
+    <div class="admin-stats">
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div>
+          <h3>{{ mascotas.total }}</h3>
+          <span>Mascotas registradas</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon icon-amber">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div>
+          <h3>{{ horarios.total }}</h3>
+          <span>Horarios guardados</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon icon-blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18"/></svg>
+        </div>
+        <div>
+          <h3>{{ comida.semanaGramos | number:'1.0-0' }} g</h3>
+          <span>Comida esta semana</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon icon-amber">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div>
+          <h3>{{ comida.hoyGramos | number:'1.0-0' }} g</h3>
+          <span>Comida hoy</span>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon icon-red">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 29h4"/><path d="M12 2a7 7 0 0 1 7 7c0 4-2 5-2 8h-10c0-3-2-4-2-8a7 7 0 0 1 7-7z"/></svg>
+        </div>
+        <div>
+          <h3>{{ sesiones.total }}</h3>
+          <span>Inicios de sesión</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+      <div class="col-md-6">
+        <div class="admin-card h-100">
+          <h5 class="fw-bold" style="color:var(--pf-navy);">Mis mascotas</h5>
+          @if (mascotas.lista.length === 0) {
+            <p class="text-muted small mt-2 mb-0">Aún no has registrado mascotas.</p>
+          } @else {
+            <ul class="list-group list-group-flush mt-2">
+              @for (m of mascotas.lista; track m.id) {
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  <div>
+                    <div class="fw-semibold">{{ m.nombre }}</div>
+                    <div class="small text-muted">{{ m.raza }} · {{ m.tamano }}</div>
+                  </div>
+                  <span class="badge" [ngClass]="m.activa ? 'badge-ok' : 'badge-pending'">{{ m.activa ? 'Activa' : 'Inactiva' }}</span>
+                </li>
+              }
+            </ul>
+          }
+          <a class="btn btn-verify btn-sm mt-3" routerLink="/mascotas">Gestionar</a>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="admin-card h-100">
+          <h5 class="fw-bold" style="color:var(--pf-navy);">Próximos horarios</h5>
+          @if (horarios.lista.length === 0) {
+            <p class="text-muted small mt-2 mb-0">Aún no tienes horarios configurados.</p>
+          } @else {
+            <ul class="list-group list-group-flush mt-2">
+              @for (h of horarios.lista.slice(0, 5); track h.id) {
+                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                  <div>
+                    <div class="fw-semibold">{{ h.nombre }}</div>
+                    <div class="small text-muted">{{ h.hora }} · {{ h.porcionGramos }} g</div>
+                  </div>
+                  <span class="badge" [ngClass]="h.activo ? 'badge-ok' : 'badge-pending'">{{ h.activo ? 'Activo' : 'Inactivo' }}</span>
+                </li>
+              }
+            </ul>
+          }
+          <a class="btn btn-verify btn-sm mt-3" routerLink="/horarios">Gestionar</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="admin-card h-100">
+          <h5 class="fw-bold" style="color:var(--pf-navy);">Mi dispensador</h5>
+          @if (dispensadores.length === 0) {
+            <p class="text-muted small mt-2 mb-0">No tienes dispensadores vinculados a tu cuenta.</p>
+          } @else {
+            @for (d of dispensadores; track d.id) {
+              <div class="d-flex justify-content-between align-items-center py-2">
+                <div>
+                  <div class="fw-semibold">{{ d.nombre }}</div>
+                  <div class="small text-muted mono">{{ d.codigoUnico }}</div>
+                </div>
+                <span class="badge" [ngClass]="d.activo ? 'badge-ok' : 'badge-error'">{{ d.activo ? 'En línea' : 'Desconectado' }}</span>
+              </div>
+              <div class="mb-2">
+                <div class="d-flex justify-content-between small text-muted mb-1">
+                  <span>Batería</span><span>{{ d.bateriaPercent }}%</span>
+                </div>
+                <div class="progress" style="height:8px;">
+                  <div class="progress-bar" style="width:{{ d.bateriaPercent }}%; background:var(--pf-blue);"></div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="d-flex justify-content-between small text-muted mb-1">
+                  <span>Tolva</span><span>{{ d.nivelTolvaPct }}%</span>
+                </div>
+                <div class="progress" style="height:8px;">
+                  <div class="progress-bar" style="width:{{ d.nivelTolvaPct }}%; background:var(--pf-amber);"></div>
+                </div>
+              </div>
+            }
+          }
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="admin-card h-100">
+          <h5 class="fw-bold" style="color:var(--pf-navy);">Actividad</h5>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Dispensaciones hoy</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ comida.dispensacionesHoy }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Dispensaciones totales</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ comida.totalDispensaciones }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Notificaciones sin leer</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ notificaciones.noLeidas }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Inicios desde la web</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ sesiones.web }}</span>
+          </div>
+          <div class="d-flex justify-content-between align-items-center py-2">
+            <span class="text-muted small">Inicios desde la app</span>
+            <span class="fw-bold" style="color:var(--pf-navy);">{{ sesiones.app }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  }
+</div>

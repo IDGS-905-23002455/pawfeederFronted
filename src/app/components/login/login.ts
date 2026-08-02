@@ -36,9 +36,9 @@ export class LoginComponent {
     this.auth.login(email!, password!).subscribe({
       next: (usuario) => {
         if (usuario.rol === 'admin') {
-          this.router.navigate(['/admin']);
+          this.router.navigate(['/dashboard']);
         } else {
-          this.router.navigate(['/mascotas']);
+          this.router.navigate(['/dashboard-cliente']);
         }
       },
       error: () => {

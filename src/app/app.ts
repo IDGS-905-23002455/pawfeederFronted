@@ -14,6 +14,7 @@ import { AuthService } from './services/auth';
 export class App {
 
   rolActual: string = 'publico';
+  menuAbierto = false;
 
   constructor(
     private appService: AppService,
@@ -22,6 +23,14 @@ export class App {
     this.auth.currentUser$.subscribe(user => {
       this.rolActual = user?.rol ?? 'publico';
     });
+  }
+
+  toggleMenu() {
+    this.menuAbierto = !this.menuAbierto;
+  }
+
+  cerrarMenu() {
+    this.menuAbierto = false;
   }
 
   logout() {

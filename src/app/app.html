@@ -7,13 +7,13 @@
       </span>
     </a>
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+    <button class="navbar-toggler" type="button" (click)="toggleMenu()" [attr.aria-expanded]="menuAbierto" aria-label="Abrir menú">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="collapse navbar-collapse justify-content-center" id="mainNav">
+    <div class="collapse navbar-collapse justify-content-center" [class.show]="menuAbierto" id="mainNav">
       @if (rolActual === 'admin') {
-        <ul class="navbar-nav gap-2">
+        <ul class="navbar-nav gap-2" (click)="cerrarMenu()">
           <li class="nav-item"><a class="pf-nav-link" routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/admin" routerLinkActive="active">Usuarios</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/inventario" routerLinkActive="active">Inventario</a></li>
@@ -22,14 +22,14 @@
           <li class="nav-item"><a class="pf-nav-link" routerLink="/recetas" routerLinkActive="active">Recetas</a></li>
         </ul>
       } @else if (rolActual === 'cliente') {
-        <ul class="navbar-nav gap-2">
+        <ul class="navbar-nav gap-2" (click)="cerrarMenu()">
           <li class="nav-item"><a class="pf-nav-link" routerLink="/dashboard-cliente" routerLinkActive="active">Dashboard</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/mascotas" routerLinkActive="active">Mis Mascotas</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/horarios" routerLinkActive="active">Horarios</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/manual" routerLinkActive="active">Manual IoT</a></li>
         </ul>
       } @else {
-        <ul class="navbar-nav gap-2">
+        <ul class="navbar-nav gap-2" (click)="cerrarMenu()">
           <li class="nav-item"><a class="pf-nav-link" routerLink="/" routerLinkActive="active">Inicio</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/about" routerLinkActive="active">Proyecto</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/contacto" routerLinkActive="active">Contacto</a></li>

@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: pawfeeder-web
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: node dist/pawfeeder-frontend/server/server.mjs
+    plan: free
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NODE_OPTIONS
+        value: --max-old-space-size=512

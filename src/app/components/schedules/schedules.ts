@@ -3,6 +3,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MascotaService } from '../../services/mascota';
+import { AuthService } from '../../services/auth';
 import { Horario } from '../horario';
 
 @Component({
@@ -17,6 +18,16 @@ export class Schedules implements OnInit {
   listaHorarios: Horario[] = [];
   listaMascotas: any[] = [];
   horarioEnEdicionId: number | null = null;
+  cargando = true;
+  errorMsg = '';
+
+  get usuarioId(): number {
+    return this.auth.currentUser?.id ?? 0;
+  }
+
+  get sinSesion(): boolean {
+    return !this.auth.currentUser;
+  }
 
 horarioForm = new FormGroup({
     nombre: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
@@ -55,26 +66,38 @@ horarioForm = new FormGroup({
   constructor(
     private horarioService: HorarioService,
     private mascotaService: MascotaService,
+    private auth: AuthService,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    if (!this.auth.currentUser) {
+      this.cargando = false;
+      return;
+    }
     this.cargarHorarios();
     this.cargarMascotas();
   }
 
   cargarHorarios() {
-    this.horarioService.getHorariosPorUsuario(1).subscribe({
+    this.cargando = true;
+    this.errorMsg = '';
+    this.horarioService.getHorariosPorUsuario(this.usuarioId).subscribe({
       next: (data) => {
         this.listaHorarios = data;
+        this.cargando = false;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error al cargar horarios:', err)
+      error: (err) => {
+        console.error('Error al cargar horarios:', err);
+        this.cargando = false;
+        this.errorMsg = 'No se pudieron cargar tus horarios. Verifica tu conexión e intenta de nuevo.';
+      }
     });
   }
 
   cargarMascotas() {
-    this.mascotaService.getMascotasPorUsuario(1).subscribe({
+    this.mascotaService.getMascotasPorUsuario(this.usuarioId).subscribe({
       next: (data) => {
         this.listaMascotas = data.filter(m => m.nombre);
         this.cdr.detectChanges();
@@ -93,9 +116,9 @@ horarioForm = new FormGroup({
 
     const datosHorario: Horario = {
       id: this.horarioEnEdicionId ?? 0,
-      usuarioId: 1,
+      usuarioId: this.usuarioId,
       mascotaId: mId ? Number(mId) : null,
-      dispensadorId: 1,
+      dispensadorId: null,
       nombre: this.horarioForm.value.nombre!,
       hora: this.horarioForm.value.hora!,
       porcionGramos: Number(this.horarioForm.value.porcionGramos),

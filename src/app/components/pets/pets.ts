@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { MascotaService } from '../../services/mascota';
+import { AuthService } from '../../services/auth';
 
 interface Mascota {
   id?: number;
@@ -26,6 +27,16 @@ export class Pets implements OnInit {
 
   listaMascotas: Mascota[] = [];
   mascotaEnEdicionId: number | null = null;
+  cargando = true;
+  errorMsg = '';
+
+  get usuarioId(): number {
+    return this.auth.currentUser?.id ?? 0;
+  }
+
+  get sinSesion(): boolean {
+    return !this.auth.currentUser;
+  }
 
   mascotaForm = new FormGroup({
     nombre: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
@@ -37,22 +48,31 @@ export class Pets implements OnInit {
 
   constructor(
     private mascotaService: MascotaService,
+    private auth: AuthService,
     private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
+    if (!this.auth.currentUser) {
+      this.cargando = false;
+      return;
+    }
     this.cargarMascotas();
   }
 
   cargarMascotas() {
-    this.mascotaService.getMascotasPorUsuario(1).subscribe({
+    this.cargando = true;
+    this.errorMsg = '';
+    this.mascotaService.getMascotasPorUsuario(this.usuarioId).subscribe({
       next: (data: any[]) => {
         this.listaMascotas = data.filter(m => m.nombre);
-        console.log('¡Mascotas cargadas desde C#!', this.listaMascotas);
+        this.cargando = false;
         this.cdr.detectChanges();
       },
       error: (err: any) => {
         console.error('Error al conectar con el backend:', err);
+        this.cargando = false;
+        this.errorMsg = 'No se pudieron cargar tus mascotas. Verifica tu conexión e intenta de nuevo.';
       }
     });
   }
@@ -65,7 +85,7 @@ export class Pets implements OnInit {
 
     const datosMascota: Mascota = {
       id: this.mascotaEnEdicionId ?? 0,
-      usuarioId: 1,
+      usuarioId: this.usuarioId,
       nombre: this.mascotaForm.value.nombre!,
       raza: this.mascotaForm.value.raza!,
       edadAnos: Number(this.mascotaForm.value.edadAnos),

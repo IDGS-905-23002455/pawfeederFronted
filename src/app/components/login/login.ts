@@ -19,6 +19,7 @@ export class LoginComponent {
   });
 
   errorMsg = '';
+  cargando = false;
 
   constructor(
     private auth: AuthService,
@@ -32,9 +33,12 @@ export class LoginComponent {
     }
 
     const { email, password } = this.loginForm.value;
+    this.cargando = true;
+    this.errorMsg = '';
 
     this.auth.login(email!, password!).subscribe({
       next: (usuario) => {
+        this.cargando = false;
         if (usuario.rol === 'admin') {
           this.router.navigate(['/dashboard']);
         } else {
@@ -42,6 +46,7 @@ export class LoginComponent {
         }
       },
       error: () => {
+        this.cargando = false;
         this.errorMsg = 'Credenciales inválidas. Intenta de nuevo.';
       }
     });

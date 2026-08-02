@@ -36,6 +36,19 @@ export class UsuarioService {
     return this.http.get<Usuario[]>(this.apiUrl);
   }
 
+  // Obtener un usuario por id
+  getUsuario(id: number): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
+  }
+
+  // Actualizar perfil propio (nombre y teléfono)
+  actualizarPerfil(id: number, nombre: string, telefono: string): Observable<any> {
+    return this.http.put(
+      `${this.apiUrl}/${id}`,
+      { nombre: nombre, telefono: telefono }
+    );
+  }
+
 
 
   // Actualizar estado del usuario

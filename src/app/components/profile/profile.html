@@ -1,47 +1,68 @@
-<div class="container my-4" style="max-width: 600px;">
-  <div class="card shadow-sm border-0 p-4 bg-white position-relative overflow-hidden">
-    <div class="bg-success position-absolute top-0 start-0 w-100" style="height: 6px;"></div>
+<div class="panel-card profile-wrap">
 
-    <div class="text-center mb-4">
-      <div class="bg-success bg-opacity-10 text-success rounded-circle d-inline-flex align-items-center justify-content-center p-3 mb-2" style="width: 5rem; height: 5rem;">
-        <span class="fs-1">👤</span>
-      </div>
-      <h3 class="fw-bold m-0">Mi Perfil PawFeeder</h3>
-      <p class="text-muted small">Configuración general de tu cuenta y vinculación IoT</p>
+  <div class="page-header">
+    <div>
+      <h1 class="page-title">Mi Perfil</h1>
+      <p class="text-muted mb-0">Configuración general de tu cuenta PawFeeder.</p>
     </div>
-
-    <form [formGroup]="profileForm" (ngSubmit)="guardarPerfil()">
-      <div class="row g-3 mb-3">
-        <div class="col-md-6">
-          <label class="form-label fw-semibold">Nombre</label>
-          <input type="text" formControlName="nombre" class="form-control">
-        </div>
-        <div class="col-md-6">
-          <label class="form-label fw-semibold">Apellido</label>
-          <input type="text" formControlName="apellido" class="form-control">
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Correo electrónico</label>
-        <input type="email" formControlName="email" class="form-control" readonly style="background-color: #f8f9fa;">
-        <small class="text-muted">El correo electrónico no se puede cambiar.</small>
-      </div>
-
-      <div class="mb-3">
-        <label class="form-label fw-semibold">Teléfono de contacto</label>
-        <input type="text" formControlName="telefono" class="form-control">
-      </div>
-
-      <div class="mb-4 p-3 bg-light rounded border border-2">
-        <label class="form-label fw-bold text-dark m-0 mb-1">ID de Dispensador Vinculado (Arduino)</label>
-        <input type="text" formControlName="arduinoId" class="form-control border-success fw-mono bg-white text-success">
-        <small class="text-muted">Este token permite la comunicación WiFi mediante los tópicos MQTT.</small>
-      </div>
-
-      <button type="submit" class="btn btn-success w-100 rounded-pill fw-bold py-2">
-        Guardar Cambios
-      </button>
-    </form>
   </div>
+
+  @if (cargando) {
+    <div class="pf-loading-box">
+      <span class="pf-spinner"></span>
+      <span>Cargando tu perfil...</span>
+    </div>
+  } @else {
+    <div class="row g-4">
+      <div class="col-lg-4">
+        <div class="panel-card text-center p-4">
+          <div class="pf-avatar mb-3">
+            <span>{{ (profileForm.value.nombre || 'U')[0] | uppercase }}</span>
+          </div>
+          <h4 class="mb-1">{{ profileForm.value.nombre || 'Usuario' }}</h4>
+          <p class="text-muted small mb-3">{{ profileForm.value.email }}</p>
+          <span class="badge-pf" [class.badge-pf-amber]="rol === 'admin'" [class.badge-pf-blue]="rol === 'cliente'">
+            {{ rol === 'admin' ? 'Administrador' : 'Cliente' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="panel-card">
+          <form [formGroup]="profileForm" (ngSubmit)="guardarPerfil()">
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Nombre completo</label>
+              <input type="text" formControlName="nombre" class="form-control pf-input" placeholder="Tu nombre">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-semibold">Correo electrónico</label>
+              <input type="email" formControlName="email" class="form-control pf-input" readonly style="background-color: var(--pf-cream);">
+              <small class="text-muted">El correo electrónico no se puede cambiar.</small>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-semibold">Teléfono de contacto</label>
+              <input type="text" formControlName="telefono" class="form-control pf-input" placeholder="Ej. 4771234567">
+            </div>
+
+            @if (errorMsg) {
+              <div class="alert alert-danger py-2 small">{{ errorMsg }}</div>
+            }
+            @if (exitoMsg) {
+              <div class="alert alert-success py-2 small">{{ exitoMsg }}</div>
+            }
+
+            <button type="submit" class="btn btn-pf-block" [disabled]="guardando || !profileForm.valid">
+              @if (guardando) {
+                <span class="pf-spinner me-2"></span> Guardando...
+              } @else {
+                Guardar Cambios
+              }
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  }
 </div>

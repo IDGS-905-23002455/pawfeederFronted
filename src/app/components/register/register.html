@@ -1,29 +1,50 @@
-<div class="pf-auth-wrap">
+<div class="auth-split">
 
-  <div class="pf-auth-form d-md-none" style="flex:1; padding:2rem 1.5rem 1rem;">
-    <div class="text-center w-100">
-      <img src="imagenes/pawfeeder-mark.png" alt="PawFeeder" style="height:3rem;" class="mb-2" />
-      <span class="pf-auth-eyebrow d-block mb-2">CREA TU CUENTA</span>
-      <h2 class="pf-auth-title fs-2 mb-1">Únete a PawFeeder</h2>
-      <p class="pf-auth-sub">Programa, alimenta y monitorea — todo desde tu celular.</p>
+  <div class="auth-panel">
+    <div class="auth-panel-inner">
+      <div class="auth-panel-brand">
+        <img src="/imagenes/pawfeeder-mark.png" alt="Logo" style="height: 40px;">
+        <span class="auth-panel-logo"><span class="paw">Paw</span><span class="feeder">Feeder</span></span>
+      </div>
+
+      <div class="auth-panel-content">
+        <span class="auth-panel-badge">IOT · SMART FEEDER</span>
+        <h1 class="auth-panel-title">Tu mascota merece la mejor alimentación</h1>
+        <p class="auth-panel-sub">
+          Crea tu cuenta y empieza a programar comidas, monitorear el nivel de croquetas y controlar tu dispensador desde cualquier lugar.
+        </p>
+
+        <ul class="auth-panel-features">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span><strong>Registro gratuito</strong> en menos de un minuto</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span><strong>Control remoto</strong> desde tu teléfono</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span><strong>Monitoreo en tiempo real</strong> del nivel de croquetas</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="auth-panel-footer">
+        <p>© 2026 PawFeeder · Proyecto IoT con Arduino</p>
+      </div>
     </div>
   </div>
 
-  <div class="pf-auth-image d-none d-md-block"
-       style="background-image:url('/imagenes/auth-bg.jpg'); background-size:cover; background-position:center;">
-    <span class="pf-auth-badge-iot">IOT · SMART FEEDER</span>
-    <div class="pf-auth-caption">
-      <img src="imagenes/pawfeeder-mark.png" alt="PawFeeder" style="height:2.6rem;margin-bottom:1rem;" />
-      <h2 class="fw-bold mb-1" style="color:#fff;">Paw<span style="color:#E8A838;">Feeder</span></h2>
-      <p class="mb-0 opacity-75">Tu mascota merece la mejor alimentación.</p>
-    </div>
-  </div>
+  <div class="auth-form-side">
+    <div class="auth-form-box">
+      <div class="text-center mb-4 d-md-none">
+        <img src="/imagenes/pawfeeder-mark.png" alt="Logo" style="height: 40px;">
+      </div>
 
-  <div class="pf-auth-form">
-    <div class="pf-form-box">
-      <span class="pf-auth-eyebrow d-none d-md-block">CREA TU CUENTA</span>
-      <h2 class="pf-auth-title mb-1 mt-2 d-none d-md-block">Únete a PawFeeder</h2>
-      <p class="pf-auth-sub mb-4 d-none d-md-block">Programa, alimenta y monitorea — todo desde tu celular.</p>
+      <span class="pf-auth-eyebrow">CREA TU CUENTA</span>
+      <h2 class="auth-form-title mt-1">Únete a PawFeeder</h2>
+      <p class="auth-form-sub mb-4">Programa, alimenta y monitorea — todo desde tu celular.</p>
 
       <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
         <div class="row g-3">
@@ -57,7 +78,13 @@
           <label class="form-check-label small text-muted" for="terminos">Al continuar aceptas los <span style="color:var(--pf-primary);font-weight:600;">Términos</span> y la <span style="color:var(--pf-primary);font-weight:600;">Privacidad</span>.</label>
         </div>
 
-        <button type="submit" class="btn btn-pf-block">Crear cuenta →</button>
+        <button type="submit" class="btn btn-pf-block" [disabled]="cargando">
+          @if (cargando) {
+            <span class="pf-spinner me-2"></span> Creando cuenta...
+          } @else {
+            Crear cuenta →
+          }
+        </button>
       </form>
 
       @if (errorMsg) {
@@ -73,4 +100,5 @@
       </p>
     </div>
   </div>
+
 </div>

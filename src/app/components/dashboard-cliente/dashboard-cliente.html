@@ -17,7 +17,7 @@
   } @else {
 
     <div class="admin-stats">
-      <div class="stat-card">
+      <div class="stat-card clickable" routerLink="/mascotas" title="Ver mascotas">
         <div class="stat-icon icon-blue">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
         </div>
@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <div class="stat-card">
+      <div class="stat-card clickable" routerLink="/horarios" title="Ver horarios">
         <div class="stat-icon icon-amber">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
         </div>
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="stat-card">
+      <div class="stat-card clickable" routerLink="/perfil" title="Ver perfil">
         <div class="stat-icon icon-red">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 29h4"/><path d="M12 2a7 7 0 0 1 7 7c0 4-2 5-2 8h-10c0-3-2-4-2-8a7 7 0 0 1 7-7z"/></svg>
         </div>
@@ -66,6 +66,29 @@
           <span>Inicios de sesión</span>
         </div>
       </div>
+    </div>
+
+    <div class="admin-card mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-bold mb-0" style="color:var(--pf-navy);">Comida dispensada · últimos 7 días</h5>
+        <span class="text-muted small">{{ comida.semanaGramos | number:'1.0-0' }} g en total</span>
+      </div>
+      @if (comida7Dias.length === 0) {
+        <p class="text-muted small mb-0">Aún no hay dispensaciones esta semana.</p>
+      } @else {
+        <div class="bars-week">
+          @for (d of comida7Dias; track d.fecha) {
+            <div class="bars-col">
+              <span class="bars-value">{{ d.gramos }}g</span>
+              <div class="bars-track">
+                <div class="bars-bar" [style.height.%]="barraComida(d)"
+                     [title]="d.etiqueta + ': ' + d.gramos + ' g'"></div>
+              </div>
+              <span class="bars-label">{{ d.etiqueta }}</span>
+            </div>
+          }
+        </div>
+      }
     </div>
 
     <div class="row g-4 mb-4">

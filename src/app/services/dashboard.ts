@@ -18,6 +18,12 @@ export class DashboardService {
     );
   }
 
+  getComida7Dias(usuarioId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/cliente/${usuarioId}/comida-7-dias`).pipe(
+      timeout(15000)
+    );
+  }
+
   getDashboardAdmin(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/admin`).pipe(
       timeout(15000),

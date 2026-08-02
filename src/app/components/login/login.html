@@ -1,27 +1,56 @@
-<div class="pf-auth-wrap">
+<div class="auth-split">
 
-  <div class="pf-auth-image d-none d-md-block"
-       style="background-image:url('/imagenes/auth-bg.jpg'); background-size:cover; background-position:center;">
-    <span class="pf-auth-badge-iot">IOT · SMART FEEDER</span>
-    <div class="pf-auth-caption">
-      <img src="imagenes/pawfeeder-mark.png" alt="PawFeeder" style="height:2.6rem;margin-bottom:1rem;" />
-      <h2 class="fw-bold mb-1" style="color:#fff;">Paw<span style="color:#E8A838;">Feeder</span></h2>
-      <p class="mb-0 opacity-75">Alimentación inteligente para tu mascota.</p>
+  <div class="auth-panel">
+    <div class="auth-panel-inner">
+      <div class="auth-panel-brand">
+        <img src="/imagenes/pawfeeder-mark.png" alt="Logo" style="height: 40px;">
+        <span class="auth-panel-logo"><span class="paw">Paw</span><span class="feeder">Feeder</span></span>
+      </div>
+
+      <div class="auth-panel-content">
+        <span class="auth-panel-badge">IOT · SMART FEEDER</span>
+        <h1 class="auth-panel-title">Alimentación inteligente para tu mascota</h1>
+        <p class="auth-panel-sub">
+          Programa comidas, controla tu dispensador a distancia y monitorea la comida de tu peludo desde cualquier lugar.
+        </p>
+
+        <ul class="auth-panel-features">
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span><strong>Programa horarios</strong> de comida automáticos</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span><strong>Control remoto</strong> desde tu teléfono</span>
+          </li>
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span><strong>Monitoreo en tiempo real</strong> del nivel de croquetas</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="auth-panel-footer">
+        <p>© 2026 PawFeeder · Proyecto IoT con Arduino</p>
+      </div>
     </div>
   </div>
 
-  <div class="pf-auth-form">
-    <div class="pf-form-box">
+  <div class="auth-form-side">
+    <div class="auth-form-box">
       <div class="text-center mb-4 d-md-none">
-        <img src="imagenes/pawfeeder-mark.png" alt="PawFeeder" style="height:3rem;" class="mb-2" />
+        <img src="/imagenes/pawfeeder-mark.png" alt="Logo" style="height: 40px;">
       </div>
 
       <span class="pf-auth-eyebrow">BIENVENIDO DE VUELTA</span>
-      <h2 class="pf-auth-title mb-1 mt-2">Hora de alimentar<br />a tu peludo</h2>
-      <p class="pf-auth-sub mb-4">Inicia sesión para controlar tu dispensador.</p>
+      <h2 class="auth-form-title mt-1">Hora de alimentar<br>a tu peludo</h2>
+      <p class="auth-form-sub mb-4">Inicia sesión para controlar tu dispensador.</p>
+
+      @if (errorMsg) {
+        <div class="alert alert-danger py-2 small">{{ errorMsg }}</div>
+      }
 
       <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
-
         <div class="mb-3">
           <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Correo</label>
           <input type="email" formControlName="email" class="form-control pf-input" placeholder="tu@correo.com">
@@ -32,11 +61,13 @@
           <input type="password" formControlName="password" class="form-control pf-input" placeholder="••••••••">
         </div>
 
-        @if (errorMsg) {
-          <div class="alert alert-danger py-2 small">{{ errorMsg }}</div>
-        }
-
-        <button type="submit" class="btn btn-pf-block mb-3">Iniciar sesión →</button>
+        <button type="submit" class="btn btn-pf-block mb-3" [disabled]="cargando">
+          @if (cargando) {
+            <span class="pf-spinner me-2"></span> Iniciando sesión...
+          } @else {
+            Iniciar sesión →
+          }
+        </button>
       </form>
 
       <p class="text-center text-muted small mb-0">
@@ -45,4 +76,5 @@
       </p>
     </div>
   </div>
+
 </div>

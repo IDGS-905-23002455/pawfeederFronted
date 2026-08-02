@@ -23,6 +23,7 @@ export class RegisterComponent {
 
   errorMsg = '';
   successMsg = '';
+  cargando = false;
 
   constructor(private auth: AuthService) {}
 
@@ -35,15 +36,19 @@ export class RegisterComponent {
         return;
       }
 
+      this.cargando = true;
+      this.errorMsg = '';
+      this.successMsg = '';
+
       this.auth.register(`${nombre} ${apellido}`.trim(), email!, password!).subscribe({
         next: (resp) => {
+          this.cargando = false;
           this.successMsg = resp.mensaje;
-          this.errorMsg = '';
           console.log('Registro exitoso:', resp);
         },
         error: (err) => {
+          this.cargando = false;
           this.errorMsg = err.error?.mensaje ?? 'No se pudo crear la cuenta. Intenta de nuevo.';
-          this.successMsg = '';
         }
       });
     } else {

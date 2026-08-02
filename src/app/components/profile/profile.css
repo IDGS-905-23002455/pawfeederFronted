@@ -1,0 +1,33 @@
+.profile-wrap { padding: 1.6rem; }
+
+.pf-avatar {
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+  background: var(--pf-primary);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.9rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 8px 20px rgba(44,95,138,0.3);
+}
+
+.badge-pf {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+}
+.badge-pf-blue {
+  background: var(--pf-primary-light);
+  color: var(--pf-primary);
+  border: 1px solid #d3e3f2;
+}
+.badge-pf-amber {
+  background: #fdf1dc;
+  color: #b07d1a;
+  border: 1px solid #f2ddb0;
+}

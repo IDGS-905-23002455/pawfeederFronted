@@ -25,6 +25,7 @@ export class DashboardClienteComponent implements OnInit, OnDestroy {
   mascotas = { total: 0, activas: 0, lista: [] as any[] };
   horarios = { total: 0, activos: 0, lista: [] as any[] };
   comida = { semanaGramos: 0, hoyGramos: 0, totalDispensaciones: 0, dispensacionesHoy: 0 };
+  comida7Dias: any[] = [];
   dispensadores: any[] = [];
   sesiones = { total: 0, web: 0, app: 0 };
   notificaciones = { noLeidas: 0 };
@@ -68,6 +69,15 @@ export class DashboardClienteComponent implements OnInit, OnDestroy {
         this.cargando = false;
       }
     });
+
+    this.dashboardService.getComida7Dias(usuario.id).subscribe({
+      next: (dias: any[]) => {
+        this.comida7Dias = dias;
+      },
+      error: (err) => {
+        console.error('Error cargando comida 7 días:', err);
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -84,5 +94,13 @@ export class DashboardClienteComponent implements OnInit, OnDestroy {
     if (!this.dispensadores.length) return 0;
     const sum = this.dispensadores.reduce((acc, d) => acc + (d.nivelTolvaPct ?? 0), 0);
     return Math.round(sum / this.dispensadores.length);
+  }
+
+  get maxComidaSemana(): number {
+    return Math.max(1, ...this.comida7Dias.map(d => d.gramos ?? 0));
+  }
+
+  barraComida(d: any): number {
+    return ((d.gramos ?? 0) / this.maxComidaSemana) * 100;
   }
 }

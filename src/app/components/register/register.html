@@ -46,46 +46,93 @@
       <h2 class="auth-form-title mt-1">Únete a PawFeeder</h2>
       <p class="auth-form-sub mb-4">Programa, alimenta y monitorea — todo desde tu celular.</p>
 
-      <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
-        <div class="row g-3">
-          <div class="col-md-6 mb-1">
-            <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Nombre</label>
-            <input type="text" formControlName="nombre" class="form-control pf-input" placeholder="Juan">
+      @if (paso === 'form') {
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+          <div class="row g-3">
+            <div class="col-md-6 mb-1">
+              <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Nombre</label>
+              <input type="text" formControlName="nombre" class="form-control pf-input" placeholder="Juan">
+            </div>
+            <div class="col-md-6 mb-1">
+              <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Apellido</label>
+              <input type="text" formControlName="apellido" class="form-control pf-input" placeholder="Pérez">
+            </div>
           </div>
-          <div class="col-md-6 mb-1">
-            <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Apellido</label>
-            <input type="text" formControlName="apellido" class="form-control pf-input" placeholder="Pérez">
+
+          <div class="mb-3">
+            <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Correo</label>
+            <input type="email" formControlName="email" class="form-control pf-input" placeholder="tu@correo.com">
           </div>
-        </div>
 
-        <div class="mb-3">
-          <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Correo</label>
-          <input type="email" formControlName="email" class="form-control pf-input" placeholder="tu@correo.com">
-        </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Contraseña</label>
+            <input type="password" formControlName="password" class="form-control pf-input" placeholder="Mínimo 8 caracteres">
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Contraseña</label>
-          <input type="password" formControlName="password" class="form-control pf-input" placeholder="Mínimo 8 caracteres">
-        </div>
+          <div class="mb-3">
+            <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Confirmar contraseña</label>
+            <input type="password" formControlName="confirmPassword" class="form-control pf-input" placeholder="Repite tu contraseña">
+          </div>
 
-        <div class="mb-3">
-          <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Confirmar contraseña</label>
-          <input type="password" formControlName="confirmPassword" class="form-control pf-input" placeholder="Repite tu contraseña">
-        </div>
+          <div class="form-check mb-3">
+            <input type="checkbox" formControlName="aceptaTerminos" class="form-check-input" id="terminos">
+            <label class="form-check-label small text-muted" for="terminos">Al continuar aceptas los <span style="color:var(--pf-primary);font-weight:600;">Términos</span> y la <span style="color:var(--pf-primary);font-weight:600;">Privacidad</span>.</label>
+          </div>
 
-        <div class="form-check mb-3">
-          <input type="checkbox" formControlName="aceptaTerminos" class="form-check-input" id="terminos">
-          <label class="form-check-label small text-muted" for="terminos">Al continuar aceptas los <span style="color:var(--pf-primary);font-weight:600;">Términos</span> y la <span style="color:var(--pf-primary);font-weight:600;">Privacidad</span>.</label>
-        </div>
+          <button type="submit" class="btn btn-pf-block" [disabled]="cargando">
+            @if (cargando) {
+              <span class="pf-spinner me-2"></span> Creando cuenta...
+            } @else {
+              Crear cuenta →
+            }
+          </button>
+        </form>
+      }
 
-        <button type="submit" class="btn btn-pf-block" [disabled]="cargando">
-          @if (cargando) {
-            <span class="pf-spinner me-2"></span> Creando cuenta...
-          } @else {
-            Crear cuenta →
-          }
-        </button>
-      </form>
+      @if (paso === 'otp') {
+        <div class="text-center">
+          <div class="mb-3">
+            <img src="/imagenes/pawfeeder-mark.png" alt="Logo" style="height: 56px;">
+          </div>
+          <h3 class="auth-form-title mb-1">Verifica tu cuenta</h3>
+          <p class="auth-form-sub mb-4">
+            Te enviamos un código de 6 dígitos a <strong>{{ emailRegistrado }}</strong>.
+          </p>
+
+          <input
+            type="text"
+            inputmode="numeric"
+            maxlength="6"
+            [(ngModel)]="codigo"
+            [ngModelOptions]="{ standalone: true }"
+            class="form-control pf-input text-center"
+            style="font-size:1.6rem; letter-spacing:0.5em; font-weight:700;"
+            placeholder="••••••">
+
+          <button class="btn btn-pf-block mt-3" (click)="onVerificar()" [disabled]="verificando || codigo.length !== 6">
+            @if (verificando) {
+              <span class="pf-spinner me-2"></span> Verificando...
+            } @else {
+              Verificar código
+            }
+          </button>
+
+          <button class="btn btn-link mt-2 small" (click)="onReenviar()" [disabled]="reenviando">
+            {{ reenviando ? 'Enviando...' : '¿No recibiste el código? Reenviar' }}
+          </button>
+        </div>
+      }
+
+      @if (paso === 'listo') {
+        <div class="text-center">
+          <div class="mb-3">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#2e7d32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3 class="auth-form-title mb-1">¡Cuenta verificada!</h3>
+          <p class="auth-form-sub mb-4">Ya puedes iniciar sesión con tu correo y contraseña.</p>
+          <a routerLink="/login" class="btn btn-pf-block">Iniciar sesión</a>
+        </div>
+      }
 
       @if (errorMsg) {
         <div class="alert alert-danger mt-3 mb-0 py-2 small">{{ errorMsg }}</div>

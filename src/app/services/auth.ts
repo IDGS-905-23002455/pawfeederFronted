@@ -91,6 +91,17 @@ export class AuthService {
     });
   }
 
+  verificar(email: string, codigo: string): Observable<RegistroRespuesta> {
+    return this.http.post<RegistroRespuesta>(`${environment.apiUrl}/auth/verificar`, {
+      email,
+      codigo
+    });
+  }
+
+  reenviar(email: string): Observable<RegistroRespuesta> {
+    return this.http.post<RegistroRespuesta>(`${environment.apiUrl}/auth/reenviar`, { email });
+  }
+
   private guardarSesion(usuario: UsuarioAuth): void {
     const u = this.asignarRol(usuario);
     const storage = getLocalStorage();

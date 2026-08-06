@@ -11,6 +11,138 @@
 
   <div class="custom-card mb-4">
     <div class="card-header-custom">
+      <h5>Hacer Pedido a Proveedor</h5>
+    </div>
+    <div class="card-body-custom">
+      <div class="row-form">
+        <div class="form-group flex-grow">
+          <label>Componente</label>
+          <select
+            class="custom-input"
+            [(ngModel)]="pedidoComponenteId"
+            name="pedComponente">
+            <option [ngValue]="null" disabled>Selecciona un componente...</option>
+            <option *ngFor="let c of componentes" [ngValue]="c.id">
+              {{ c.nombre }} ({{ c.stock }} pza){{ c.stock <= 3 ? ' — ¡Stock bajo!' : '' }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group flex-grow">
+          <label>Proveedor</label>
+          <select
+            class="custom-input"
+            [(ngModel)]="pedidoProveedorId"
+            name="pedProveedor">
+            <option [ngValue]="null" disabled>Selecciona un proveedor...</option>
+            <option *ngFor="let p of proveedores" [ngValue]="p.id">{{ p.nombre }}</option>
+          </select>
+        </div>
+
+        <div class="form-group w-fixed">
+          <label>Cantidad</label>
+          <input
+            type="number"
+            class="custom-input"
+            min="1"
+            step="1"
+            [(ngModel)]="pedidoCantidad"
+            name="pedCantidad">
+        </div>
+
+        <div class="form-group align-end">
+          <button type="button" class="btn-custom-primary" (click)="hacerPedido()" [disabled]="cargando">
+            Registrar Pedido
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="stockBajo.length > 0" class="low-stock-hint">
+        <i class="bi bi-exclamation-triangle-fill"></i>
+        Componentes con stock bajo (≤ 3 pza):
+        <strong>{{ stockBajo.map(c => c.nombre).join(', ') }}</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="custom-card full-width-card mb-4">
+    <div class="card-header-custom bg-mint">
+      <h5>Pedidos a Proveedor — Pendientes ({{ pedidos.length }})</h5>
+    </div>
+    <div class="card-body-custom p-0">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Folio</th>
+            <th>Proveedor</th>
+            <th>Componente</th>
+            <th class="text-center">Cantidad</th>
+            <th>Fecha</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pedido of pedidos">
+            <td class="fw-bold text-dark">{{ pedido.folio }}</td>
+            <td>{{ pedido.proveedor }}</td>
+            <td>{{ pedido.componente }}</td>
+            <td class="text-center">
+              <span class="badge-stock">{{ pedido.cantidad }} {{ pedido.unidadMedida }}</span>
+            </td>
+            <td>{{ pedido.fecha }}</td>
+            <td class="text-center">
+              <div class="actions-wrapper">
+                <button class="btn-action-outline btn-edit-outline" (click)="verDetallePedido(pedido)">
+                  Detalle
+                </button>
+                <button class="btn-action-outline btn-received-outline" (click)="marcarRecibido(pedido)">
+                  Recibido
+                </button>
+              </div>
+            </td>
+          </tr>
+          <tr *ngIf="pedidos.length === 0">
+            <td colspan="6" class="text-center py-4 text-muted">
+              No hay pedidos pendientes.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="custom-card full-width-card mb-4" *ngIf="pedidosRecibidos.length > 0">
+    <div class="card-header-custom" style="background-color: #D8E7F5; color:#25517A;">
+      <h5>Pedidos Recibidos ({{ pedidosRecibidos.length }})</h5>
+    </div>
+    <div class="card-body-custom p-0">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Folio</th>
+            <th>Proveedor</th>
+            <th>Componente</th>
+            <th class="text-center">Cantidad</th>
+            <th>Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pedido of pedidosRecibidos">
+            <td class="fw-bold text-dark">{{ pedido.folio }}</td>
+            <td>{{ pedido.proveedor }}</td>
+            <td>{{ pedido.componente }}</td>
+            <td class="text-center">
+              <span class="badge-stock">{{ pedido.cantidad }} {{ pedido.unidadMedida }}</span>
+            </td>
+            <td>{{ pedido.fecha }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="custom-card mb-4">
+    <div class="card-header-custom">
       <h5>Alta de Nuevo Componente</h5>
     </div>
     <div class="card-body-custom">

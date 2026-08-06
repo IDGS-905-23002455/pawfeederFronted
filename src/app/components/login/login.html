@@ -50,15 +50,31 @@
         <div class="alert alert-danger py-2 small">{{ errorMsg }}</div>
       }
 
-      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" novalidate>
         <div class="mb-3">
           <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Correo</label>
-          <input type="email" formControlName="email" class="form-control pf-input" placeholder="tu@correo.com">
+          <input
+            type="email"
+            formControlName="email"
+            class="form-control pf-input"
+            [class.is-invalid]="loginForm.controls.email.invalid && loginForm.controls.email.touched"
+            placeholder="tu@correo.com">
+          @if (loginForm.controls.email.invalid && loginForm.controls.email.touched) {
+            <div class="pf-field-error">{{ emailMensaje() }}</div>
+          }
         </div>
 
         <div class="mb-4">
           <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Contraseña</label>
-          <input type="password" formControlName="password" class="form-control pf-input" placeholder="••••••••">
+          <input
+            type="password"
+            formControlName="password"
+            class="form-control pf-input"
+            [class.is-invalid]="loginForm.controls.password.invalid && loginForm.controls.password.touched"
+            placeholder="••••••••">
+          @if (loginForm.controls.password.invalid && loginForm.controls.password.touched) {
+            <div class="pf-field-error">{{ passwordMensaje() }}</div>
+          }
         </div>
 
         <button type="submit" class="btn btn-pf-block mb-3" [disabled]="cargando">

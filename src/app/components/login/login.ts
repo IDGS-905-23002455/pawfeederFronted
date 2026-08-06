@@ -27,8 +27,8 @@ export class LoginComponent {
   ) {}
 
   onLogin() {
+    this.loginForm.markAllAsTouched();
     if (this.loginForm.invalid) {
-      alert("Por favor, llena todos los campos correctamente.");
       return;
     }
 
@@ -45,10 +45,23 @@ export class LoginComponent {
           this.router.navigate(['/dashboard-cliente']);
         }
       },
-      error: () => {
+      error: (err) => {
         this.cargando = false;
-        this.errorMsg = 'Credenciales inválidas. Intenta de nuevo.';
+        this.errorMsg = err?.error?.mensaje ?? 'Credenciales inválidas. Intenta de nuevo.';
       }
     });
+  }
+
+  emailMensaje(): string {
+    const c = this.loginForm.controls.email;
+    if (c.hasError('required')) return 'El correo es obligatorio.';
+    if (c.hasError('email')) return 'Ingresa un correo válido.';
+    return '';
+  }
+
+  passwordMensaje(): string {
+    const c = this.loginForm.controls.password;
+    if (c.hasError('required')) return 'La contraseña es obligatoria.';
+    return '';
   }
 }

@@ -34,34 +34,74 @@ export class RegisterComponent {
   constructor(private auth: AuthService) {}
 
   onRegister() {
-    if (this.registerForm.valid) {
-      const { nombre, apellido, email, password, confirmPassword } = this.registerForm.value;
-
-      if (password !== confirmPassword) {
-        this.errorMsg = 'Las contraseñas no coinciden.';
-        return;
-      }
-
-      this.cargando = true;
-      this.errorMsg = '';
-      this.successMsg = '';
-
-      this.auth.register(`${nombre} ${apellido}`.trim(), email!, password!).subscribe({
-        next: (resp) => {
-          this.cargando = false;
-          this.successMsg = resp.mensaje;
-          this.emailRegistrado = email!;
-          this.paso = 'otp';
-          console.log('Registro exitoso:', resp);
-        },
-        error: (err) => {
-          this.cargando = false;
-          this.errorMsg = err.error?.mensaje ?? 'No se pudo crear la cuenta. Intenta de nuevo.';
-        }
-      });
-    } else {
-      alert("Por favor, llena correctamente todos los campos y acepta los términos.");
+    this.registerForm.markAllAsTouched();
+    if (this.registerForm.invalid) {
+      return;
     }
+
+    const { nombre, apellido, email, password, confirmPassword } = this.registerForm.value;
+
+    if (password !== confirmPassword) {
+      this.registerForm.controls.confirmPassword.setErrors({ noCoincide: true });
+      return;
+    }
+
+    this.cargando = true;
+    this.errorMsg = '';
+    this.successMsg = '';
+
+    this.auth.register(`${nombre} ${apellido}`.trim(), email!, password!).subscribe({
+      next: (resp) => {
+        this.cargando = false;
+        this.successMsg = resp.mensaje;
+        this.emailRegistrado = email!;
+        this.paso = 'otp';
+        console.log('Registro exitoso:', resp);
+      },
+      error: (err) => {
+        this.cargando = false;
+        this.errorMsg = err.error?.mensaje ?? 'No se pudo crear la cuenta. Intenta de nuevo.';
+      }
+    });
+  }
+
+  nombreMensaje(): string {
+    const c = this.registerForm.controls.nombre;
+    if (c.hasError('required')) return 'El nombre es obligatorio.';
+    return '';
+  }
+
+  apellidoMensaje(): string {
+    const c = this.registerForm.controls.apellido;
+    if (c.hasError('required')) return 'El apellido es obligatorio.';
+    return '';
+  }
+
+  emailMensaje(): string {
+    const c = this.registerForm.controls.email;
+    if (c.hasError('required')) return 'El correo es obligatorio.';
+    if (c.hasError('email')) return 'Ingresa un correo válido.';
+    return '';
+  }
+
+  passwordMensaje(): string {
+    const c = this.registerForm.controls.password;
+    if (c.hasError('required')) return 'La contraseña es obligatoria.';
+    if (c.hasError('minlength')) return 'La contraseña debe tener al menos 8 caracteres.';
+    return '';
+  }
+
+  confirmMensaje(): string {
+    const c = this.registerForm.controls.confirmPassword;
+    if (c.hasError('required')) return 'Confirma tu contraseña.';
+    if (c.hasError('noCoincide')) return 'Las contraseñas no coinciden.';
+    return '';
+  }
+
+  terminosMensaje(): string {
+    const c = this.registerForm.controls.aceptaTerminos;
+    if (c.hasError('requiredTrue')) return 'Debes aceptar los términos y la privacidad.';
+    return '';
   }
 
   onVerificar() {

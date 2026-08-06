@@ -47,36 +47,64 @@
       <p class="auth-form-sub mb-4">Programa, alimenta y monitorea — todo desde tu celular.</p>
 
       @if (paso === 'form') {
-        <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+        <form [formGroup]="registerForm" (ngSubmit)="onRegister()" novalidate>
           <div class="row g-3">
             <div class="col-md-6 mb-1">
               <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Nombre</label>
-              <input type="text" formControlName="nombre" class="form-control pf-input" placeholder="Juan">
+              <input type="text" formControlName="nombre" class="form-control pf-input"
+                [class.is-invalid]="registerForm.controls.nombre.invalid && registerForm.controls.nombre.touched"
+                placeholder="Juan">
+              @if (registerForm.controls.nombre.invalid && registerForm.controls.nombre.touched) {
+                <div class="pf-field-error">{{ nombreMensaje() }}</div>
+              }
             </div>
             <div class="col-md-6 mb-1">
               <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Apellido</label>
-              <input type="text" formControlName="apellido" class="form-control pf-input" placeholder="Pérez">
+              <input type="text" formControlName="apellido" class="form-control pf-input"
+                [class.is-invalid]="registerForm.controls.apellido.invalid && registerForm.controls.apellido.touched"
+                placeholder="Pérez">
+              @if (registerForm.controls.apellido.invalid && registerForm.controls.apellido.touched) {
+                <div class="pf-field-error">{{ apellidoMensaje() }}</div>
+              }
             </div>
           </div>
 
           <div class="mb-3">
             <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Correo</label>
-            <input type="email" formControlName="email" class="form-control pf-input" placeholder="tu@correo.com">
+            <input type="email" formControlName="email" class="form-control pf-input"
+              [class.is-invalid]="registerForm.controls.email.invalid && registerForm.controls.email.touched"
+              placeholder="tu@correo.com">
+            @if (registerForm.controls.email.invalid && registerForm.controls.email.touched) {
+              <div class="pf-field-error">{{ emailMensaje() }}</div>
+            }
           </div>
 
           <div class="mb-3">
             <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Contraseña</label>
-            <input type="password" formControlName="password" class="form-control pf-input" placeholder="Mínimo 8 caracteres">
+            <input type="password" formControlName="password" class="form-control pf-input"
+              [class.is-invalid]="registerForm.controls.password.invalid && registerForm.controls.password.touched"
+              placeholder="Mínimo 8 caracteres">
+            @if (registerForm.controls.password.invalid && registerForm.controls.password.touched) {
+              <div class="pf-field-error">{{ passwordMensaje() }}</div>
+            }
           </div>
 
           <div class="mb-3">
             <label class="form-label fw-semibold small text-uppercase" style="letter-spacing:0.06em;">Confirmar contraseña</label>
-            <input type="password" formControlName="confirmPassword" class="form-control pf-input" placeholder="Repite tu contraseña">
+            <input type="password" formControlName="confirmPassword" class="form-control pf-input"
+              [class.is-invalid]="registerForm.controls.confirmPassword.invalid && registerForm.controls.confirmPassword.touched"
+              placeholder="Repite tu contraseña">
+            @if (registerForm.controls.confirmPassword.invalid && registerForm.controls.confirmPassword.touched) {
+              <div class="pf-field-error">{{ confirmMensaje() }}</div>
+            }
           </div>
 
           <div class="form-check mb-3">
             <input type="checkbox" formControlName="aceptaTerminos" class="form-check-input" id="terminos">
             <label class="form-check-label small text-muted" for="terminos">Al continuar aceptas los <span style="color:var(--pf-primary);font-weight:600;">Términos</span> y la <span style="color:var(--pf-primary);font-weight:600;">Privacidad</span>.</label>
+            @if (registerForm.controls.aceptaTerminos.invalid && registerForm.controls.aceptaTerminos.touched) {
+              <div class="pf-field-error">{{ terminosMensaje() }}</div>
+            }
           </div>
 
           <button type="submit" class="btn btn-pf-block" [disabled]="cargando">

@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home';
 import { About } from './components/about/about';
 import { Contact } from './components/contact/contact';
 import { Manual } from './components/manual/manual';
+import { Faq } from './components/faq/faq';
 import { Pets } from './components/pets/pets';
 import { Profile } from './components/profile/profile';
 import { Schedules } from './components/schedules/schedules';
@@ -24,6 +25,7 @@ export const routes: Routes = [
   { path: 'about', component: About },
   { path: 'contacto', component: Contact },
   { path: 'manual', component: Manual },
+  { path: 'preguntas-frecuentes', component: Faq },
   { path: 'opiniones', component: Reviews },
   { path: 'registro', component: RegisterComponent },
   { path: 'login', component: LoginComponent },

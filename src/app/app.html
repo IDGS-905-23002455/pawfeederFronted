@@ -34,6 +34,7 @@
           <li class="nav-item"><a class="pf-nav-link" routerLink="/about" routerLinkActive="active">Proyecto</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/contacto" routerLinkActive="active">Contacto</a></li>
           <li class="nav-item"><a class="pf-nav-link" routerLink="/opiniones" routerLinkActive="active">Comentarios</a></li>
+          <li class="nav-item"><a class="pf-nav-link" routerLink="/preguntas-frecuentes" routerLinkActive="active">Preguntas frecuentes</a></li>
         </ul>
       }
     </div>
@@ -46,8 +47,7 @@
         <a class="pf-nav-link text-decoration-none" routerLink="/perfil">Mi Perfil</a>
         <button class="btn btn-outline-danger rounded-pill px-3 btn-sm" (click)="logout()">Cerrar Sesión</button>
       } @else {
-        <a class="pf-nav-link text-decoration-none" routerLink="/login">Iniciar sesión</a>
-        <button class="btn-pf text-decoration-none" (click)="descargarApp()">Obtener app</button>
+        <a class="btn-pf text-decoration-none" routerLink="/login">Iniciar sesión</a>
       }
     </div>
   </div>
@@ -70,6 +70,8 @@
         <h6 class="fw-bold mb-3">Producto</h6>
         <ul class="list-unstyled small d-inline-block text-start">
           <li class="mb-2"><a class="pf-footer-link" routerLink="/about">Sobre el proyecto</a></li>
+          <li class="mb-2"><a class="pf-footer-link" routerLink="/manual">Manual de uso</a></li>
+          <li class="mb-2"><a class="pf-footer-link" routerLink="/preguntas-frecuentes">Preguntas frecuentes</a></li>
           <li class="mb-2"><a class="pf-footer-link" routerLink="/contacto">Soporte técnico</a></li>
         </ul>
       </div>

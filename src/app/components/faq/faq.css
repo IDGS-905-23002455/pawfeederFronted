@@ -1,0 +1,100 @@
+.pf-faq-section {
+  padding: 4rem 0;
+}
+
+.pf-faq-alt {
+  background: #fff;
+}
+
+.pf-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 860px;
+}
+
+.pf-faq-item {
+  background: #fff;
+  border: 1px solid var(--pf-border);
+  border-radius: 1rem;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.pf-faq-alt .pf-faq-item {
+  background: var(--pf-bg);
+}
+
+.pf-faq-item.abierta {
+  box-shadow: 0 12px 32px rgba(30, 58, 92, 0.1);
+  border-color: var(--pf-primary);
+}
+
+.pf-faq-head {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.pf-faq-num {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.6rem;
+  background: var(--pf-primary-light);
+  color: var(--pf-primary);
+  font-weight: 700;
+  font-size: 0.8rem;
+}
+
+.pf-faq-question {
+  flex: 1;
+  font-weight: 600;
+  color: var(--pf-navy);
+  font-size: 1rem;
+}
+
+.pf-faq-icon {
+  flex-shrink: 0;
+  color: var(--pf-primary);
+  font-size: 1.1rem;
+  transition: transform 0.25s ease;
+}
+
+.pf-faq-icon.rotado {
+  transform: rotate(180deg);
+}
+
+.pf-faq-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.25s ease;
+}
+
+.pf-faq-body.abierto {
+  grid-template-rows: 1fr;
+}
+
+.pf-faq-answer {
+  overflow: hidden;
+  margin: 0;
+  padding: 0 1.25rem;
+  color: var(--pf-muted);
+  line-height: 1.6;
+  max-height: 0;
+  transition: max-height 0.25s ease, padding 0.25s ease;
+}
+
+.pf-faq-body.abierto .pf-faq-answer {
+  max-height: 300px;
+  padding: 0 1.25rem 1.25rem 4.25rem;
+}

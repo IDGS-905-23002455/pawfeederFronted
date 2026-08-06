@@ -291,6 +291,18 @@
   box-shadow: 0 2px 6px rgba(239, 68, 68, 0.2);
 }
 
+/* Botón Recibido: Verde suave */
+.btn-received-outline {
+  border: 1px solid #16a34a;
+  color: #15803d;
+}
+
+.btn-received-outline:hover {
+  background-color: #16a34a;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(22, 163, 74, 0.2);
+}
+
 .full-width-card {
   width: 100%;
 }
@@ -298,4 +310,17 @@
 .custom-table {
   width: 100%;
   border-collapse: collapse;
+}
+
+.low-stock-hint {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background-color: #fff7ed;
+  border: 1px solid #fdba74;
+  color: #c2410c;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }

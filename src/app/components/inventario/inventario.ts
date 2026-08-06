@@ -6,6 +6,25 @@ import { forkJoin } from 'rxjs';
 import { Componente, ProductoTerminado } from '../models/inventario.model';
 import { environment } from '../../../environments/environment';
 
+interface Proveedor {
+  id: number;
+  nombre: string;
+  contacto: string;
+  telefono: string;
+  correo: string;
+  direccion: string;
+  activo: boolean;
+}
+
+interface PedidoSimulado {
+  folio: string;
+  proveedor: string;
+  componente: string;
+  cantidad: number;
+  unidadMedida: string;
+  fecha: string;
+}
+
 @Component({
   selector: 'app-inventario',
   standalone: true,
@@ -16,6 +35,7 @@ import { environment } from '../../../environments/environment';
 export class InventarioComponent implements OnInit {
   componentes: Componente[] = [];
   productos: ProductoTerminado[] = [];
+  proveedores: Proveedor[] = [];
   cargando: boolean = false;
 
   nuevoNombre: string = '';
@@ -23,6 +43,12 @@ export class InventarioComponent implements OnInit {
 
 
   componenteEditando: Componente | null = null;
+
+  pedidoComponenteId: number | null = null;
+  pedidoProveedorId: number | null = null;
+  pedidoCantidad: number = 10;
+  pedidos: PedidoSimulado[] = [];
+  pedidosRecibidos: PedidoSimulado[] = [];
 
   private apiUrl = environment.apiUrl;
 
@@ -34,6 +60,24 @@ export class InventarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerInventario();
+    this.cargarProveedores();
+  }
+
+  cargarProveedores(): void {
+    this.http.get<Proveedor[]>(`${this.apiUrl}/Proveedores`).subscribe({
+      next: (data) => {
+        this.zone.run(() => {
+          this.proveedores = data.filter(p => p.activo);
+          this.cdr.detectChanges();
+        });
+      },
+      error: (err) => {
+        console.error('Error al cargar proveedores:', err);
+        this.zone.run(() => {
+          this.cdr.detectChanges();
+        });
+      }
+    });
   }
 
   obtenerInventario(): void {
@@ -59,6 +103,71 @@ export class InventarioComponent implements OnInit {
         });
       }
     });
+  }
+
+  get stockBajo(): Componente[] {
+    return this.componentes.filter(c => c.stock <= 3);
+  }
+
+  hacerPedido(): void {
+    const componente = this.componentes.find(c => c.id === Number(this.pedidoComponenteId));
+    const proveedor = this.proveedores.find(p => p.id === Number(this.pedidoProveedorId));
+
+    if (!componente) {
+      alert('Selecciona un componente para el pedido.');
+      return;
+    }
+    if (!proveedor) {
+      alert('Selecciona un proveedor para el pedido.');
+      return;
+    }
+    if (!Number.isInteger(this.pedidoCantidad) || this.pedidoCantidad <= 0) {
+      alert('La cantidad debe ser un número entero mayor a 0.');
+      return;
+    }
+
+    const folio = `PF-${Date.now().toString().slice(-8)}`;
+    const pedido: PedidoSimulado = {
+      folio,
+      proveedor: proveedor.nombre,
+      componente: componente.nombre,
+      cantidad: this.pedidoCantidad,
+      unidadMedida: componente.unidadMedida || 'pza',
+      fecha: new Date().toLocaleString('es-MX')
+    };
+
+    this.zone.run(() => {
+      this.pedidos.unshift(pedido);
+      this.pedidoComponenteId = null;
+      this.pedidoProveedorId = null;
+      this.pedidoCantidad = 10;
+      this.cdr.detectChanges();
+    });
+
+    alert(`Pedido ${folio} registrado:\n${componente.nombre} x${this.pedidoCantidad} → ${proveedor.nombre}`);
+  }
+
+  verDetallePedido(pedido: PedidoSimulado): void {
+    alert([
+      `Folio: ${pedido.folio}`,
+      `Proveedor: ${pedido.proveedor}`,
+      `Componente: ${pedido.componente}`,
+      `Cantidad: ${pedido.cantidad} ${pedido.unidadMedida}`,
+      `Fecha: ${pedido.fecha}`
+    ].join('\n'));
+  }
+
+  marcarRecibido(pedido: PedidoSimulado): void {
+    const confirmacion = confirm(`¿Marcar el pedido ${pedido.folio} como recibido?`);
+    if (!confirmacion) return;
+
+    this.zone.run(() => {
+      this.pedidos = this.pedidos.filter(p => p !== pedido);
+      this.pedidosRecibidos.unshift(pedido);
+      this.cdr.detectChanges();
+    });
+
+    alert(`Pedido ${pedido.folio} marcado como recibido.`);
   }
 
   registrarComponente(): void {

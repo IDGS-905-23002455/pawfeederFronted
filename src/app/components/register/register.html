@@ -127,6 +127,13 @@
             Te enviamos un código de 6 dígitos a <strong>{{ emailRegistrado }}</strong>.
           </p>
 
+          @if (codigoPrueba) {
+            <div class="alert alert-info py-2 small mb-3">
+              <strong>Tu código:</strong>
+              <span style="font-size:1.3rem; font-weight:700; letter-spacing:0.2em; color:#0c5460;">{{ codigoPrueba }}</span>
+            </div>
+          }
+
           <input
             type="text"
             inputmode="numeric"

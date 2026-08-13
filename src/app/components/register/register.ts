@@ -28,6 +28,7 @@ export class RegisterComponent {
   paso = 'form';
   emailRegistrado = '';
   codigo = '';
+  codigoPrueba = '';
   verificando = false;
   reenviando = false;
 
@@ -55,6 +56,7 @@ export class RegisterComponent {
         this.cargando = false;
         this.successMsg = resp.mensaje;
         this.emailRegistrado = email!;
+        this.codigoPrueba = resp.codigoPrueba ?? '';
         this.paso = 'otp';
         console.log('Registro exitoso:', resp);
       },

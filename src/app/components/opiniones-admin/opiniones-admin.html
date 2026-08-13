@@ -1,0 +1,164 @@
+<div class="container py-4">
+
+  <!-- Encabezado -->
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+    <div>
+      <h2 class="fw-bold mb-1">Comentarios de Clientes</h2>
+      <p class="text-muted mb-0">Revisa, responde y da seguimiento a las opiniones publicadas en la web.</p>
+    </div>
+    <button class="btn btn-outline-secondary btn-sm" (click)="cargarOpiniones()">
+      Actualizar listado
+    </button>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger d-flex justify-content-between align-items-center">
+    <span>{{ mensajeError }}</span>
+    <button class="btn btn-sm btn-outline-danger" (click)="error = false">Cerrar</button>
+  </div>
+
+  <!-- Métricas -->
+  <div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+      <div class="card admin-stat shadow-sm h-100">
+        <div class="card-body">
+          <h6 class="text-muted small mb-1">Total</h6>
+          <h3 class="fw-bold mb-0">{{ totales.total }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card admin-stat shadow-sm h-100 border-danger">
+        <div class="card-body">
+          <h6 class="text-muted small mb-1">Nuevos</h6>
+          <h3 class="fw-bold mb-0 text-danger">{{ totales.nuevos }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card admin-stat shadow-sm h-100 border-warning">
+        <div class="card-body">
+          <h6 class="text-muted small mb-1">En revisión</h6>
+          <h3 class="fw-bold mb-0 text-warning">{{ totales.enRevision }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="card admin-stat shadow-sm h-100 border-success">
+        <div class="card-body">
+          <h6 class="text-muted small mb-1">Resueltos</h6>
+          <h3 class="fw-bold mb-0 text-success">{{ totales.resueltos }}</h3>
+          <div class="small text-muted">Promedio: {{ totales.calif }} ★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filtros -->
+  <div class="card shadow-sm mb-4">
+    <div class="card-body d-flex flex-wrap gap-3 align-items-center">
+      <div class="btn-group">
+        <button *ngFor="let e of opcionesEstado"
+                class="btn btn-sm"
+                [class.btn-success]="filtroEstado === e"
+                [class.btn-outline-success]="filtroEstado !== e"
+                (click)="filtroEstado = e">
+          {{ e }}
+        </button>
+      </div>
+      <div class="ms-auto" style="min-width: 260px;">
+        <input type="search" class="form-control form-control-sm"
+               placeholder="Buscar por nombre, mascota o comentario..."
+               [(ngModel)]="busqueda">
+      </div>
+    </div>
+  </div>
+
+  <!-- Listado -->
+  <div *ngIf="cargando" class="text-center py-5">
+    <div class="spinner-border text-success"></div>
+    <p class="text-muted mt-2 mb-0">Cargando comentarios...</p>
+  </div>
+
+  <div *ngIf="!cargando && opinionesFiltradas.length === 0" class="alert alert-info text-center">
+    No hay comentarios que coincidan con el filtro.
+  </div>
+
+  <div *ngIf="!cargando && opinionesFiltradas.length > 0" class="card shadow-sm">
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Cliente</th>
+              <th>Calificación</th>
+              <th>Comentario</th>
+              <th>Estado</th>
+              <th>Respuesta admin</th>
+              <th class="text-end">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let op of opinionesFiltradas">
+              <td>
+                <div class="fw-semibold">{{ op.nombreUsuario }}</div>
+                <div class="small text-muted">{{ op.detallesMascota }} &middot; {{ op.fecha }}</div>
+              </td>
+              <td>
+                <span class="text-warning">
+                  <span *ngFor="let e of obtenerEstrellas(op.calificacion)">★</span>
+                  <span *ngFor="let v of obtenerEstrellasVacias(op.calificacion)" class="text-black-50 opacity-25">★</span>
+                </span>
+                <span class="small text-muted ms-1">{{ op.calificacion }}/5</span>
+              </td>
+              <td style="max-width: 320px;">
+                <div class="small text-truncate" [title]="op.comentario">{{ op.comentario }}</div>
+              </td>
+              <td><span class="badge" [ngClass]="badgeClase(op.estado)">{{ estadoDe(op) }}</span></td>
+              <td style="max-width: 220px;">
+                <div *ngIf="op.respuestaAdmin" class="small text-truncate" [title]="op.respuestaAdmin">{{ op.respuestaAdmin }}</div>
+                <div *ngIf="op.fechaRespuesta" class="small text-muted">{{ op.fechaRespuesta }}</div>
+                <span *ngIf="!op.respuestaAdmin" class="text-muted small">Sin respuesta</span>
+              </td>
+              <td class="text-end text-nowrap">
+                <button class="btn btn-sm btn-outline-success me-1" (click)="iniciarEdicion(op)">Responder</button>
+                <button class="btn btn-sm btn-outline-danger" (click)="eliminar(op)">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panel de seguimiento -->
+  <div *ngIf="editando" class="card shadow border-success mt-4">
+    <div class="card-header bg-success text-white fw-bold">Seguimiento del comentario</div>
+    <div class="card-body">
+      <div class="alert alert-light border mb-3 small">
+        <strong>{{ editando.nombreUsuario }}</strong> &middot; {{ editando.detallesMascota }} &middot; {{ editando.fecha }}
+        <div class="text-secondary mt-1">{{ editando.comentario }}</div>
+      </div>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <label class="form-label fw-semibold">Estado</label>
+          <select class="form-select" [(ngModel)]="editEstado">
+            <option *ngFor="let e of ['Nuevo', 'En revisión', 'Resuelto']" [value]="e">{{ e }}</option>
+          </select>
+        </div>
+        <div class="col-md-8">
+          <label class="form-label fw-semibold">Respuesta al cliente</label>
+          <textarea class="form-control" rows="3" [(ngModel)]="editRespuesta"
+                    placeholder="Escribe aquí la respuesta que se mostrará públicamente al cliente..."></textarea>
+        </div>
+      </div>
+      <div class="text-end mt-3">
+        <button class="btn btn-outline-secondary me-2" (click)="cancelarEdicion()">Cancelar</button>
+        <button class="btn btn-success" [disabled]="guardando" (click)="guardarSeguimiento()">
+          <span *ngIf="guardando" class="spinner-border spinner-border-sm me-1"></span>
+          Guardar seguimiento
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>

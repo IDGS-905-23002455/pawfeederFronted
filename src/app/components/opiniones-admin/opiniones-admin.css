@@ -1,0 +1,10 @@
+.admin-stat {
+  border: 0;
+  border-top: 3px solid var(--pf-primary, #2c7a5f);
+  border-radius: 12px;
+}
+
+.admin-stat:hover {
+  transform: translateY(-2px);
+  transition: transform 0.15s ease;
+}

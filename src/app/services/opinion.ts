@@ -19,4 +19,12 @@ export class OpinionService {
   crearOpinion(opinion: Opinion): Observable<Opinion> {
     return this.http.post<Opinion>(this.apiUrl, opinion);
   }
+
+  actualizarOpinion(id: number, opinion: Partial<Opinion>): Observable<Opinion> {
+    return this.http.put<Opinion>(`${this.apiUrl}/${id}`, opinion);
+  }
+
+  eliminarOpinion(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 }

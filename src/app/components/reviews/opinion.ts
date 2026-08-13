@@ -5,4 +5,7 @@ export interface Opinion {
   calificacion: number;
   comentario: string;
   fecha: string;
+  estado?: string;
+  respuestaAdmin?: string | null;
+  fechaRespuesta?: string | null;
 }

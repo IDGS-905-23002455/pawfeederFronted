@@ -19,6 +19,7 @@ import { RecetasComponent } from './components/recetas/recetas';
 import { DashboardClienteComponent } from './components/dashboard-cliente/dashboard-cliente';
 import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin';
 import { MisComprasComponent } from './components/mis-compras/mis-compras';
+import { OpinionesAdminComponent } from './components/opiniones-admin/opiniones-admin';
 
 
 export const routes: Routes = [
@@ -33,6 +34,7 @@ export const routes: Routes = [
 
   { path: 'admin', component: Admin, canActivate: [rolGuard('admin')] },
   { path: 'dashboard', component: DashboardAdminComponent, canActivate: [rolGuard('admin')] },
+  { path: 'comentarios', component: OpinionesAdminComponent, canActivate: [rolGuard('admin')] },
   { path: 'inventario', component: InventarioComponent, canActivate: [rolGuard('admin')] },
   { path: 'inventario-dispensadores', component: InventarioDispensadoresComponent, canActivate: [rolGuard('admin')] },
   { path: 'proveedores', component: ProveedoresComponent, canActivate: [rolGuard('admin')] },

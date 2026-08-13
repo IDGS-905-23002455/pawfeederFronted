@@ -73,11 +73,11 @@ enviarCotizacion() {
   };
 
   this.http.post(
-    `${environment.apiUrl}/Cotizacion/enviar`,
+    `${environment.cotizacionApiUrl}/Cotizacion/enviar`,
     datos
   ).subscribe({
-    next: () => {
-      alert("La cotización fue enviada correctamente.");
+    next: (resp: any) => {
+      alert(resp?.mensaje ?? "La cotización fue enviada correctamente.");
 
       // Limpiar formulario
       this.correoUsuario = '';
@@ -85,7 +85,8 @@ enviarCotizacion() {
     },
     error: (error) => {
       console.error(error);
-      alert("Error al enviar la cotización.");
+      const msj = error.error?.mensaje ?? 'Error al enviar la cotización.';
+      alert(msj);
     }
   });
 

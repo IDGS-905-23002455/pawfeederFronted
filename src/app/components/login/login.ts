@@ -20,6 +20,7 @@ export class LoginComponent {
 
   errorMsg = '';
   cargando = false;
+  mostrarPassword = false;
 
   constructor(
     private auth: AuthService,

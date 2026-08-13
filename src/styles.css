@@ -343,6 +343,31 @@ body {
   box-shadow: 0 0 0 4px rgba(44,95,138,0.15);
   outline: none;
 }
+.pf-pass-wrapper {
+  position: relative;
+}
+.pf-pass-wrapper .form-control {
+  padding-right: 2.9rem;
+}
+.pf-pass-eye {
+  position: absolute;
+  top: 50%;
+  right: 0.4rem;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--pf-muted);
+  padding: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 0.5rem;
+  transition: color 0.2s;
+}
+.pf-pass-eye:hover {
+  color: var(--pf-primary);
+}
 .btn-pf-block {
   width: 100%;
   background: var(--pf-primary);

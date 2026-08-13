@@ -31,6 +31,8 @@ export class RegisterComponent {
   codigoPrueba = '';
   verificando = false;
   reenviando = false;
+  mostrarPassword = false;
+  mostrarConfirm = false;
 
   constructor(private auth: AuthService) {}
 
@@ -135,6 +137,8 @@ export class RegisterComponent {
       next: (resp) => {
         this.reenviando = false;
         this.successMsg = resp.mensaje;
+        this.codigoPrueba = (resp as any).codigoPrueba ?? '';
+        this.codigo = '';
       },
       error: (err) => {
         this.reenviando = false;

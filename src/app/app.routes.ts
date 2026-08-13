@@ -18,6 +18,7 @@ import { ProveedoresComponent } from './components/proveedores/proveedores';
 import { RecetasComponent } from './components/recetas/recetas';
 import { DashboardClienteComponent } from './components/dashboard-cliente/dashboard-cliente';
 import { DashboardAdminComponent } from './components/dashboard-admin/dashboard-admin';
+import { MisComprasComponent } from './components/mis-compras/mis-compras';
 
 
 export const routes: Routes = [
@@ -39,6 +40,7 @@ export const routes: Routes = [
   { path: 'mascotas', component: Pets, canActivate: [rolGuard('cliente')] },
   { path: 'perfil', component: Profile, canActivate: [rolGuard('cliente')] },
   { path: 'horarios', component: Schedules, canActivate: [rolGuard('cliente')] },
+  { path: 'mis-compras', component: MisComprasComponent, canActivate: [rolGuard('cliente')] },
   { path: 'dashboard-cliente', component: DashboardClienteComponent, canActivate: [rolGuard('cliente')] },
   { path: '**', redirectTo: '' }
 ];

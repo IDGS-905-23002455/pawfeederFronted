@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DashboardService } from '../../services/dashboard';
 import { AuthService } from '../../services/auth';
+import { CompraService } from '../../services/compra';
 
 @Component({
   selector: 'app-dashboard-cliente',
@@ -15,12 +16,15 @@ import { AuthService } from '../../services/auth';
 export class DashboardClienteComponent implements OnInit, OnDestroy {
   private dashboardService = inject(DashboardService);
   private auth = inject(AuthService);
+  private compraService = inject(CompraService);
 
   cargando = true;
   error = false;
   mensajeError = '';
   usuarioNombre = '';
   private userSub: Subscription | null = null;
+
+  comprasCount = 0;
 
   mascotas = { total: 0, activas: 0, lista: [] as any[] };
   horarios = { total: 0, activos: 0, lista: [] as any[] };
@@ -52,6 +56,7 @@ export class DashboardClienteComponent implements OnInit, OnDestroy {
 
   private cargarDashboard(usuario: { id: number; nombre: string }): void {
     this.usuarioNombre = usuario.nombre;
+    this.comprasCount = this.compraService.getCompras(usuario.id).reduce((acc, c) => acc + c.cantidad, 0);
     this.dashboardService.getDashboardCliente(usuario.id).subscribe({
       next: (data: any) => {
         this.mascotas = data.mascotas;

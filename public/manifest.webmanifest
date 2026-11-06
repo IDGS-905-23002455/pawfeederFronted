@@ -1,0 +1,34 @@
+{
+  "name": "PawFeeder · Dispensador inteligente de croquetas",
+  "short_name": "PawFeeder",
+  "description": "Dispensador inteligente de croquetas IoT. Programa horarios, ajusta porciones y monitorea a tu mascota en tiempo real.",
+  "lang": "es",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#F5F0E8",
+  "theme_color": "#2C5F8A",
+  "categories": ["lifestyle", "utilities"],
+  "icons": [
+    {
+      "src": "/imagenes/pwa-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/imagenes/pwa-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/imagenes/pwa-icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

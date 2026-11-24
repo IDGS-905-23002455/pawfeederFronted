@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { api } from '../api.js'
-import { CONTENEDORES, MATERIALES, PRECIO_BASE } from '../datos/cotizador.js'
+import { MODELO, PRECIO_BASE, PRECIO_CAMARA } from '../datos/cotizador.js'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export function useCotizador() {
-  const [contenedor, setContenedor] = useState('chico')
-  const [material, setMaterial] = useState('plastico')
+  const [incluyeCamara, setIncluyeCamara] = useState(false)
   const [cantidad, setCantidad] = useState(1)
   const [correo, setCorreo] = useState('')
   const [mostrarCorreo, setMostrarCorreo] = useState(false)
@@ -14,7 +13,7 @@ export function useCotizador() {
   const [enviando, setEnviando] = useState(false)
 
   const cantidadNum = Math.min(10, Math.max(1, Math.trunc(Number(cantidad)) || 1))
-  const total = (PRECIO_BASE + CONTENEDORES[contenedor] + MATERIALES[material]) * cantidadNum
+  const total = (PRECIO_BASE + (incluyeCamara ? PRECIO_CAMARA : 0)) * cantidadNum
 
   function cambiarCantidad(e) {
     const valor = e.target.value
@@ -28,8 +27,22 @@ export function useCotizador() {
     setCantidad(String(Math.min(10, Math.max(1, numero))))
   }
 
+  function abrirMailto(correoDestino) {
+    const asunto = encodeURIComponent('Cotización PawFeeder')
+    const cuerpo = encodeURIComponent(
+      `Hola,\n\nSolicito cotización PawFeeder:\n\n` +
+        `- Modelo: ${MODELO}\n` +
+        `- Cámara de monitoreo: ${incluyeCamara ? 'Sí (+$350 MXN)' : 'No'}\n` +
+        `- Cantidad: ${cantidadNum}\n` +
+        `- Total estimado: $${total} MXN\n\n` +
+        `Correo de contacto: ${correoDestino}\n`,
+    )
+    window.location.href = `mailto:ganzalezpao11@gmail.com?subject=${asunto}&body=${cuerpo}`
+  }
+
   async function enviar() {
-    if (!EMAIL_RE.test(correo.trim())) {
+    const correoLimpio = correo.trim()
+    if (!EMAIL_RE.test(correoLimpio)) {
       setMensaje({ tipo: 'danger', texto: 'Ingresa un correo electrónico válido.' })
       return
     }
@@ -39,9 +52,9 @@ export function useCotizador() {
 
     try {
       const respuesta = await api.enviarCotizacion({
-        correo: correo.trim(),
-        contenedor,
-        material,
+        correo: correoLimpio,
+        contenedor: 'grande',
+        material: 'premium',
         cantidad: cantidadNum,
         total,
       })
@@ -52,17 +65,20 @@ export function useCotizador() {
       setCorreo('')
       setMostrarCorreo(false)
     } catch (error) {
-      setMensaje({ tipo: 'danger', texto: error.message })
+      const texto = error.message || 'No se pudo enviar por correo automático.'
+      setMensaje({
+        tipo: 'warning',
+        texto: `${texto} Puedes enviarla manualmente por correo.`,
+      })
+      abrirMailto(correoLimpio)
     } finally {
       setEnviando(false)
     }
   }
 
   return {
-    contenedor,
-    setContenedor,
-    material,
-    setMaterial,
+    incluyeCamara,
+    setIncluyeCamara,
     cantidad,
     cambiarCantidad,
     ajustarCantidad: () => setCantidad(String(cantidadNum)),

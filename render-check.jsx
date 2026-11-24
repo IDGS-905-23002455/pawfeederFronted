@@ -8,7 +8,7 @@ import { ProveedorSesion } from './src/sesion.jsx'
 const ESPERADO = {
   '/': ['Alimenta a tu mascota', '¿Por qué PawFeeder?', 'Tecnología Arduino', 'pf-hero'],
   '/about': ['El proyecto PawFeeder', 'Resumen de Cotización', 'Total Estimado', '¿Tienes preguntas?'],
-  '/contacto': ['Contáctanos', 'Envíanos un mensaje', 'carlosriosrmz17@gmail.com'],
+  '/contacto': ['Contáctanos', 'Envíanos un mensaje', 'ganzalezpao11@gmail.com'],
   '/manual': ['Manual de uso', 'Conectar a WiFi', 'Programar horarios', 'Alertas y notificaciones'],
   '/preguntas-frecuentes': ['Preguntas frecuentes', 'Compra y envío', '¿Cuántas comidas puedo programar al día?'],
   '/opiniones': ['Déjanos tu Opinión', 'Comentarios de la Comunidad', 'Cargando comentarios'],

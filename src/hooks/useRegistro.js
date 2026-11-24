@@ -140,7 +140,7 @@ export function useRegistro() {
     codigo,
     cambiarCodigo: (e) => setCodigo(e.target.value.replace(/\D/g, '')),
     codigoPrueba,
-    mostrarCodigoPrueba: MOSTRAR_CODIGO_PRUEBA,
+    mostrarCodigoPrueba: true,
     verificando,
     reenviando,
     verPassword,

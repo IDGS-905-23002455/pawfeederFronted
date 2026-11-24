@@ -1,6 +1,6 @@
 export const CLAVE_TOKEN = 'pawfeeder_token'
 
-const API_URL = import.meta.env.VITE_API_URL ?? 'https://petfeeder-api-dgjx.onrender.com/api'
+const API_URL = import.meta.env.VITE_API_URL ?? 'https://petfeeder-api-davf.onrender.com/api'
 
 function leerToken() {
   if (typeof window === 'undefined') return null

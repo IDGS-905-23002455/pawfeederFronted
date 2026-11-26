@@ -113,7 +113,7 @@ export const api = {
 
   getUsuario: (id) => pedir(`/Usuarios/${id}`),
 
-  actualizarPerfil: (id, nombre, telefono) => pedir(`/Usuarios/${id}`, json('PUT', { nombre, telefono })),
+  actualizarPerfil: (id, nombre, telefono, fotoUrl) => pedir(`/Usuarios/${id}`, json('PUT', { nombre, telefono, fotoUrl })),
 
   actualizarEstado: (id, activo) => pedir(`/Usuarios/${id}/estado`, json('PUT', { activo })),
 

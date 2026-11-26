@@ -494,11 +494,21 @@
 /* ═══════════════ Perfil ═══════════════ */
 .pf-perfil-panel .profile-wrap { padding: 1.6rem; }
 
+.pf-perfil-panel .pf-perfil-side {
+  border: 1px solid rgba(44, 95, 138, 0.08);
+  background: linear-gradient(180deg, #fbfdff 0%, #ffffff 100%);
+}
+
+.pf-perfil-panel .pf-avatar-wrap {
+  display: flex;
+  justify-content: center;
+}
+
 .pf-perfil-panel .pf-avatar {
   width: 4.5rem;
   height: 4.5rem;
   border-radius: 50%;
-  background: var(--pf-primary);
+  background: linear-gradient(135deg, var(--pf-primary), #4a84b8);
   color: #fff;
   display: inline-flex;
   align-items: center;
@@ -506,7 +516,39 @@
   font-size: 1.9rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
-  box-shadow: 0 8px 20px rgba(44, 95, 138, 0.3);
+  box-shadow: 0 8px 20px rgba(44, 95, 138, 0.28);
+  overflow: hidden;
+  position: relative;
+}
+
+.pf-perfil-panel .pf-avatar-lg {
+  width: 112px;
+  height: 112px;
+  font-size: 2.6rem;
+  margin-bottom: 0;
+  border: 4px solid #fff;
+  box-shadow: 0 12px 28px rgba(44, 95, 138, 0.22);
+}
+
+.pf-perfil-panel .pf-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pf-perfil-panel .pf-perfil-name {
+  font-weight: 700;
+  color: var(--pf-navy);
+}
+
+.pf-perfil-panel .pf-foto-actions .btn {
+  border-radius: 0.75rem;
+}
+
+.pf-perfil-panel .pf-perfil-section-head h5 {
+  font-weight: 700;
+  color: var(--pf-navy);
 }
 
 .pf-perfil-panel .badge-pf {

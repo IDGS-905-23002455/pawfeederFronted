@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import './estilos/base.css'
 import './estilos/faq.css'
+import './estilos/manual.css'
 import './estilos/auth.css'
 import './estilos/panel.css'
 

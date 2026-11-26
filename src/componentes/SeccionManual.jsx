@@ -1,12 +1,16 @@
-export function SeccionManual({ id, numero, titulo, ultima = false, children }) {
+﻿export function SeccionManual({ id, numero, titulo, icono, ultima = false, children }) {
   return (
-    <div id={id} className={ultima ? undefined : 'mb-5'}>
-      <h2 className="fw-bold mb-3">
-        <span className="me-2" style={{ color: 'var(--pf-primary)' }}>{numero}.</span>
-        {titulo}
-      </h2>
-      <div className="pf-divider" />
-      {children}
-    </div>
+    <section id={id} className={`pf-manual-section${ultima ? '' : ' mb-4'}`}>
+      <div className="pf-manual-section-head">
+        <div className="pf-manual-section-num">{numero}</div>
+        <div className="pf-manual-section-title-wrap">
+          <h2 className="pf-manual-section-title">
+            {icono && <i className={`bi ${icono} me-2`} aria-hidden="true"></i>}
+            {titulo}
+          </h2>
+        </div>
+      </div>
+      <div className="pf-manual-section-body">{children}</div>
+    </section>
   )
 }

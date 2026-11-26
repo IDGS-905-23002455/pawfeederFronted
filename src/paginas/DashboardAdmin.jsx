@@ -142,26 +142,26 @@ export default function DashboardAdmin() {
             </div>
 
             <h6 className="fw-bold text-uppercase small mb-2 mt-4" style={{ color: 'var(--pf-muted)', letterSpacing: '0.08em' }}>Accesos rápidos</h6>
-            <div className="admin-stats">
+            <div className="admin-stats admin-quick-access">
               <Link className="stat-card clickable text-decoration-none" to="/admin">
                 <div className="stat-icon icon-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M23 21v-2a4 4 0 0 0-3-3.87" /></svg></div>
-                <div><h3 className="fs-5">Usuarios</h3><span>Gestionar cuentas</span></div>
+                <div><h3>Usuarios</h3><span>Gestionar cuentas</span></div>
               </Link>
               <Link className="stat-card clickable text-decoration-none" to="/inventario">
                 <div className="stat-icon icon-blue"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#2C5F8A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z" /><path d="M2 17l10 5 10-5" /><path d="M2 12l10 5 10-5" /></svg></div>
-                <div><h3 className="fs-5">Inventario</h3><span>Productos y stock</span></div>
+                <div><h3>Inventario</h3><span>Productos y stock</span></div>
               </Link>
               <Link className="stat-card clickable text-decoration-none" to="/inventario-dispensadores">
                 <div className="stat-icon icon-amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" /><line x1="8" y1="21" x2="16" y2="21" /><line x1="12" y1="17" x2="12" y2="21" /></svg></div>
-                <div><h3 className="fs-5">Dispensadores</h3><span>Unidades y firmware</span></div>
+                <div><h3>Dispensadores</h3><span>Unidades y firmware</span></div>
               </Link>
               <Link className="stat-card clickable text-decoration-none" to="/proveedores">
                 <div className="stat-icon icon-red"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#b91c1c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></svg></div>
-                <div><h3 className="fs-5">Proveedores</h3><span>Gestión de abasto</span></div>
+                <div><h3>Proveedores</h3><span>Gestión de abasto</span></div>
               </Link>
               <Link className="stat-card clickable text-decoration-none" to="/recetas">
                 <div className="stat-icon icon-amber"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#CC8A25" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a7 7 0 0 0-7 7c0 2 .5 4 1.5 5.5L5 22l3-2 2 2 2-2 2 2 2-2 3 2-1.5-7.5C20.5 13 21 11 21 9a7 7 0 0 0-7-7z" /><circle cx="9" cy="9" r="1" /><circle cx="15" cy="9" r="1" /></svg></div>
-                <div><h3 className="fs-5">Recetas</h3><span>Fórmulas de comida</span></div>
+                <div><h3>Recetas</h3><span>Fórmulas de comida</span></div>
               </Link>
             </div>
 

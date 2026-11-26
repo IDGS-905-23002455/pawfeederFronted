@@ -25,7 +25,7 @@ const ENLACES_CLIENTE = [
   { a: '/mascotas', texto: 'Mis Mascotas' },
   { a: '/horarios', texto: 'Horarios' },
   { a: '/mis-compras', texto: 'Mis Compras' },
-  { a: '/manual', texto: 'Manual IoT' },
+  { a: '/manual', texto: 'Manual', destacado: true },
 ]
 
 export function Navbar() {
@@ -75,13 +75,16 @@ export function Navbar() {
           id="mainNav"
         >
           <ul className="navbar-nav gap-2" onClick={cerrarMenu}>
-            {enlaces.map(({ a, texto }) => (
+            {enlaces.map(({ a, texto, destacado }) => (
               <li className="nav-item" key={a}>
                 <NavLink
-                  className={({ isActive }) => `pf-nav-link${isActive ? ' active' : ''}`}
+                  className={({ isActive }) =>
+                    `pf-nav-link${destacado ? ' pf-nav-link-manual' : ''}${isActive ? ' active' : ''}`
+                  }
                   to={a}
                   end={a === '/'}
                 >
+                  {destacado && <i className="bi bi-journal-bookmark me-1" />}
                   {texto}
                 </NavLink>
               </li>

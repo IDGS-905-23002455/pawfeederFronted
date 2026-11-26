@@ -97,6 +97,22 @@ body {
   color: var(--pf-primary-dark);
 }
 
+.pf-nav-link-manual {
+  border: 1.5px solid rgba(44, 95, 138, 0.28);
+  background: #fff;
+  color: var(--pf-primary-dark);
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(30, 58, 92, 0.05);
+}
+
+.pf-nav-link-manual:hover,
+.pf-nav-link-manual.active {
+  border-color: var(--pf-primary);
+  background: var(--pf-primary-light);
+  color: var(--pf-primary-dark);
+  box-shadow: 0 4px 14px rgba(44, 95, 138, 0.12);
+}
+
 /* ── Buttons ── */
 .btn-pf {
   background: var(--pf-primary);

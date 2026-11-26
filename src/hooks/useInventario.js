@@ -1,10 +1,27 @@
-import { useCallback, useEffect, useState } from 'react'
+﻿import { useCallback, useEffect, useState } from 'react'
 import { api } from '../api.js'
+
+function mapPedido(p) {
+  return {
+    id: p.id,
+    folio: p.folio,
+    proveedor: p.proveedorNombre ?? p.proveedor ?? '',
+    proveedorId: p.proveedorId,
+    componente: p.componenteNombre ?? p.componente ?? '',
+    componenteId: p.componenteId,
+    cantidad: p.cantidad,
+    unidadMedida: p.unidadMedida || 'pza',
+    fecha: p.fecha ? new Date(p.fecha).toLocaleString('es-MX') : '',
+    estado: p.estado,
+  }
+}
 
 export function useInventario() {
   const [componentes, setComponentes] = useState([])
   const [productos, setProductos] = useState([])
   const [proveedores, setProveedores] = useState([])
+  const [pedidos, setPedidos] = useState([])
+  const [pedidosRecibidos, setPedidosRecibidos] = useState([])
   const [cargando, setCargando] = useState(false)
 
   const [nuevoNombre, setNuevoNombre] = useState('')
@@ -14,29 +31,43 @@ export function useInventario() {
   const [pedidoComponenteId, setPedidoComponenteId] = useState(null)
   const [pedidoProveedorId, setPedidoProveedorId] = useState(null)
   const [pedidoCantidad, setPedidoCantidad] = useState(10)
-  const [pedidos, setPedidos] = useState([])
-  const [pedidosRecibidos, setPedidosRecibidos] = useState([])
 
   const cargarProveedores = useCallback(async () => {
     try {
       const data = await api.getProveedores()
       setProveedores((Array.isArray(data) ? data : []).filter((p) => p.activo))
     } catch {
-      // Angular solo registra el error en consola.
+      // mantener estado actual
+    }
+  }, [])
+
+  const cargarPedidos = useCallback(async () => {
+    try {
+      const data = await api.getPedidosProveedor()
+      const lista = (Array.isArray(data) ? data : []).map(mapPedido)
+      setPedidos(lista.filter((p) => p.estado === 'pendiente'))
+      setPedidosRecibidos(lista.filter((p) => p.estado === 'recibido'))
+    } catch {
+      // mantener estado actual
     }
   }, [])
 
   const obtenerInventario = useCallback(async () => {
     setCargando(true)
     try {
-      const [componentesData, productosData] = await Promise.all([api.getComponentes(), api.getProductos()])
+      const [componentesData, productosData] = await Promise.all([
+        api.getComponentes(),
+        api.getProductos(),
+        cargarPedidos(),
+      ])
       setComponentes([...(Array.isArray(componentesData) ? componentesData : [])])
       setProductos([...(Array.isArray(productosData) ? productosData : [])])
-      setCargando(false)
     } catch {
+      // mantener estado actual
+    } finally {
       setCargando(false)
     }
-  }, [])
+  }, [cargarPedidos])
 
   useEffect(() => {
     obtenerInventario()
@@ -45,7 +76,7 @@ export function useInventario() {
 
   const stockBajo = componentes.filter((c) => c.stock <= 3)
 
-  const hacerPedido = () => {
+  const hacerPedido = async () => {
     const componente = componentes.find((c) => c.id === Number(pedidoComponenteId))
     const proveedor = proveedores.find((p) => p.id === Number(pedidoProveedorId))
 
@@ -62,22 +93,25 @@ export function useInventario() {
       return
     }
 
-    const folio = `PF-${Date.now().toString().slice(-8)}`
-    const pedido = {
-      folio,
-      proveedor: proveedor.nombre,
-      componente: componente.nombre,
-      cantidad: pedidoCantidad,
-      unidadMedida: componente.unidadMedida || 'pza',
-      fecha: new Date().toLocaleString('es-MX'),
+    setCargando(true)
+    try {
+      const creado = await api.crearPedidoProveedor({
+        proveedorId: proveedor.id,
+        componenteId: componente.id,
+        cantidad: pedidoCantidad,
+      })
+      const pedido = mapPedido(creado)
+      setPedidos((prev) => [pedido, ...prev])
+      setPedidoComponenteId(null)
+      setPedidoProveedorId(null)
+      setPedidoCantidad(10)
+      window.alert(`Pedido ${pedido.folio} registrado:\n${pedido.componente} x${pedido.cantidad} → ${pedido.proveedor}`)
+    } catch (err) {
+      const msj = typeof err?.body === 'string' ? err.body : err?.body?.mensaje || 'No se pudo registrar el pedido.'
+      window.alert(msj)
+    } finally {
+      setCargando(false)
     }
-
-    setPedidos((prev) => [pedido, ...prev])
-    setPedidoComponenteId(null)
-    setPedidoProveedorId(null)
-    setPedidoCantidad(10)
-
-    window.alert(`Pedido ${folio} registrado:\n${componente.nombre} x${pedido.cantidad} → ${proveedor.nombre}`)
   }
 
   const verDetallePedido = (pedido) => {
@@ -88,15 +122,26 @@ export function useInventario() {
         `Componente: ${pedido.componente}`,
         `Cantidad: ${pedido.cantidad} ${pedido.unidadMedida}`,
         `Fecha: ${pedido.fecha}`,
+        `Estado: ${pedido.estado}`,
       ].join('\n'),
     )
   }
 
-  const marcarRecibido = (pedido) => {
+  const marcarRecibido = async (pedido) => {
     if (!window.confirm(`¿Marcar el pedido ${pedido.folio} como recibido?`)) return
-    setPedidos((prev) => prev.filter((p) => p !== pedido))
-    setPedidosRecibidos((prev) => [pedido, ...prev])
-    window.alert(`Pedido ${pedido.folio} marcado como recibido.`)
+    setCargando(true)
+    try {
+      const actualizado = await api.recibirPedidoProveedor(pedido.id)
+      const pedidoActualizado = mapPedido(actualizado)
+      setPedidos((prev) => prev.filter((p) => p.id !== pedido.id))
+      setPedidosRecibidos((prev) => [pedidoActualizado, ...prev])
+      await obtenerInventario()
+      window.alert(`Pedido ${pedido.folio} marcado como recibido. El stock se actualizó.`)
+    } catch (err) {
+      const msj = typeof err?.body === 'string' ? err.body : err?.body?.mensaje || 'No se pudo marcar el pedido como recibido.'
+      window.alert(msj)
+      setCargando(false)
+    }
   }
 
   const registrarComponente = async (evento) => {
@@ -112,7 +157,7 @@ export function useInventario() {
       window.alert('El nombre del componente debe contener letras, no solo números.')
       return
     }
-    if (!/[a-zA-ZáéíóúÁÉÍÓÚñÑ]/.test(nombreLimpio)) {
+    if (!/[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]/.test(nombreLimpio)) {
       window.alert('El nombre del componente debe incluir al menos una letra.')
       return
     }
@@ -128,13 +173,13 @@ export function useInventario() {
     setCargando(true)
     try {
       const res = await api.crearComponente({ nombre: nombreLimpio, stock: stockIngresado, unidadMedida: 'pza' })
-      window.alert(`¡Componente '${res.nombre}' guardado exitosamente!`)
+      window.alert(`Componente '${res.nombre}' guardado exitosamente.`)
       setNuevoNombre('')
       setNuevoStock(1)
       obtenerInventario()
     } catch (err) {
-      const msj = typeof err?.body === 'string' ? err.body : 'Hubo un error al registrar el componente.'
-      window.alert(`${msj}`)
+      const msj = typeof err?.body === 'string' ? err.body : err?.body?.mensaje || 'Hubo un error al registrar el componente.'
+      window.alert(msj)
       setCargando(false)
     }
   }
@@ -153,7 +198,7 @@ export function useInventario() {
       window.alert('El nombre del componente no puede estar vacío.')
       return
     }
-    if (!/[a-zA-ZáéíóúÁÉÍÓÚñÑ]/.test(nombreLimpio)) {
+    if (!/[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ]/.test(nombreLimpio)) {
       window.alert('El nombre debe contener al menos una letra.')
       return
     }
@@ -164,8 +209,8 @@ export function useInventario() {
 
     setCargando(true)
     try {
-      await api.actualizarComponente(componenteEditando.id, componenteEditando)
-      window.alert('¡Componente actualizado correctamente!')
+      await api.actualizarComponente(componenteEditando.id, { ...componenteEditando, nombre: nombreLimpio, stock: stockIngresado })
+      window.alert('Componente actualizado correctamente.')
       setComponenteEditando(null)
       obtenerInventario()
     } catch {
@@ -180,7 +225,7 @@ export function useInventario() {
     setCargando(true)
     try {
       await api.eliminarComponente(item.id)
-      window.alert(`¡Componente '${item.nombre}' eliminado!`)
+      window.alert(`Componente '${item.nombre}' eliminado.`)
       obtenerInventario()
     } catch {
       window.alert('No se pudo eliminar el componente. Puede estar asociado a una receta de producción.')

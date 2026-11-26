@@ -143,6 +143,13 @@ export const api = {
 
   eliminarProveedor: (id) => pedir(`/Proveedores/${id}`, { method: 'DELETE' }),
 
+  // ── Pedidos a proveedor ────────────────────────────────────
+  getPedidosProveedor: () => pedir('/PedidosProveedor'),
+
+  crearPedidoProveedor: (pedido) => pedir('/PedidosProveedor', json('POST', pedido)),
+
+  recibirPedidoProveedor: (id) => pedir(`/PedidosProveedor/${id}/recibir`, json('PUT', {})),
+
   // ── Recetas ────────────────────────────────────────────
   getProductosConReceta: () => pedir('/Recetas/productos-con-receta'),
 
